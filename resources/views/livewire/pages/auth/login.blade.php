@@ -21,14 +21,21 @@ new #[Layout('layouts.guest')] class extends Component
 
         Session::regenerate();
 
+        $redirectTo = RouteServiceProvider::HOME;
+
+        if (auth()->user()->hasRole('Teknisi')) {
+            $redirectTo = '/graphic';
+        }
+
         $this->redirect(
-            session('url.intended', RouteServiceProvider::HOME),
+            session('url.intended', $redirectTo),
             navigate: true
         );
     }
 }; ?>
 
 <div>
+    @section('title','Login Monitoring Dashboard')
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 

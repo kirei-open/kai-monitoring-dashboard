@@ -15,6 +15,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
 
+Route::group(['middleware' => ['role:super_admin|Admin']], function () {
+    Route::view('/landing', 'landing'); 
+    Route::view('/table','table');
+    Route::view('/logger','event-logger');
+    Route::view('/voice','voice-logger');
+    Route::view('/asset','asset');
+    Route::view('/report','report');
+    Route::view('/graphic','graphic-monitoring');
+    Route::view('/audit','audit');
+});
+
+Route::view('/graphic','graphic-monitoring')->middleware('role:Teknisi|Admin|super_admin');
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
