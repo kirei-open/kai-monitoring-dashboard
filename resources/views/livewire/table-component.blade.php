@@ -1,5 +1,5 @@
 <div>
-    <h1 class="text-[#a4a2b4] lg:mt-[110px] lg:ml-[60px] lg:text-[20px]">Tabel Monitoring</h1>
+    <h1 class="text-[#a4a2b4] lg:mt-[120px] lg:ml-[60px] lg:text-[20px]">TABEL MONITORING</h1>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg lg:mt-[20px] lg:ml-[60px] lg:w-11/12">
         <div class="bg-white lg:w-full lg:h-24">
             <div class="flex justify-between">
@@ -63,48 +63,50 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="w-4 p-4">
-                        <div class="flex items-center">
-                            <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                        </div>
-                    </td>
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Apple MacBook Pro 17"
-                    </th>
-                    <td class="px-6 py-4">
-                        Silver
-                    </td>
-                    <td class="px-6 py-4">
-                        Laptop
-                    </td>
-                    <td class="px-6 py-4">
-                        $2999
-                    </td>
-                    <td class="px-6 py-4">
-                        $2999
-                    </td>
-                    <td class="px-6 py-4">
-                        $2999
-                    </td>
-                    <td class="px-6 py-4">
-                        $2999
-                    </td>
-                    <td class="px-6 py-4">
-                        $2999
-                    </td>
-                    <td class="px-6 py-4">
-                        $2999
-                    </td>
-                    <td class="px-6 py-4">
-                        $2999
-                    </td>
-                    <td class="px-6 py-4">
-                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                    </td>
-                </tr>
+                @foreach ($monitoring as $monitor )
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
+                        <td class="w-4 p-4">
+                            <div class="flex items-center">
+                                {{$loop->iteration}}
+                            </div>
+                        </td>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{$monitor->created_at}}
+                        </th>
+                        <td class="px-6 py-4">
+                            {{$monitor->id_ralok}}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{$monitor->latitude}}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{$monitor->longitude}}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{$monitor->section}}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{$monitor->input_voltage}}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{$monitor->output_voltage}}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{$monitor->voltage}}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{$monitor->clasification}}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{$monitor->power_transmite}}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{$monitor->SWR}}
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
+        {{-- {{ $monitoring->links() }} --}}
     </div>
 </div>
