@@ -14,32 +14,34 @@ class UserSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-{
-    // Create roles
-    $superAdminRole = Role::create(['name' => 'super_admin']);
-    $adminRole = Role::create(['name' => 'Admin']);
-    $teknisiRole = Role::create(['name' => 'Teknisi']);
+    {
+        if (!User::where('email', 'superadmin@kai.co.id')->exists()) {
+            $super_admin = User::create([
+                'name' => 'super_admin',
+                'email' => 'superadmin@kai.co.id',
+                'password' => Hash::make('superadmin123')
+            ]);
+            $super_admin->assignRole('super_admin');
+        }
 
-    // Create users and assign roles
-    $superAdmin = User::create([
-        'name' => 'super_admin',
-        'email' => 'superadmin@kai.com',
-        'password' => Hash::make('superadmin123')
-    ]);
-    $superAdmin->assignRole($superAdminRole);
+        // Repeat the same check for other users
 
-    $admin = User::create([
-        'name' => 'Admin',
-        'email' => 'admin@kai.com',
-        'password' => Hash::make('admin123')
-    ]);
-    $admin->assignRole($adminRole);
+        if (!User::where('email', 'admin@kai.co.id')->exists()) {
+            $Admin = User::create([
+                'name' => 'Admin',
+                'email' => 'admin@kai.co.id',
+                'password' => Hash::make('admin123')
+            ]);
+            $Admin->assignRole('Admin');
+        }
 
-    $teknisi = User::create([
-        'name' => 'Teknisi',
-        'email' => 'teknisi@kai.com',
-        'password' => Hash::make('teknisi123')
-    ]);
-    $teknisi->assignRole($teknisiRole);
-}
+        if (!User::where('email', 'teknisi@kai.co.id')->exists()) {
+            $Teknisi = User::create([
+                'name' => 'Teknisi',
+                'email' => 'teknisi@kai.co.id',
+                'password' => Hash::make('teknisi123')
+            ]);
+            $Teknisi->assignRole('Teknisi');
+        }
+    }
 }
