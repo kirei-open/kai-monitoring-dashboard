@@ -12,7 +12,7 @@
         {{-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
         crossorigin=""/> --}}
-        <link rel="stylesheet" href="{{ asset('/plugins/leaflet/leaflet.css') }}" rel="stylesheet"/>
+        <link rel="stylesheet" href="{{ asset('plugins/leaflet/leaflet.css') }}" rel="stylesheet"/>
         <link rel="shortcut icon" href="{{ URL::asset('img/kai-ico.ico') }}" type="image/x-icon">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <style>

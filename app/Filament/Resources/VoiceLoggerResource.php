@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\EventLoggerResource\Pages;
-use App\Filament\Resources\EventLoggerResource\RelationManagers;
-use App\Models\EventLogger;
+use App\Filament\Resources\VoiceLoggerResource\Pages;
+use App\Filament\Resources\VoiceLoggerResource\RelationManagers;
+use App\Models\VoiceLogger;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class EventLoggerResource extends Resource
+class VoiceLoggerResource extends Resource
 {
-    protected static ?string $model = EventLogger::class;
+    protected static ?string $model = VoiceLogger::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -28,13 +28,7 @@ class EventLoggerResource extends Resource
             Forms\Components\TextInput::make('section')
                 ->required()
                 ->maxLength(255),
-            Forms\Components\TextInput::make('event')
-                ->required()
-                ->maxLength(255),
-            Forms\Components\TextInput::make('status')
-                ->required()
-                ->maxLength(255),
-            Forms\Components\TextInput::make('area')
+            Forms\Components\TextInput::make('voice_logger')
                 ->required()
                 ->maxLength(255),
             ]);
@@ -47,9 +41,7 @@ class EventLoggerResource extends Resource
                 Tables\Columns\TextColumn::make('id_ralok')
                 ->searchable(),
                 Tables\Columns\TextColumn::make('section'),
-                Tables\Columns\TextColumn::make('event'),
-                Tables\Columns\TextColumn::make('status'),
-                Tables\Columns\TextColumn::make('area'),
+                Tables\Columns\TextColumn::make('voice_logger'),
             ])
             ->filters([
                 //
@@ -75,9 +67,9 @@ class EventLoggerResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListEventLoggers::route('/'),
-            'create' => Pages\CreateEventLogger::route('/create'),
-            'edit' => Pages\EditEventLogger::route('/{record}/edit'),
+            'index' => Pages\ListVoiceLoggers::route('/'),
+            'create' => Pages\CreateVoiceLogger::route('/create'),
+            'edit' => Pages\EditVoiceLogger::route('/{record}/edit'),
         ];
     }
 }
