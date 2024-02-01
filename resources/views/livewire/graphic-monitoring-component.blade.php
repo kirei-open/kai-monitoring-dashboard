@@ -46,7 +46,6 @@
           </div>
         </div>
       </div>
-      <div id="chart-2" class="px-2.5 lg:mt-[-100px]"></div>
     </div>
 
     {{-- <div class="bg-white rounded-lg shadow dark:bg-gray-800 lg:ml-[60px] lg:w-[870px] lg:mt-7" style="position: relative;">
