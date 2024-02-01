@@ -24,7 +24,7 @@ new class extends Component
                 <div class="flex items-center justify-between">
                     <div class="flex items-center justify-start rtl:justify-end">
                         <button class="w3-button w3-xlarge lg:ml-[-265px] lg:mt-3" onclick="w3_open()">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#193766" class="w-6 h-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="#193766" class="w-8 h-8">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                             </svg>
                         </button>
@@ -53,7 +53,7 @@ new class extends Component
                             <x-dropdown align="right" width="48">
                                 <x-slot name="trigger">
                                     <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                                        <div style="font-family: 'DM Sans', sans-serif;" class="lg:text-[16px] text-[13px] hover:text-[#193766] hover:font-bold lg:ml-2 lg:w-[150px]" x-data="{ name: '{{ ucfirst(auth()->user()->name) }}' }" x-text="name" x-on:profile-updated.window="name = $event.detail.name">
+                                        <div style="font-family: 'DM Sans', sans-serif;" class="lg:text-[16px] text-[13px] hover:text-[#193766] text-[#000] hover:font-bold lg:ml-2 lg:w-[150px]" x-data="{ name: '{{ ucfirst(auth()->user()->name) }}' }" x-text="name" x-on:profile-updated.window="name = $event.detail.name">
                                         </div>
                                         <img class="w-8 h-8 rounded-full lg:w-[50px] lg:h-[50px]" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
                                         <div class="ms-1">
