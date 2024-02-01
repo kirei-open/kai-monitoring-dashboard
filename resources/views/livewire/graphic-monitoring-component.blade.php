@@ -1,6 +1,6 @@
 <div>
   <h1 class="text-[#a4a2b4] lg:mt-[120px] lg:ml-[60px] lg:text-[20px]">GRAPHIC MONITORING</h1>
-  <div class="grid grid-cols-2 gap-1">
+  <div class="grid grid-cols-2 gap-1 mb-7">
     <div class="bg-white rounded-lg shadow dark:bg-gray-800 lg:ml-[60px] lg:w-[870px] lg:mt-7" style="position: relative;">
       <div class="flex justify-between p-4 md:p-6 pb-0 md:pb-0">
         <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2 lg:text-[16px]">Graphic Temperature Monitoring</h5>
