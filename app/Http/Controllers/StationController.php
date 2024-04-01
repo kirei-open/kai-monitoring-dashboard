@@ -20,7 +20,7 @@ class StationController extends Controller
         $longitude = floatval($request->longitude);
         $latitude = floatval($request->latitude);
 
-        $point = "POINT({$longitude} {$latitude})";
+        $point = DB::raw("ST_GeomFromText('POINT({$longitude} {$latitude})')");
         // dd($point);
 
         Station::create([
