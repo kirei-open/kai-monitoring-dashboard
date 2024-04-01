@@ -9,10 +9,10 @@ class MapsComponent extends Component
 {
     public function render()
     {
-        $station = Station::all();
-        
+        $stations = Station::all();
+
         return view('livewire.maps-component',[
-            "station" => $station,
+            "stations" => $stations,
         ]);
     }
 }
