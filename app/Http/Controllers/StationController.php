@@ -20,8 +20,7 @@ class StationController extends Controller
         $longitude = floatval($request->longitude);
         $latitude = floatval($request->latitude);
 
-        $point = DB::raw("ST_GeomFromText('POINT({$longitude} {$latitude})')");
-        // dd($point);
+        $point = DB::raw("ST_GeomFromText('POINT({$latitude} {$longitude})')");
 
         Station::create([
             'name'=> $request->name,
@@ -48,25 +47,20 @@ class StationController extends Controller
             'name'=> ['required', 'string'],
             'code' => ['required', 'string'],
             'altitude' => ['required', 'string'],
-            'last_location' => function ($attribute, $value, $fail) {
-                if (!is_array($value) || count($value) !== 2) {
-                    $fail('The :attribute must be a valid point with longitude and latitude.');
-                }
-    
-                $longitude = $value[0];
-                $latitude = $value[1];
-    
-                if (!is_numeric($longitude) || !is_numeric($latitude)) {
-                    $fail('The :attribute must be a valid point with longitude and latitude.');
-                }
-            }
+            'longitude' => ['required', 'numeric'],
+            'latitude' => ['required', 'numeric']
         ]);
+
+        $longitude = floatval($request->longitude);
+        $latitude = floatval($request->latitude);
+
+        $point = DB::raw("ST_GeomFromText('POINT({$latitude} {$longitude})')");
 
         station::where('id', $id)->update([
             'name'=> $request->name,
             'code' => $request->code,
             'altitude' => $request->altitude,
-            'last_location' => [$request->longitude, $request->latitude],
+            'point' => $point,
         ]);
 
         return response()->json(['message' => 'Station data succesfully updated']);
