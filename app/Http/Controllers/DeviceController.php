@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Device;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DeviceController extends Controller
 {
@@ -12,27 +13,22 @@ class DeviceController extends Controller
             'serial_number' => ['required', 'string'],
             'name' => ['required', 'string'],
             'code' => ['required', 'string'],
-            'last_location' => function ($attribute, $value, $fail) {
-                if (!is_array($value) || count($value) !== 2) {
-                    $fail('The :attribute must be a valid point with longitude and latitude.');
-                }
-    
-                $longitude = $value[0];
-                $latitude = $value[1];
-    
-                if (!is_numeric($longitude) || !is_numeric($latitude)) {
-                    $fail('The :attribute must be a valid point with longitude and latitude.');
-                }
-            },
-            'last_monitored_value' => ['required', 'json'],
+            'longitude' => ['required', 'numeric'],
+            'latitude' => ['required', 'numeric'],
+            'last_monitored_value' => ['required', 'array'],
         ]);
+
+        $longitude = floatval($request->longitude);
+        $latitude = floatval($request->latitude);
+
+        $lastLocation = DB::raw("ST_GeomFromText('POINT({$latitude} {$longitude})')");
 
         Device::create([
             'serial_number' => $request->serial_number,
             'name' => $request->name,
             'code' => $request->code,
-            'last_location' => [$request->longitude, $request->latitude],
-            'last_monitored_value' => $request->last_monitored_value,
+            'last_location' => $lastLocation,
+            'last_monitored_value' => json_encode($request->last_monitored_value)
         ]);
 
         return response()->json(['Succesfully create a new device']);
@@ -52,26 +48,21 @@ class DeviceController extends Controller
         $request->validate([
             'name' => ['required', 'string'],
             'code' => ['required', 'string'],
-            'last_location' => function ($attribute, $value, $fail) {
-                if (!is_array($value) || count($value) !== 2) {
-                    $fail('The :attribute must be a valid point with longitude and latitude.');
-                }
-    
-                $longitude = $value[0];
-                $latitude = $value[1];
-    
-                if (!is_numeric($longitude) || !is_numeric($latitude)) {
-                    $fail('The :attribute must be a valid point with longitude and latitude.');
-                }
-            },
-            'last_monitored_value' => ['required', 'json'],
+            'longitude' => ['required', 'numeric'],
+            'latitude' => ['required', 'numeric'],
+            'last_monitored_value' => ['required', 'array'],
         ]);
+
+        $longitude = floatval($request->longitude);
+        $latitude = floatval($request->latitude);
+
+        $lastLocation = DB::raw("ST_GeomFromText('POINT({$latitude} {$longitude})')");
 
         Device::where('serial_number', $serial_number)->update([
             'name' => $request->name,
             'code' => $request->code,
-            'last_location' => [$request->longitude, $request->latitude],
-            'last_monitored_value' => $request->last_monitored_value,
+            'last_location' => $lastLocation,
+            'last_monitored_value' => json_encode($request->last_monitored_value)
         ]);
 
         return response()->json(['message' => 'data succesfully updated']);

@@ -9,6 +9,8 @@ class Device extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'serial_number';
+
     protected $fillable = [
         'serial_number',
         'name',
