@@ -12,6 +12,8 @@ class Logout
      */
     public function __invoke(): void
     {
+        Auth::user()->tokens()->delete();
+
         Auth::guard('web')->logout();
 
         Session::invalidate();

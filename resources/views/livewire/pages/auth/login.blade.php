@@ -1,10 +1,12 @@
 <?php
 
+use Livewire\Volt\Component;
+use Livewire\Attributes\Layout;
 use App\Livewire\Forms\LoginForm;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Session;
-use Livewire\Attributes\Layout;
-use Livewire\Volt\Component;
 
 new #[Layout('layouts.guest')] class extends Component
 {
@@ -13,24 +15,28 @@ new #[Layout('layouts.guest')] class extends Component
     /**
      * Handle an incoming authentication request.
      */
-    public function login(): void
+    public function login()
     {
         $this->validate();
-
+    
         $this->form->authenticate();
-
+    
         Session::regenerate();
-
+    
+        $user = Auth::user();
+    
+        $token = $user->createToken('API Token')->plainTextToken;
+    
+        session(['api_token' => $token]);
+        Log::info(session()->all());
+    
         $redirectTo = RouteServiceProvider::HOME;
-
-        if (auth()->user()->hasRole('Teknisi')) {
+    
+        if ($user->hasRole('Teknisi')) {
             $redirectTo = '/graphic';
         }
-
-        $this->redirect(
-            session('url.intended', $redirectTo),
-            navigate: true
-        );
+    
+        return redirect()->intended($redirectTo);
     }
 }; ?>
 
