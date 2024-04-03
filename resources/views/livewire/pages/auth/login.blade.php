@@ -28,7 +28,6 @@ new #[Layout('layouts.guest')] class extends Component
         $token = $user->createToken('API Token')->plainTextToken;
     
         session(['api_token' => $token]);
-        Log::info(session()->all());
     
         $redirectTo = RouteServiceProvider::HOME;
     
