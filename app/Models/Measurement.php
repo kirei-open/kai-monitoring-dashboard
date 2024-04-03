@@ -12,7 +12,9 @@ class Measurement extends Model
     protected $fillable = [
         'device_id',
         'datetime',
-        'point',
+        'key',
+        "value",
+        "unit"
     ];
 
     public function device()
