@@ -9,6 +9,12 @@ class Measurement extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'device_id';
+
+    protected $casts = [
+        'device_id' => 'string',
+    ];
+
     protected $fillable = [
         'device_id',
         'datetime',
