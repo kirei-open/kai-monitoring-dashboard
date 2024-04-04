@@ -14,13 +14,27 @@
         stations.forEach(station => {
             var lat = station.latitude;
             var long = station.longitude;
+            
             var stationIcon = L.icon({
                 iconUrl: '{{ URL::asset('img/railway.svg') }}',
                 iconSize: [50, 95],
                 iconAnchor: [22, 94],
                 popupAnchor: [-3, -76]
             });
-            L.marker([lat, long], {icon:stationIcon}).addTo(map);
+
+            var marker = L.marker([lat, long], {icon: stationIcon}).addTo(map);
+            var popupContent = `
+                <b>Name:</b> ${station.name}<br>
+                <b>Code:</b> ${station.code}<br>
+                <b>Altitude:</b> ${station.altitude}<br>
+                <b>Pont:</b> ${station.latitude},${station.longitude}<br>
+            `;
+            marker.on('mouseover', function(e) {
+                this.bindPopup(popupContent).openPopup();
+            });
+            marker.on('mouseout', function(e) {
+                this.closePopup();
+            });
         });
 
         devices.forEach(device => {
