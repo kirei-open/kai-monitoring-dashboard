@@ -11,6 +11,10 @@ class Device extends Model
 
     protected $primaryKey = 'serial_number';
 
+    protected $casts = [
+        'serial_number' => 'string',
+    ];
+
     protected $fillable = [
         'serial_number',
         'name',

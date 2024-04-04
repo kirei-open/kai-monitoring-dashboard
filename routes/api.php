@@ -6,7 +6,6 @@ use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\StationController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MeasurementController;
-use App\Http\Controllers\AuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
