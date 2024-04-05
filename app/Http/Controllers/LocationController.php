@@ -96,9 +96,8 @@ class LocationController extends Controller
             ]);
         }else{
             Location::where('device_id', $request->device_id)->update([
-                'datetime' => ['required'],
-                'longitude' => ['required', 'numeric'],
-                'latitude' => ['required', 'numeric'],
+                'datetime' => $request->datetime,
+                'point' => $location,
             ]);
         }
 
