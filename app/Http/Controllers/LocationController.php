@@ -22,20 +22,11 @@ class LocationController extends Controller
 
         $location = DB::raw("ST_GeomFromText('POINT({$latitude} {$longitude})')");
 
-        $data = (object)[
-            'device_id' => $request->device_id,
-            'datetime' => $request->datetime,
-            'longitude' => $longitude,
-            'latitude' => $latitude
-        ];
-
         Location::create([
             'device_id' => $request->device_id,
             'datetime' => $request->datetime,
             'point' => $location,
         ]);
-
-        event(new DeviceLocationBroadcast($data));
 
         return response()->json(['message' => 'location data succesfully created']);
     }
@@ -73,5 +64,46 @@ class LocationController extends Controller
     public function deleteLocation($id){
         Location::where('device_id', $id)->delete();
         return response()->json(['message' => 'location data succesfully deleted']);
+    }
+
+    public function broadcastLocation(Request $request){
+        $request->validate([
+            'device_id' => ['required', 'string'],
+            'datetime' => ['required'],
+            'longitude' => ['required', 'numeric'],
+            'latitude' => ['required', 'numeric'],
+        ]);
+
+        $longitude = floatval($request->longitude);
+        $latitude = floatval($request->latitude);
+
+        $location = DB::raw("ST_GeomFromText('POINT({$latitude} {$longitude})')");
+
+        $data = (object)[
+            'device_id' => $request->device_id,
+            'datetime' => $request->datetime,
+            'longitude' => $longitude,
+            'latitude' => $latitude
+        ];
+
+        $check = Location::where('device_id', $request->device_id)->first();
+
+        if(!$check){
+            Location::create([
+                'device_id' => $request->device_id,
+                'datetime' => $request->datetime,
+                'point' => $location,
+            ]);
+        }else{
+            Location::where('device_id', $request->device_id)->update([
+                'datetime' => ['required'],
+                'longitude' => ['required', 'numeric'],
+                'latitude' => ['required', 'numeric'],
+            ]);
+        }
+
+        event(new DeviceLocationBroadcast($data));
+
+        return response()->json(['message' => 'location data succesfully broadcasted']);
     }
 }

@@ -17,14 +17,6 @@ class MeasurementController extends Controller
             'unit' => ['required', 'string']
         ]);
 
-        $data = (object)[
-            'device_id' => $request->device_id,
-            'datetime' => $request->datetime,
-            'key' => $request->key,
-            'value' => $request->value,
-            'unit' => $request->unit
-        ];
-
         Measurement::create([
             'device_id' => $request->device_id,
             'datetime' => $request->datetime,
@@ -33,9 +25,7 @@ class MeasurementController extends Controller
             'unit' => $request->unit
         ]);
 
-        event(new DeviceMeasurementBroadcast($data));
-
-        return response()->json(['message' => 'measurement data succesfully added']);
+        return response()->json(['message' => 'measurement data succesfully created']);
     }
 
     public function getMeasurement(){
@@ -69,5 +59,46 @@ class MeasurementController extends Controller
     public function deleteMeasurement($id){
         Measurement::where('device_id', $id)->delete();
         return response()->json(['message' => 'measurement data succesfully deleted']);
+    }
+
+    public function broadcastMeasurement(Request $request){
+        $request->validate([
+            'device_id' => ['required', 'string'],
+            'datetime' => ['required'],
+            'key' => ['required', 'string'],
+            'value' => ['required', 'numeric'],
+            'unit' => ['required', 'string']
+        ]);
+
+        $data = (object)[
+            'device_id' => $request->device_id,
+            'datetime' => $request->datetime,
+            'key' => $request->key,
+            'value' => $request->value,
+            'unit' => $request->unit
+        ];
+
+        $check = Measurement::where('device_id', $request->device_id)->first();
+
+        if(!$check){
+            Measurement::create([
+                'device_id' => $request->device_id,
+                'datetime' => $request->datetime,
+                'key' => $request->key,
+                'value' => $request->value,
+                'unit' => $request->unit
+            ]);
+        }else{
+            Measurement::where('device_id', $request->device_id)->update([
+                'datetime' => $request->datetime,
+                'key' => $request->key,
+                'value' => $request->value,
+                'unit' => $request->unit
+            ]);
+        }
+        
+        event(new DeviceMeasurementBroadcast($data));
+
+        return response()->json(['message' => 'measurement data succesfully broadcasted']);
     }
 }

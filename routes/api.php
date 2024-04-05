@@ -44,6 +44,7 @@ Route::middleware('auth:sanctum')->prefix('location')->group(function () {
     Route::get('/{id}', [LocationController::class, 'getDetailLocation']);
     Route::put('/{id}', [LocationController::class, 'updateLocation']);
     Route::delete('/{id}', [LocationController::class, 'deleteLocation']);
+    Route::post('/broadcast', [LocationController::class, 'broadcastLocation']);
 });
 
 Route::middleware('auth:sanctum')->prefix('measurement')->group(function () {
@@ -52,4 +53,5 @@ Route::middleware('auth:sanctum')->prefix('measurement')->group(function () {
     Route::get('/{id}', [MeasurementController::class, 'getDetailMeasurement']);
     Route::put('/{id}', [MeasurementController::class, 'updateMeasurement']);
     Route::delete('/{id}', [MeasurementController::class, 'deleteMeasurement']);
+    Route::post('/broadcast', [MeasurementController::class, 'broadcastMeasurement']);
 });
