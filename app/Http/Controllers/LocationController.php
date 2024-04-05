@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\DeviceLocationBroadcast;
 use App\Models\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,11 +22,20 @@ class LocationController extends Controller
 
         $location = DB::raw("ST_GeomFromText('POINT({$latitude} {$longitude})')");
 
+        $data = (object)[
+            'device_id' => $request->device_id,
+            'datetime' => $request->datetime,
+            'longitude' => $longitude,
+            'latitude' => $latitude
+        ];
+
         Location::create([
             'device_id' => $request->device_id,
             'datetime' => $request->datetime,
             'point' => $location,
         ]);
+
+        event(new DeviceLocationBroadcast($data));
 
         return response()->json(['message' => 'location data succesfully created']);
     }
