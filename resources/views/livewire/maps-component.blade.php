@@ -27,7 +27,7 @@
                 <b>Name:</b> ${station.name}<br>
                 <b>Code:</b> ${station.code}<br>
                 <b>Altitude:</b> ${station.altitude}<br>
-                <b>Pont:</b> ${station.latitude},${station.longitude}<br>
+                <b>Point:</b> ${station.latitude},${station.longitude}<br>
             `;
             marker.on('mouseover', function(e) {
                 this.bindPopup(popupContent).openPopup();
@@ -46,9 +46,28 @@
                 iconAnchor: [22, 94],
                 popupAnchor: [-3, -76]
             });
-            L.marker([device_lat, device_long], {icon: deviceIcon}).addTo(map);
+            var marker = L.marker([device_lat, device_long], {icon: deviceIcon}).addTo(map);
+            var popupContent = `
+                <b>Serial Number:</b> ${device.serial_number}<br>
+                <b>Name:</b> ${device.name}<br>
+                <b>Code:</b> ${device.code}<br>
+                <b>Last Location:</b> ${device.latitude},${device.longitude}<br>
+            `;
+            marker.on('mouseover', function(e) {
+                this.bindPopup(popupContent).openPopup();
+            });
+            marker.on('mouseout', function(e) {
+                this.closePopup();
+            });
+            
         });
-
-
+    </script>
+    <script>
+        window.onload = function() {
+            window.Echo.channel('test-channel')
+                .listen('testbroadcast', (data) => {
+                    console.log('Message received:', data.data);
+                });
+        };
     </script>
 </div>
