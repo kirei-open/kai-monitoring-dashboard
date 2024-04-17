@@ -11,27 +11,28 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
         <link rel="shortcut icon" href="{{ URL::asset('img/kai-ico.ico') }}" type="image/x-icon">
+        <link href="https://fonts.googleapis.com/css2?family=Cabin&family=DM+Sans:opsz@9..40&family=Poppins&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <style>
-            nav {
+            /* nav {
                 position: fixed;
                 top: 0;
                 left: 0;
                 width: 100%;
                 z-index: 1000;
-            }
+            } */
             #map {
                 position: relative;
                 z-index: 1;
                 height: calc(100vh - 80px);
                 padding-top: 80px;
             }
-            body {
+            /* body {
                 overflow: hidden;
-            }
-            .w3-sidebar {
+            } */
+            /* .w3-sidebar {
                 overflow-y: hidden;
-            }
+            } */
             
         </style>
         <!-- Scripts -->
