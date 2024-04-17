@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('locations', function (Blueprint $table) {
-            $table->string('device_id')->primary();
+            $table->id();
+            $table->string('device_id');
             $table->foreign('device_id')->references('serial_number')->on('devices');
             $table->dateTime('datetime');
             $table->point('point');
