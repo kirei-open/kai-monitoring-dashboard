@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container">
     <div id="map" class="lg:mt-[100px] mt-[50px] lg:w-[2000px] w-full"></div>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
@@ -29,45 +29,42 @@
                 <b>Altitude:</b> ${station.altitude}<br>
                 <b>Point:</b> ${station.latitude},${station.longitude}<br>
             `;
-            marker.on('mouseover', function(e) {
-                this.bindPopup(popupContent).openPopup();
-            });
-            marker.on('mouseout', function(e) {
-                this.closePopup();
-            });
+            marker.bindPopup(popupContent);
         });
 
+        var deviceMarkers = {};
+
         devices.forEach(device => {
-            var device_lat = device.latitude;
-            var device_long = device.longitude;
+            addOrUpdateDeviceMarker(device);
+        });
+
+        function addOrUpdateDeviceMarker(device) {
             var deviceIcon = L.icon({
                 iconUrl: '{{ URL::asset('img/train.svg') }}',
                 iconSize: [50, 95],
                 iconAnchor: [22, 94],
                 popupAnchor: [-3, -76]
             });
-            var marker = L.marker([device_lat, device_long], {icon: deviceIcon}).addTo(map);
+
             var popupContent = `
-                <b>Serial Number:</b> ${device.serial_number}<br>
-                <b>Name:</b> ${device.name}<br>
-                <b>Code:</b> ${device.code}<br>
+                <b>Serial Number:</b> ${device.device_id}<br>
                 <b>Last Location:</b> ${device.latitude},${device.longitude}<br>
             `;
-            marker.on('mouseover', function(e) {
-                this.bindPopup(popupContent).openPopup();
-            });
-            marker.on('mouseout', function(e) {
-                this.closePopup();
-            });
-            
-        });
-    </script>
-    <script>
+
+            if (deviceMarkers[device.device_id]) {
+                deviceMarkers[device.device_id].setLatLng([device.latitude, device.longitude]).setPopupContent(popupContent);
+            } else {
+                var marker = L.marker([device.latitude, device.longitude], {icon: deviceIcon}).addTo(map).bindPopup(popupContent);
+                deviceMarkers[device.device_id] = marker;
+            }
+        }
         window.onload = function() {
-            window.Echo.channel('test-channel')
-                .listen('testbroadcast', (data) => {
-                    console.log('Message received:', data.data);
+            window.Echo.channel('location-channel')
+                .listen('DeviceLocationBroadcast', (data) => {
+                    var device = data.data;
+                    addOrUpdateDeviceMarker(device);
                 });
         };
     </script>
 </div>
+
