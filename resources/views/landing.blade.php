@@ -19,17 +19,17 @@
                 top: 0;
                 left: 0;
                 width: 100%;
-                z-index: 1000;
+                z-index: 100;
             } */
             #map {
                 position: relative;
-                z-index: 1;
-                height: calc(100vh - 80px);
-                padding-top: 80px;
+                z-index: 10;
+                height: 800px;
+                padding-top: 20px;
             }
-            /* body {
+            body {
                 overflow: hidden;
-            } */
+            }
             /* .w3-sidebar {
                 overflow-y: hidden;
             } */
