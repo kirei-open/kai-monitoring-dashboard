@@ -15,8 +15,8 @@ return new class extends Migration
             $table->string('serial_number')->primary();
             $table->string('name');
             $table->string('code');
-            $table->point('last_location');
-            $table->json('last_monitored_value');
+            $table->point('last_location')->nullable();
+            $table->json('last_monitored_value')->nullable();
             $table->string('api_key');
             $table->timestamps();
         });
