@@ -17,6 +17,14 @@ class MeasurementController extends Controller
             'unit' => ['required', 'string']
         ]);
 
+        $data = (object)[
+            'device_id' => $request->device_id,
+            'datetime' => $request->datetime,
+            'key' => $request->key,
+            'value' => $request->value,
+            'unit' => $request->unit
+        ];
+
         Measurement::create([
             'device_id' => $request->device_id,
             'datetime' => $request->datetime,
@@ -24,6 +32,8 @@ class MeasurementController extends Controller
             'value' => $request->value,
             'unit' => $request->unit
         ]);
+
+        event(new DeviceMeasurementBroadcast($data));
 
         return response()->json(['message' => 'measurement data succesfully created']);
     }

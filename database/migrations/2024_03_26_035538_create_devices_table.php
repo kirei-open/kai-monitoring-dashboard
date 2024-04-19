@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('code');
             $table->point('last_location');
             $table->json('last_monitored_value');
+            $table->string('api_key');
             $table->timestamps();
         });
     }
