@@ -1,11 +1,12 @@
 <div class="container">
     <div id="map" class="lg:mt-[100px] mt-[50px] lg:w-[2000px] w-full"></div>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="{{ URL::asset('js/leaflet.js') }}"></script>
     <script>
         const stations = @json($stations);
         const devices = @json($devices);
-        
-        var map = L.map('map').setView([-4.628757657193269, 122.33816943962901], 5);
+
+
+        var map = L.map('map').setView([-7.000576569450258, 107.17740302365186], 9);
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -32,6 +33,25 @@
             marker.bindPopup(popupContent);
         });
 
+        devices.forEach(device => {
+            var device_lat = device.latitude;
+            var device_long = device.longitude;
+            console.log(device_lat,device_long);
+            var deviceIcon = L.icon({
+                iconUrl: '{{ URL::asset('img/train.svg') }}',
+                iconSize: [50, 95],
+                iconAnchor: [22, 94],
+                popupAnchor: [-3, -76]
+            });
+
+            var marker = L.marker([device_lat, device_long], {icon: deviceIcon}).addTo(map);
+            var popupContent = `
+                <b>Name:</b> ${device.name}<br>
+                <b>Code:</b> ${device.code}<br>
+            `;
+            marker.bindPopup(popupContent);
+        });
+
         var deviceMarkers = {};
 
         devices.forEach(device => {
@@ -53,7 +73,7 @@
 
             if (deviceMarkers[device.device_id]) {
                 deviceMarkers[device.device_id].setLatLng([device.latitude, device.longitude]).setPopupContent(popupContent);
-            } else {
+            } else {    
                 var marker = L.marker([device.latitude, device.longitude], {icon: deviceIcon}).addTo(map).bindPopup(popupContent);
                 deviceMarkers[device.device_id] = marker;
             }
