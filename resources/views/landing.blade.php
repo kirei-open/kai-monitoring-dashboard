@@ -9,36 +9,21 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+        <link rel="stylesheet" href="{{ URL::asset('css/leaflet.css') }}"/>
         <link rel="shortcut icon" href="{{ URL::asset('img/kai-ico.ico') }}" type="image/x-icon">
         <link href="https://fonts.googleapis.com/css2?family=Cabin&family=DM+Sans:opsz@9..40&family=Poppins&display=swap" rel="stylesheet" />
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <style>
-            /* nav {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                z-index: 100;
-            } */
             #map {
-                position: relative;
-                z-index: 10;
-                height: 800px;
+                position: fixed;
+                height: 1000px;
                 padding-top: 20px;
             }
-            body {
-                overflow: hidden;
-            }
-            /* .w3-sidebar {
-                overflow-y: hidden;
-            } */
             
         </style>
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="antialiased" id="main">
+    <body class="antialiased" style="background: linear-gradient(180deg, rgba(76, 167, 81, 0.00) 0%, rgba(163, 208, 181, 0.34) 53.13%, rgba(228, 239, 255, 0.60) 92.51%, rgba(228, 239, 255, 0.00) 100%);" id="main">
         <livewire:navbar-component />               
         <livewire:maps-component />
     </body>
