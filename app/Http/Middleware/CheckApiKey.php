@@ -25,7 +25,7 @@ class CheckApiKey
         $device = Device::where('api_key', $apiKey)->first();
     
         if (!$device) {
-            return response()->json(['error' => 'Invalid API key'], 401);
+            return response()->json(['error' => 'API key is not valid'], 401);
         }
     
         $request->attributes->add(['serial_number' => $device->serial_number]);
