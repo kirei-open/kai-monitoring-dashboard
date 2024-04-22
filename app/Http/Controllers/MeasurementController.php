@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Device;
 use App\Models\Measurement;
 use Illuminate\Http\Request;
 use App\Events\DeviceMeasurementBroadcast;
@@ -9,8 +10,9 @@ use App\Events\DeviceMeasurementBroadcast;
 class MeasurementController extends Controller
 {
     public function createMeasurement(Request $request){
+        $serialNumber = $request->get('serial_number');
+
         $request->validate([
-            'device_id' => ['required', 'string'],
             'datetime' => ['required'],
             'key' => ['required', 'string'],
             'value' => ['required', 'numeric'],
@@ -18,19 +20,25 @@ class MeasurementController extends Controller
         ]);
 
         $data = (object)[
-            'device_id' => $request->device_id,
+            'device_id' => $serialNumber,
             'datetime' => $request->datetime,
             'key' => $request->key,
             'value' => $request->value,
             'unit' => $request->unit
         ];
 
-        Measurement::create([
-            'device_id' => $request->device_id,
+        $measurementData = [
+            'device_id' => $serialNumber,
             'datetime' => $request->datetime,
             'key' => $request->key,
             'value' => $request->value,
             'unit' => $request->unit
+        ];
+
+        Measurement::create($measurementData);
+
+        Device::where('serial_number', $serialNumber)->update([
+            'last_monitored_value' => json_encode($measurementData)
         ]);
 
         event(new DeviceMeasurementBroadcast($data));

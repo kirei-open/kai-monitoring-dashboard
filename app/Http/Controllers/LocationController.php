@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\DeviceLocationBroadcast;
+use App\Models\Device;
 use App\Models\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Events\DeviceLocationBroadcast;
 
 class LocationController extends Controller
 {
     public function createLocation(Request $request){
+        $serialNumber = $request->get('serial_number');
+
         $request->validate([
-            'device_id' => ['required', 'string'],
             'datetime' => ['required'],
             'longitude' => ['required', 'numeric'],
             'latitude' => ['required', 'numeric'],
@@ -23,16 +25,20 @@ class LocationController extends Controller
         $location = DB::raw("ST_GeomFromText('POINT({$latitude} {$longitude})')");
 
         $data = (object)[
-            'device_id' => $request->device_id,
+            'device_id' => $serialNumber,
             'datetime' => $request->datetime,
             'longitude' => $longitude,
             'latitude' => $latitude
         ];
 
         Location::create([
-            'device_id' => $request->device_id,
+            'device_id' => $serialNumber,
             'datetime' => $request->datetime,
             'point' => $location,
+        ]);
+
+        Device::where('serial_number', $serialNumber)->update([
+            'last_location' => $location,
         ]);
 
         event(new DeviceLocationBroadcast($data));
