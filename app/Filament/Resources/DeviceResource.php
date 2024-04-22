@@ -53,9 +53,11 @@ class DeviceResource extends Resource
                 TextColumn::make('serial_number')
                     ->label('Serial Number'),
                 TextColumn::make('name')
-                    ->label('Device Name'),
+                    ->label('Device Name')
+                    ->searchable(),
                 TextColumn::make('code')
-                    ->label('Device Code'),
+                    ->label('Device Code')
+                    ->searchable(),
                 TextColumn::make('last_location')
                     ->label('Last Location'),
                 TextColumn::make('last_monitored_value')
