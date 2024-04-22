@@ -32,10 +32,10 @@ class DeviceResource extends Resource
                     ->required()
                     ->unique(ignoreRecord:true),
                 TextInput::make('name')
-                    ->label('Name Device')
+                    ->label('Device Name')
                     ->required(),
                 TextInput::make('code')
-                    ->label('Code Device')
+                    ->label('Device Code')
                     ->required(),
                 Hidden::make('api_key')
             ])
@@ -53,9 +53,9 @@ class DeviceResource extends Resource
                 TextColumn::make('serial_number')
                     ->label('Serial Number'),
                 TextColumn::make('name')
-                    ->label('Name Device'),
+                    ->label('Device Name'),
                 TextColumn::make('code')
-                    ->label('Code Device'),
+                    ->label('Device Code'),
                 TextColumn::make('last_location')
                     ->label('Last Location'),
                 TextColumn::make('last_monitored_value')
