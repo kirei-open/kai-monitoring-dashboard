@@ -22,18 +22,13 @@ class CheckApiKey
             return response()->json(['error' => 'API key is missing'], 401);
         }
     
-        // Retrieve the device based on the provided API key
         $device = Device::where('api_key', $apiKey)->first();
     
         if (!$device) {
             return response()->json(['error' => 'Invalid API key'], 401);
         }
     
-        // if ($device->id !== expected_device_id) {
-        //     return response()->json(['error' => 'Invalid device'], 401);
-        // }
-    
-        $request->merge(['device' => $device]);
+        $request->attributes->add(['serial_number' => $device->serial_number]);
     
         return $next($request);
     }
