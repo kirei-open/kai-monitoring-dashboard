@@ -29,9 +29,9 @@ class StationResource extends Resource
             ->schema([
                 TextInput::make('name')->label('Station Name')->required(),
                 TextInput::make('code')->label('Station Code')->required(),
-                TextInput::make('altitude')->label('Altitude')->required(),
-                TextInput::make('longitude')->label('Longitude')->required(),
                 TextInput::make('latitude')->label('Latitude')->required(),
+                TextInput::make('longitude')->label('Longitude')->required(),
+                TextInput::make('altitude')->label('Altitude')->required(),
                 Hidden::make('point')
             ]);
     }
