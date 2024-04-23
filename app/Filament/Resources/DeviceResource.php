@@ -38,12 +38,7 @@ class DeviceResource extends Resource
                     ->label('Device Code')
                     ->required(),
                 Hidden::make('api_key')
-            ])
-            ->context('create', function ($context) {
-                $context->submit(function (Device $device) {
-                    $device->save();
-                });
-            });
+            ]);
     }
 
     public static function table(Table $table): Table

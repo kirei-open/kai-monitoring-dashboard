@@ -21,13 +21,7 @@ class Device extends Model
         'code',
         'last_location',
         'last_monitored_value',
+        'api_key'
     ];
 
-    protected static function booted()
-    {
-        static::creating(function ($device) {
-            // Generate a random 40-character string for api_key
-            $device->api_key = bin2hex(random_bytes(20));
-        });
-    }
 }
