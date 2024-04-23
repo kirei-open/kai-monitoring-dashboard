@@ -1,17 +1,17 @@
 <div>
     <h1 class="text-[#a4a2b4] lg:mt-[120px] lg:ml-[60px] lg:text-[20px]">TABEL MONITORING</h1>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg lg:mt-[20px] lg:ml-[60px] lg:w-11/12">
-        <div class="bg-white lg:w-full lg:h-24">
+        <div class="bg-white lg:w-full lg:h-24 dark:bg-gray-900">
             <div class="flex justify-between">
                 <div class="lg:mt-7 lg:ml-5">
                     <span class="absolute my-2 mx-2 text-[#878686]">
                         <x-icon name="magnifying-glass" />
                     </span>
-                    <input style="font-family: 'Poppins', sans-serif;" type="text" class="border border-gray-300 pl-10 rounded-xl bg-[#f2f2f8] placeholder:text-[#878686] focus:ring-[#4CA751] focus:border-[#4CA751] w-40 lg:w-72 text-[12px] lg:text-[14px]" placeholder="Search" />
+                    <input style="font-family: 'Poppins', sans-serif;" type="text" class="bg-white border border-gray-300 pl-10 rounded-xl bg-[#f2f2f8] placeholder:text-[#878686] focus:ring-[#4CA751] focus:border-[#4CA751] w-40 lg:w-72 text-[12px] lg:text-[14px] dark:bg-gray-900" placeholder="Search" />
                 </div>
                 <div class="lg:mt-7">
                     <form wire:submit.prevent="save">
-                        <select wire:model="sortBy" wire:change="applyFilter" id="sort" name="sort" style="font-family: 'Poppins', sans-serif;" type="text" class="border border-gray-300 pr-10 text-[#878686] rounded-xl bg-[#f2f2f8] focus:ring-[#4CA751] focus:border-[#4CA751] text-[12px] lg:text-[14px] lg:mr-[30px] lg:w-72">
+                        <select wire:model="sortBy" wire:change="applyFilter" id="sort" name="sort" style="font-family: 'Poppins', sans-serif;" type="text" class="bg-white border border-gray-300 pr-10 text-[#878686] rounded-xl bg-[#f2f2f8] focus:ring-[#4CA751] focus:border-[#4CA751] text-[12px] lg:text-[14px] lg:mr-[30px] lg:w-72 dark:bg-gray-900">
                             <option value="#" selected disabled>Filter</option>
                             <option value="latest">Terbaru</option>
                             <option value="oldest" selected>Terlama</option>

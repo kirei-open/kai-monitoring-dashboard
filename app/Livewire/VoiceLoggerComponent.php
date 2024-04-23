@@ -14,20 +14,4 @@ class VoiceLoggerComponent extends Component
     {
         return view('livewire.voice-logger-component');
     }
-
-    public function mount()
-    {
-        $this->voice_logger = VoiceLogger::all();
-        $this->applyFilter();
-    }
-
-    public function applyFilter()
-    {
-        if ($this->sortBy == 'latest') {
-            $this->voice_logger = $this->voice_logger->sortByDesc('created_at');
-        } elseif ($this->sortBy == 'oldest') {
-            $this->voice_logger = $this->voice_logger->sortBy('created_at');
-        }
-        $this->render();
-    }
 }
