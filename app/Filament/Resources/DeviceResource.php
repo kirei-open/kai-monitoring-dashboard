@@ -59,6 +59,7 @@ class DeviceResource extends Resource
                     ->label('Last Monitored Value'),
                 TextColumn::make('api_key')
                     ->label('API Key')
+                    ->copyable()
             ])
             ->filters([
                 //
