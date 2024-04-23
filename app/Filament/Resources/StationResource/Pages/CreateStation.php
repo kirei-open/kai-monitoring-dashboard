@@ -12,7 +12,7 @@ class CreateStation extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $data['point'] = DB::raw("ST_GeomFromText('POINT({$data['longitude']} {$data['latitude']})')");
+        $data['point'] = DB::raw("ST_GeomFromText('POINT({$data['latitude']} {$data['longitude']})')");
     
         return $data;
     }
