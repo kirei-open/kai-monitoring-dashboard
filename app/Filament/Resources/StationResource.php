@@ -15,12 +15,13 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\StationResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\StationResource\RelationManagers;
+use Filament\Actions\DeleteAction;
 
 class StationResource extends Resource
 {
     protected static ?string $model = Station::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-home-modern';
 
     public static function form(Form $form): Form
     {
@@ -40,9 +41,11 @@ class StationResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')
-                ->label('Station Name'),
+                ->label('Station Name')
+                ->searchable(),
                 TextColumn::make('code')
-                    ->label('Station Code'),
+                    ->label('Station Code')
+                    ->searchable(),
                 TextColumn::make('altitude')
                     ->label('Altitude'),
                 TextColumn::make('point')
@@ -53,6 +56,7 @@ class StationResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
