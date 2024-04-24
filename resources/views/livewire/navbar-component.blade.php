@@ -30,7 +30,7 @@ new class extends Component
         </div>
         <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
             @if (auth()->user()->hasRole(['Admin']))
-                <ul class="flex flex-col p-4 md:p-0 mt-2 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-[4.5rem] rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 whitespace-nowrap md:ml-[300px] md:mt-[-60px]">
+                <ul class="flex flex-col p-4 md:p-0 mt-2 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-[4.5rem] rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 whitespace-nowrap md:ml-[400px] md:mt-[-60px]">
                         <li style="font-family: 'DM Sans', sans-serif;" class="{{ Request::is('landing') ? 'text-[#2596be] font-bold' : 'dark:text-white'}} hover:text-[#2596be] hover:font-bold lg:text-[16px] text-[13px]">
                             <a href="/landing">Home</a>
                         </li>
@@ -42,9 +42,6 @@ new class extends Component
                         </li>
                         <li style="font-family: 'DM Sans', sans-serif;" class="{{ Request::is('logger') ? 'text-[#2596be] font-bold' : 'dark:text-white'}} hover:text-[#2596be] hover:font-bold lg:text-[16px] text-[13px]">
                             <a wire:navgate href="/logger">Event Logger</a>
-                        </li>
-                        <li style="font-family: 'DM Sans', sans-serif;" class="{{ Request::is('voice') ? 'text-[#2596be] font-bold' : 'dark:text-white'}} hover:text-[#2596be] hover:font-bold lg:text-[16px] text-[13px]">
-                            <a wire:navgate href="/voice">Voice Logger</a>
                         </li>
                         <li style="font-family: 'DM Sans', sans-serif;" class="{{ Request::is('report') ? 'text-[#2596be] font-bold' : 'dark:text-white'}} hover:text-[#2596be] hover:font-bold lg:text-[16px] text-[13px]">
                             <a wire:navigate href="/report">Report</a>
@@ -84,15 +81,12 @@ new class extends Component
                 </ul>
             @endif
             @if (auth()->user()->hasRole(['Teknisi']))
-                <ul class="flex flex-col p-4 md:p-0 mt-2 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-[4.5rem] rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 whitespace-nowrap md:ml-[450px] md:mt-[-60px]">
+                <ul class="flex flex-col p-4 md:p-0 mt-2 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-[4.5rem] rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 whitespace-nowrap md:ml-[550px] md:mt-[-60px]">
                     <li style="font-family: 'DM Sans', sans-serif;" class="{{ Request::is('graphic') ? 'text-[#2596be] font-bold' : 'dark:text-white'}} hover:text-[#2596be] hover:font-bold lg:text-[16px] text-[13px]">
                         <a wire:navgate href="/graphic">Graphic</a>
                     </li>
                     <li style="font-family: 'DM Sans', sans-serif;" class="{{ Request::is('logger') ? 'text-[#2596be] font-bold' : 'dark:text-white'}} hover:text-[#2596be] hover:font-bold lg:text-[16px] text-[13px]">
                         <a wire:navgate href="/logger">Event Logger</a>
-                    </li>
-                    <li style="font-family: 'DM Sans', sans-serif;" class="{{ Request::is('voice') ? 'text-[#2596be] font-bold' : 'dark:text-white'}} hover:text-[#2596be] hover:font-bold lg:text-[16px] text-[13px]">
-                        <a wire:navgate href="/voice">Voice Logger</a>
                     </li>
                     <li style="font-family: 'DM Sans', sans-serif;" class="{{ Request::is('report') ? 'text-[#2596be] font-bold' : 'dark:text-white'}} hover:text-[#2596be] hover:font-bold lg:text-[16px] text-[13px]">
                         <a wire:navigate href="/report">Report</a>
@@ -129,7 +123,7 @@ new class extends Component
                 </ul>
             @endif
             @if (auth()->user()->hasRole(['super_admin']))
-                <ul class="flex flex-col p-4 md:p-0 mt-2 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-[4.5rem] rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 whitespace-nowrap md:ml-[300px] md:mt-[-60px]">
+                <ul class="flex flex-col p-4 md:p-0 mt-2 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-[4.5rem] rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 whitespace-nowrap md:ml-[400px] md:mt-[-60px]">
                         <li style="font-family: 'DM Sans', sans-serif;" class="{{ Request::is('landing') ? 'text-[#2596be] font-bold' : 'dark:text-white'}} hover:text-[#2596be] hover:font-bold lg:text-[16px] text-[13px]">
                             <a href="/landing">Home</a>
                         </li>
@@ -141,9 +135,6 @@ new class extends Component
                         </li>
                         <li style="font-family: 'DM Sans', sans-serif;" class="{{ Request::is('logger') ? 'text-[#2596be] font-bold' : 'dark:text-white'}} hover:text-[#2596be] hover:font-bold lg:text-[16px] text-[13px]">
                             <a wire:navgate href="/logger">Event Logger</a>
-                        </li>
-                        <li style="font-family: 'DM Sans', sans-serif;" class="{{ Request::is('voice') ? 'text-[#2596be] font-bold' : 'dark:text-white'}} hover:text-[#2596be] hover:font-bold lg:text-[16px] text-[13px]">
-                            <a wire:navgate href="/voice">Voice Logger</a>
                         </li>
                         <li style="font-family: 'DM Sans', sans-serif;" class="{{ Request::is('report') ? 'text-[#2596be] font-bold' : 'dark:text-white'}} hover:text-[#2596be] hover:font-bold lg:text-[16px] text-[13px]">
                             <a wire:navigate href="/report">Report</a>
