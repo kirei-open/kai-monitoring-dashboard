@@ -18,6 +18,7 @@
         stations.forEach(station => {
             var lat = station.latitude;
             var long = station.longitude;
+            console.log(lat,long);
             
             var stationIcon = L.icon({
                 iconUrl: '{{ URL::asset('img/railway.svg') }}',
@@ -33,7 +34,12 @@
                 <b>Altitude:</b> ${station.altitude}<br>
                 <b>Point:</b> ${station.latitude},${station.longitude}<br>
             `;
-            marker.bindPopup(popupContent);
+            marker.on('mouseover', function(e) {
+                this.bindPopup(popupContent).openPopup();
+            });
+            marker.on('mouseout', function(e) {
+                this.closePopup();
+            });
         });
     
         devices.forEach(device => {
@@ -49,11 +55,21 @@
     
             var popupContent = `
                 <b>Serial Number:</b> ${device.serial_number}<br>
+                <b>Name:</b> ${device.name}<br>
+                <b>Code:</b> ${device.code}<br>
                 <b>Last Location:</b> ${latitude},${longitude}<br>
             `;
     
             var marker = L.marker([latitude, longitude], { icon: deviceIcon, device_id: device.serial_number }).bindPopup(popupContent);
             marker.addTo(markerLayerGroup);
+
+            marker.on('mouseover', function(e) {
+                this.bindPopup(popupContent).openPopup();
+            });
+            
+            marker.on('mouseout', function(e) {
+                this.closePopup();
+            });
         });
 
         function addOrUpdateMarkerFromBroadcast(device) {
@@ -78,7 +94,12 @@
                 var newMarker = L.marker([device.longitude, device.latitude], { icon: deviceIcon, device_id: device.device_id }).bindPopup(popupContent);
                 newMarker.addTo(markerLayerGroup);
             }
-    
+                newMarker.on('mouseover', function(e) {
+                this.bindPopup(popupContent).openPopup();
+            });
+            newMarker.on('mouseout', function(e) {
+                this.closePopup();
+            });
             console.log('Marker updated or added:', device.device_id, device.latitude, device.longitude);
         }
     
