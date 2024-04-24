@@ -1,13 +1,7 @@
 <?php
 
 use Livewire\Volt\Volt;
-use App\Events\testbroadcast;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Broadcast;
-use App\Http\Controllers\DeviceController;
-use App\Http\Controllers\StationController;
-use App\Http\Controllers\LocationController;
-use App\Http\Controllers\MeasurementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,13 +14,15 @@ use App\Http\Controllers\MeasurementController;
 |
 */
 
-Volt::route('/','pages.auth.login')->name('login');
+Route::group(['middleware' => ['guest']],function(){
+    Volt::route('/','pages.auth.login')->name('login');
+});
+
 
 Route::group(['middleware' => ['role:super_admin|Admin']], function () {
     Route::view('/landing', 'landing'); 
     Route::view('/table','table');
     Route::view('/logger','event-logger');
-    Route::view('/voice','voice-logger');
     Route::view('/report','report');
     Route::view('/graphic','graphic-monitoring');
     Route::view('/audit','audit');
