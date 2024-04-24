@@ -69,13 +69,13 @@ new class extends Component
                         <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-30 dark:bg-gray-700">
                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                                 <li>
-                                    <x-dropdown-link :href="route('profile')" wire:navigate style="font-family: 'DM Sans', sans-serif;" class="px-12 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white dark:text-white text-black">
-                                        {{ __('Profile') }}
+                                    <x-dropdown-link :href="route('profile')" wire:navigate class="px-12 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white dark:text-white text-black">
+                                        <h6 style="font-family: 'DM Sans', sans-serif;">{{ __('Profile') }}</h6>
                                     </x-dropdown-link>
                                 </li>
                                 <li>
-                                    <button wire:click="logout" style="font-family: 'DM Sans', sans-serif;" class="px-12 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                        {{ __('Log Out') }}
+                                    <button wire:click="logout" class="px-12 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        <h6 style="font-family: 'DM Sans', sans-serif;" class="lg:ml-[-30px]">{{ __('Log Out') }}</h6>
                                     </button>
                                 </li>
                             </ul>
@@ -113,17 +113,16 @@ new class extends Component
                         <!-- Dropdown menu -->
                         <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-30 dark:bg-gray-700">
                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                            <li>
-                                <x-dropdown-link :href="route('profile')" wire:navigate style="font-family: 'DM Sans', sans-serif;" class="px-12 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white dark:text-white text-black">
-                                    {{ __('Profile') }}
-                                </x-dropdown-link>
-                            </li>
-                            </li>
-                            <li>
-                                <button wire:click="logout" style="font-family: 'DM Sans', sans-serif;" class="px-12 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                    {{ __('Log Out') }}
-                                </button>
-                            </li>
+                                <li>
+                                    <x-dropdown-link :href="route('profile')" wire:navigate class="px-12 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white dark:text-white text-black">
+                                        <h6 style="font-family: 'DM Sans', sans-serif;">{{ __('Profile') }}</h6>
+                                    </x-dropdown-link>
+                                </li>
+                                <li>
+                                    <button wire:click="logout" class="px-12 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        <h6 style="font-family: 'DM Sans', sans-serif;" class="lg:ml-[-30px]">{{ __('Log Out') }}</h6>
+                                    </button>
+                                </li>
                             </ul>
                         </div>
                     </li>
