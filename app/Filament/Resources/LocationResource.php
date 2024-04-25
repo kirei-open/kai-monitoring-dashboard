@@ -2,17 +2,18 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\LocationResource\Pages;
-use App\Filament\Resources\LocationResource\RelationManagers;
-use App\Models\Location;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
+use App\Models\Location;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\LocationResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\LocationResource\RelationManagers;
 
 class LocationResource extends Resource
 {
@@ -30,6 +31,11 @@ class LocationResource extends Resource
 
     public static function table(Table $table): Table
     {
+        $deviceIds = Location::query()
+        ->groupBy('device_id')
+        ->pluck('device_id', 'device_id')
+        ->toArray();
+
         return $table
             ->columns([
                 TextColumn::make('device_id')
@@ -40,7 +46,15 @@ class LocationResource extends Resource
                     ->label('Point')
             ])
             ->filters([
-                //
+                SelectFilter::make('device_id', 'Device ID')
+                    ->options($deviceIds)
+                    ->query(function (Builder $query, array $data) {
+                        $value = $data['value'] ?? null;
+                        if ($value !== null) {
+                            $query->where('device_id', $value);
+                        }
+                    })
+                    ->default('')
             ])
             ->actions([
                 //
