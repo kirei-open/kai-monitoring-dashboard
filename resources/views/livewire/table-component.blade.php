@@ -31,7 +31,7 @@
                         TIME STAMP
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        ID RALOK
+                        SERIAL NUMBER
                     </th>
                     <th scope="col" class="px-6 py-3">
                         LATITUDE
@@ -40,30 +40,12 @@
                         LONGITUDE
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        SECTION
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        TEGANGAN INPUT
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        TEGANGAN OUTPUT
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        ARUS
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        KLASIFIKASI
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        POWER TRANSMITE
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        SWR
+                        ACTION
                     </th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($monitoring as $monitor )
+                @foreach ($locations as $location )
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
                         <td class="w-4 p-4">
                             <div class="flex items-center">
@@ -71,37 +53,19 @@
                             </div>
                         </td>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{$monitor->created_at}}
+                            {{$location->created_at}}
                         </th>
                         <td class="px-6 py-4">
-                            {{$monitor->id_ralok}}
+                            {{$location->device_id}}
                         </td>
                         <td class="px-6 py-4">
-                            {{$monitor->latitude}}
+                            {{$location->latitude}}
                         </td>
                         <td class="px-6 py-4">
-                            {{$monitor->longitude}}
+                            {{$location->longitude}}
                         </td>
                         <td class="px-6 py-4">
-                            {{$monitor->section}}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{$monitor->input_voltage}}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{$monitor->output_voltage}}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{$monitor->voltage}}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{$monitor->clasification}}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{$monitor->power_transmite}}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{$monitor->SWR}}
+                            <a href="/table/detail/{{$location->device_id}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Detail</a>
                         </td>
                     </tr>
                 @endforeach

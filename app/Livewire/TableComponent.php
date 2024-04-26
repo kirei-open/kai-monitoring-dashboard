@@ -2,36 +2,26 @@
 
 namespace App\Livewire;
 
-use App\Models\TableMonitoring;
+use App\Models\Device;
 use Livewire\Component;
+use App\Models\Location;
+use App\Models\Measurement;
 use Livewire\WithPagination;
 
 class TableComponent extends Component
 {
     use WithPagination;
     
-    public $monitoring;
-    public $sortBy = 'latest';
-
-    public function render()
-    {
-        return view('livewire.table-component');
-    }
+    public $locations;
 
     public function mount()
     {
-        $this->monitoring = TableMonitoring::all();
-        $this->applyFilter();
+        $this->locations = Location::selectRaw('*, ST_X(point::geometry) AS longitude, ST_Y(point::geometry) AS latitude')->get();
     }
 
-    public function applyFilter()
+    public function render()
     {
-        if ($this->sortBy == 'latest') {
-            $this->monitoring = $this->monitoring->sortByDesc('created_at');
-        } elseif ($this->sortBy == 'oldest') {
-            $this->monitoring = $this->monitoring->sortBy('created_at');
-        }
-        $this->render();
+        $locations = Location::selectRaw('*, ST_X(point::geometry) AS longitude, ST_Y(point::geometry) AS latitude')->get();
+        return view('livewire.table-component', ['locations' => $locations]);
     }
-    
 }

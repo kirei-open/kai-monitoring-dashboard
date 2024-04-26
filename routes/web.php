@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\TableComponent;
+use App\Livewire\TableDetailComponent;
 use Livewire\Volt\Volt;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +24,7 @@ Route::group(['middleware' => ['guest']],function(){
 Route::group(['middleware' => ['role:super_admin|Admin']], function () {
     Route::view('/landing', 'landing'); 
     Route::view('/table','table');
+    Route::get('/table/detail/{id}',TableDetailComponent::class)->name('table.detail');
     Route::view('/logger','event-logger');
     Route::view('/report','report');
     Route::view('/graphic','graphic-monitoring');
