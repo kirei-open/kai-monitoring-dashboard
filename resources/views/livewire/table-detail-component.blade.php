@@ -29,10 +29,19 @@
                       <div class="flex flex-col">
                         <p class="text-xl font-bold text-gray-500 dark:text-white">Last Monitored Value</p>
                         @if ($device->last_monitored_value != null)
-                            <span class="text-gray-700 dark:text-white mt-4 lg:text-[16px]">Datetime : {{ \Carbon\Carbon::createFromFormat('m-d-Y H:i:s', $device->last_monitored_value['datetime'])->format('d F Y') }} </span>
+                        <span class="text-gray-700 dark:text-white mt-4 lg:text-[16px]">
+                            Datetime: 
+                            @php
+                                $timestamp = strtotime($device->last_monitored_value['datetime']);
+                                $formattedDatetime = date('d F Y H:i:s', $timestamp);
+                            @endphp
+                            {{ $formattedDatetime }}
+                        </span>
                             <span class="text-gray-700 dark:text-white mt-4 lg:text-[16px]">Key : {{ $device->last_monitored_value['key'] }} </span>
                             <span class="text-gray-700 dark:text-white mt-4 lg:text-[16px]">Value : {{ $device->last_monitored_value['value'] }} </span>
                             <span class="text-gray-700 dark:text-white mt-4 lg:text-[16px]">Unit : {{ $device->last_monitored_value['unit'] }} </span>
+                        @else
+                        <span class="text-gray-700 dark:text-white mt-4 lg:text-[16px]"></span>
                         @endif
                       </div>
                       <div class="flex flex-col">
