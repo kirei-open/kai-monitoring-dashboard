@@ -23,7 +23,7 @@
     </head>
     <body class="bg-white antialiased dark:bg-gray-900" id="main">
         <livewire:navbar-component />                          
-        <livewire:graphic-monitoring-component />
+        <livewire:graphic-component/>
         <livewire:footer-component/>
     </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
