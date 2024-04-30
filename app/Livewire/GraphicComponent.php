@@ -7,12 +7,9 @@ use Livewire\Component;
 
 class GraphicComponent extends Component
 {
-    public $tempData;
-
     public function render()
     {
-        $tempData = Measurement::where('key','temp')->get();
-        dd($tempData);
-        return view('livewire.graphic-component');
+        $device_id = Measurement::groupBy('device_id')->pluck('device_id', 'device_id');
+        return view('livewire.graphic-component',['device_id' => $device_id]);
     }
 }
