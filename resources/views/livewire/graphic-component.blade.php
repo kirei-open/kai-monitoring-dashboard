@@ -50,6 +50,19 @@
     // Event listener for select device dropdown
     document.getElementById('device_id').addEventListener('change', function(event) {
       selectedDevice = event.target.value;
+
+      // Clear chart data for all chart containers
+      for (const chartContainerId in chartData) {
+        chartData[chartContainerId] = [];
+      }
+
+      // Clear existing charts
+      for (const chartContainerId in chartContainers) {
+        if (chartContainers[chartContainerId]) {
+          chartContainers[chartContainerId].destroy();
+          delete chartContainers[chartContainerId];
+        }
+      }
     });
 
     document.addEventListener("DOMContentLoaded", function (event) {
@@ -72,16 +85,24 @@
 
         switch (data.key) {
           case 'Tegangan':
-            chartContainerId = 'chart2';
+            chartContainerId = 'chart';
+            lineColor = '#5546ff';
+            markerColor = '#5546ff';
             break;
           case 'Arus':
-            chartContainerId = 'chart3';
+            chartContainerId = 'chart2';
+            lineColor = '#ef732f';
+            markerColor = '#ef732f';
             break;
           case 'Daya Pancar':
-            chartContainerId = 'chart4';
+            chartContainerId = 'chart3';
+            lineColor = '#2f2b70';
+            markerColor = '#2f2b70';
             break;
           case 'SWR':
-            chartContainerId = 'chart5';
+            chartContainerId = 'chart4';
+            lineColor = '#eecd23';
+            markerColor = '#eecd23';
             break;
           default:
             return;
@@ -102,7 +123,7 @@
 
         chartData[chartContainerId].push({ x: datetime, y: value });
 
-        const maxDataPoints = 3; // Maximum number of data points
+        const maxDataPoints = 10; // Maximum number of data points
 
         if (chartData[chartContainerId].length > maxDataPoints) {
             chartData[chartContainerId].shift();
@@ -134,7 +155,9 @@
                     enabled: false
                 },
                 stroke: {
-                    curve: 'straight'
+                    curve: 'straight',
+                    colors: [lineColor],
+                    width: 3,
                 },
                 grid: {
                     row: {
@@ -143,23 +166,40 @@
                     },
                 },
                 xaxis: {
-                    type: 'datetime'
+                  show: true,
+                  type: 'datetime',
+                  labels: {
+                    show: true,
+                    style: {
+                      fontFamily: "Inter, sans-serif",
+                      cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+                    }
+                  },
+                },
+                yaxis: {
+                  show: true,
+                  type: 'value',
+                  labels: {
+                    show: true,
+                    style: {
+                      fontFamily: "Inter, sans-serif",
+                      cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+                    },
+                  }
                 },
                 markers: {
                     size: 8,
                     colors: ['#fff'],
-                    strokeColors: ['#5546ff'],
+                    strokeColors: [markerColor],
                 },
                 toolbar: {
                     show: false,
                 }
             });
-
             chart.render();
             chartContainers[chartContainerId] = chart;
         }
     }
-
     const chartContainers = {};
   </script>
 </div>

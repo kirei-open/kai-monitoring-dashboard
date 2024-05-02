@@ -1,6 +1,5 @@
 <?php
 
-use App\Livewire\TableComponent;
 use App\Livewire\TableDetailComponent;
 use Livewire\Volt\Volt;
 use Illuminate\Support\Facades\Route;
