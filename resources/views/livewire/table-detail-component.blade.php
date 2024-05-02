@@ -1,5 +1,5 @@
 <div>
-    <div class="mb-4 border-b border-gray-200 dark:border-gray-700 lg:ml-[205px] lg:mt-[100px]">
+    <div class="mb-4 lg:ml-[205px] lg:mt-[100px]">
         <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
             <li class="me-2" role="presentation">
                 <button class="inline-block p-4 border-b-2 rounded-t-lg" id="device-tab" data-tabs-target="#device" type="button" role="tab" aria-controls="device" aria-selected="false">Device</button>
@@ -13,7 +13,7 @@
         </ul>
     </div>
     <div id="default-tab-content">
-        <div class="hidden p-4 rounded-lg lg:w-[1300px] lg:ml-[350px] bg-gray-50 dark:bg-gray-800 drop-shadow-xl" id="device" role="tabpanel" aria-labelledby="device-tab">
+        <div class="hidden p-4 rounded-lg lg:w-[1460px] lg:ml-[200px] bg-gray-50 dark:bg-gray-800 drop-shadow-xl" id="device" role="tabpanel" aria-labelledby="device-tab">
             <div class="container lg:w-[1200px]">
                 <div class="grid grid-cols-3">
                     <div class="flex flex-col">
@@ -51,7 +51,7 @@
                 </div>
             </div>
         </div>
-        <div class="hidden p-0 rounded-lg lg:w-[1300px] lg:ml-[350px] bg-gray-50 dark:bg-gray-800 drop-shadow-xl" id="location" role="tabpanel" aria-labelledby="location-tab">
+        <div class="hidden p-0 rounded-lg lg:w-[1460px] lg:ml-[200px] bg-gray-50 dark:bg-gray-800 drop-shadow-xl" id="location" role="tabpanel" aria-labelledby="location-tab">
             <table class="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 lg:w-full">
                 <thead class="text-xs text-neutral-100 uppercase bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -89,7 +89,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="hidden p-0 rounded-lg lg:w-[1300px] lg:ml-[350px] bg-gray-50 dark:bg-gray-800 drop-shadow-xl" id="measurement" role="tabpanel" aria-labelledby="measurement-tab">
+        <div class="hidden p-0 rounded-lg lg:w-[1460px] lg:ml-[200px] bg-gray-50 dark:bg-gray-800 drop-shadow-xl" id="measurement" role="tabpanel" aria-labelledby="measurement-tab">
             <table class="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 lg:w-full">
                 <thead class="text-xs text-neutral-100 uppercase bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
                     <tr>
