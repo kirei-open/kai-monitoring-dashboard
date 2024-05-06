@@ -30,7 +30,6 @@
                         <ul class="ml-[155px]">
                             <li class="text-gray-700 dark:text-white mt-4 lg:text-[16px] ml-[-50px]">Datetime: {{ $device->last_monitored_value['datetime'] }}</li>
                             <li class="text-gray-700 dark:text-white mt-4 lg:text-[16px] ml-[-50px]">Key : {{ $device->last_monitored_value['key'] }} </li>
-                            <li class="text-gray-700 dark:text-white mt-4 lg:text-[16px] ml-[-50px]">Key : {{ $device->last_monitored_value['key'] }} </li>
                             <li class="text-gray-700 dark:text-white mt-4 lg:text-[16px] ml-[-50px]">Value : {{ $device->last_monitored_value['value'] }}</li>
                             <li class="text-gray-700 dark:text-white mt-4 lg:text-[16px] ml-[-50px]">Unit : {{ $device->last_monitored_value['unit'] }}</li>
                         </ul>

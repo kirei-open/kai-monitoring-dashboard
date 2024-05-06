@@ -1,8 +1,9 @@
 <?php
 
-use App\Livewire\TableDetailComponent;
 use Livewire\Volt\Volt;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\TableDetailComponent;
+use App\Http\Controllers\MeasurementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,7 @@ Route::group(['middleware' => ['role:super_admin|Admin']], function () {
     Route::view('/report','report');
     Route::view('/graphic','graphic-monitoring');
     Route::view('/audit','audit');
+    Route::get('/get-detail-measurement/{device_id}', [MeasurementController::class, 'getDetailMeasurement']);
 });
 
 Route::view('/graphic','graphic-monitoring')->middleware('role:Teknisi|Admin|super_admin');

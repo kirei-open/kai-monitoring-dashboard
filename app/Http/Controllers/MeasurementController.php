@@ -51,8 +51,9 @@ class MeasurementController extends Controller
         return response()->json(['message' => 'measurement data', 'data' => $data]);
     }
 
-    public function getDetailMeasurement($id){
-        $data = Measurement::where('device_id', $id)->first();
+    public function getDetailMeasurement($device_id){
+        $data = Measurement::where('device_id', $device_id)->get();
+        if(!$data) return response()->json(['message' => 'measurement detail data', 'device_id' => $device_id]);
         return response()->json(['message' => 'measurement detail data', 'data' => $data]);
     }
 
@@ -119,4 +120,5 @@ class MeasurementController extends Controller
 
         return response()->json(['message' => 'measurement data succesfully broadcasted']);
     }
+
 }

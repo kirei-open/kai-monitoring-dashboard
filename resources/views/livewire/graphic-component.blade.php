@@ -1,12 +1,20 @@
 <div>
   <h1 class="text-[#a4a2b4] lg:mt-[120px] lg:ml-[60px] lg:text-[20px]">GRAPHIC MONITORING</h1>
   <form wire:submit.prevent="save" class="max-w-sm mx-auto lg:ml-[60px]">
-    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Device</label>
-    <select name="device_id" id="device_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    <label for="select devices" class="block mt-4 text-sm font-medium text-gray-900 dark:text-white">Select Device</label>
+    <select name="device_id" id="device_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-4">
       <option value="" selected disabled>Select Device</option>
       @foreach ($device_id as $id)
         <option value="{{ $id }}">{{ $id }}</option>
       @endforeach
+    </select>
+  </form>
+  <form wire:submit.prevent="save" class="max-w-sm mx-auto lg:ml-[1450px] lg:mt-[-95px]">
+    <label for="countries" class="block mt-4 text-sm font-medium text-gray-900 dark:text-white">Select Mode</label>
+    <select name="" id="dataMode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-4">
+      <option value="" selected disabled>Select Mode</option>
+      <option value="live">Live</option>
+      <option value="database">Database</option>
     </select>
   </form>
   <div class="grid grid-cols-2 gap-1 mb-7">
@@ -44,78 +52,215 @@
   </div>
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script>
-    const chartData = {};
+    const measurements = @json($measurement);
+    let chartData = {};
     let selectedDevice = '';
 
-    // Event listener for select device dropdown
-    document.getElementById('device_id').addEventListener('change', function(event) {
-      selectedDevice = event.target.value;
-
-      // Clear chart data for all chart containers
-      for (const chartContainerId in chartData) {
-        chartData[chartContainerId] = [];
-      }
-
-      // Clear existing charts
-      for (const chartContainerId in chartContainers) {
-        if (chartContainers[chartContainerId]) {
-          chartContainers[chartContainerId].destroy();
-          delete chartContainers[chartContainerId];
+    function createChartConfig(key, lineColor, markerColor) {
+        let chartContainerId;
+        switch (key) {
+            case 'Tegangan':
+                chartContainerId = 'chart';
+                lineColor = '#5546ff';
+                markerColor = '#5546ff';
+                break;
+            case 'Arus':
+                chartContainerId = 'chart2';
+                lineColor = '#ef732f';
+                markerColor = '#ef732f';
+                break;
+            case 'Daya Pancar':
+                chartContainerId = 'chart3';
+                lineColor = '#2f2b70';
+                markerColor = '#2f2b70';
+                break;
+            case 'SWR':
+                chartContainerId = 'chart4';
+                lineColor = '#eecd23';
+                markerColor = '#eecd23';
+                break;
+            default:
+                return null; 
         }
-      }
+
+        return {
+            series: [],
+            chart: {
+                height: 350,
+                type: 'area',
+                zoom: {
+                    enabled: false
+                },
+                toolbar: {
+                    show: false,
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'straight',
+                colors: [lineColor],
+                width: 3,
+            },
+            grid: {
+                row: {
+                    colors: ['#f3f3f3', 'transparent'],
+                    opacity: 0.5
+                },
+            },
+            xaxis: {
+                show: true,
+                type: 'datetime',
+                labels: {
+                    show: true,
+                    style: {
+                        fontFamily: "Inter, sans-serif",
+                        cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+                    }
+                },
+            },
+            yaxis: {
+                show: true,
+                type: 'value',
+                labels: {
+                    show: true,
+                    style: {
+                        fontFamily: "Inter, sans-serif",
+                        cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+                    },
+                }
+            },
+            markers: {
+                size: 8,
+                colors: ['#fff'],
+                strokeColors: [markerColor],
+            },
+            toolbar: {
+                show: false,
+            },
+            chartContainerId: chartContainerId
+        };
+    }
+
+    document.getElementById('device_id').addEventListener('change', function(event) {
+        selectedDevice = event.target.value;
+
+        // Membersihkan data chart untuk semua kontainer chart
+        for (const chartContainerId in chartData) {
+            chartData[chartContainerId] = [];
+        }
+
+        // Membersihkan chart yang sudah ada
+        for (const chartContainerId in chartContainers) {
+            if (chartContainers[chartContainerId]) {
+                chartContainers[chartContainerId].destroy();
+                delete chartContainers[chartContainerId];
+            }
+        }
+
+        // Jika mode database dipilih, render chart dengan data dari database
+        if (document.getElementById('dataMode').value === 'database') {
+            renderChartWithDataFromDatabase();
+        }
     });
 
-    document.addEventListener("DOMContentLoaded", function (event) {
-        window.onload = function () {
-            window.Echo.channel('measurement-channel')
-                .listen('DeviceMeasurementBroadcast', (data) => {
-                    var data = data.data;
-                    updateChart(data);
-                });
-        };
+    document.addEventListener("DOMContentLoaded", function(event) {
+        // Memuat data awal berdasarkan mode yang dipilih
+        if (document.getElementById('dataMode').value === 'database') {
+            renderChartWithDataFromDatabase();
+        } else {
+            enableLiveMode();
+        }
+
+        // Mendengarkan perubahan dalam dropdown mode data
+        document.getElementById('dataMode').addEventListener('change', function(event) {
+            const mode = event.target.value;
+
+            // Membersihkan chart yang sudah ada dan data chart
+            for (const chartContainerId in chartContainers) {
+                if (chartContainers[chartContainerId]) {
+                    chartContainers[chartContainerId].destroy();
+                    delete chartContainers[chartContainerId];
+                }
+            }
+            chartData = {}; // Membersihkan data chart
+
+            if (mode === 'live') {
+                // Mengaktifkan mode live broadcast
+                enableLiveMode();
+            } else if (mode === 'database') {
+                // Mengaktifkan mode database
+                renderChartWithDataFromDatabase();
+            }
+        });
     });
+
+    function enableLiveMode() {
+        window.Echo.channel('measurement-channel')
+            .listen('DeviceMeasurementBroadcast', (data) => {
+                var data = data.data;
+                updateChart(data);
+            });
+    }
+
+    function renderChartWithDataFromDatabase() {
+        fetch('/get-detail-measurement/' + selectedDevice)
+            .then(response => response.json())
+            .then(data => {
+                const dataArray = data.data;
+                let count = 0;
+                dataArray.forEach(measurement => {
+                    console.log(count);
+                    count += 1;
+                    let lineColor, markerColor;
+                    const key = measurement.key;
+                    const config = createChartConfig(key, lineColor, markerColor);
+                    if (!config) return;
+                    const { chartContainerId } = config;
+                    const datetime = new Date(measurement.datetime).getTime();
+                    const value = parseFloat(measurement.value);
+
+                    // Menambahkan data ke objek chartData
+                    if (!chartData[chartContainerId]) {
+                        chartData[chartContainerId] = [];
+                    }
+                    chartData[chartContainerId].push({ x: datetime, y: value });
+
+                    const chartContainer = document.getElementById(chartContainerId);
+                    if (!chartContainer) return;
+
+                    let chart = chartContainers[chartContainerId];
+                    if (chart) {
+                        chart.updateSeries([{ data: chartData[chartContainerId] }]);
+                    } else {
+                        chart = new ApexCharts(chartContainer, config);
+                        chart.render();
+                        chartContainers[chartContainerId] = chart;
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
 
     function updateChart(data) {
-        // Check if a device is selected
+        // Memeriksa apakah sebuah perangkat telah dipilih
         if (!selectedDevice) return;
-        
+
         if (data.device_id !== selectedDevice) return;
-        
-        let chartContainerId;
 
-        switch (data.key) {
-          case 'Tegangan':
-            chartContainerId = 'chart';
-            lineColor = '#5546ff';
-            markerColor = '#5546ff';
-            break;
-          case 'Arus':
-            chartContainerId = 'chart2';
-            lineColor = '#ef732f';
-            markerColor = '#ef732f';
-            break;
-          case 'Daya Pancar':
-            chartContainerId = 'chart3';
-            lineColor = '#2f2b70';
-            markerColor = '#2f2b70';
-            break;
-          case 'SWR':
-            chartContainerId = 'chart4';
-            lineColor = '#eecd23';
-            markerColor = '#eecd23';
-            break;
-          default:
-            return;
-        }
+        const key = data.key;
+        const config = createChartConfig(key);
+        if (!config) return; // Keluar dari fungsi jika kunci tidak dikenali
+        const { chartContainerId, lineColor, markerColor } = config;
 
-        console.log(data.device_id);
-                  
         const chartContainer = document.getElementById(chartContainerId);
         if (!chartContainer) return;
 
         const datetime = new Date(data.datetime).getTime();
         const value = parseFloat(data.value);
-        const id = parseFloat(data.device_id);
 
         if (!chartData[chartContainerId]) {
             chartData[chartContainerId] = [];
@@ -123,7 +268,7 @@
 
         chartData[chartContainerId].push({ x: datetime, y: value });
 
-        const maxDataPoints = 10; // Maximum number of data points
+        const maxDataPoints = 10; // Jumlah maksimum titik data
 
         if (chartData[chartContainerId].length > maxDataPoints) {
             chartData[chartContainerId].shift();
@@ -136,70 +281,12 @@
                 data: chartData[chartContainerId]
             }]);
         } else {
-            chart = new ApexCharts(chartContainer, {
-                series: [{
-                    name: data.key,
-                    data: chartData[chartContainerId]
-                }],
-                chart: {
-                    height: 350,
-                    type: 'line',
-                    zoom: {
-                        enabled: false
-                    },
-                    toolbar: {
-                        show: false,
-                    }
-                },
-                dataLabels: {
-                    enabled: false
-                },
-                stroke: {
-                    curve: 'straight',
-                    colors: [lineColor],
-                    width: 3,
-                },
-                grid: {
-                    row: {
-                        colors: ['#f3f3f3', 'transparent'],
-                        opacity: 0.5
-                    },
-                },
-                xaxis: {
-                  show: true,
-                  type: 'datetime',
-                  labels: {
-                    show: true,
-                    style: {
-                      fontFamily: "Inter, sans-serif",
-                      cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
-                    }
-                  },
-                },
-                yaxis: {
-                  show: true,
-                  type: 'value',
-                  labels: {
-                    show: true,
-                    style: {
-                      fontFamily: "Inter, sans-serif",
-                      cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
-                    },
-                  }
-                },
-                markers: {
-                    size: 8,
-                    colors: ['#fff'],
-                    strokeColors: [markerColor],
-                },
-                toolbar: {
-                    show: false,
-                }
-            });
+            chart = new ApexCharts(chartContainer, config);
             chart.render();
             chartContainers[chartContainerId] = chart;
         }
     }
     const chartContainers = {};
-  </script>
+</script>
+
 </div>
