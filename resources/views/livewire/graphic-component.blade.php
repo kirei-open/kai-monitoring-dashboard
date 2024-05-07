@@ -18,7 +18,15 @@
     </select>
   </form>
   
-  {{-- <input type="datetime-local" name="" id=""> --}}
+  <div class="flex items-center lg:mt-[-40px] lg:ml-[950px]">
+    <div class="relative">
+        <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="datetime-local" name="" id="">
+    </div>
+    <span class="mx-4 text-gray-500">To</span>
+    <div class="relative">
+        <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="datetime-local" name="" id="">
+    </div>
+  </div>
 
   <div class="grid grid-cols-2 gap-1 mb-7">
     <div class="bg-white rounded-lg shadow dark:bg-gray-800 lg:ml-[60px] lg:w-[870px] lg:mt-7" style="position: relative;">
@@ -276,6 +284,10 @@
             chart = new ApexCharts(chartContainer, config);
             chart.render();
             chartContainers[chartContainerId] = chart;
+            chart.updateSeries([{
+                name: data.key,
+                data: chartData[chartContainerId]
+            }]);
         }
     }
     const chartContainers = {};
