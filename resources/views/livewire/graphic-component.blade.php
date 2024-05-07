@@ -26,6 +26,7 @@
     <div class="relative">
         <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 lg:w-[160px]" type="datetime-local" name="" id="endDate" disabled>
     </div>
+    <button type="reset" id="resetButton" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 lg:ml-6 lg:mt-2">Reset</button>
   </div>
 
   <div class="grid grid-cols-2 gap-1 mb-7">
@@ -68,23 +69,47 @@
         const deviceSelect = document.getElementById('device_id');
         const startDateInput = document.getElementById('startDate');
         const endDateInput = document.getElementById('endDate');
+        const resetButton = document.getElementById('resetButton');
 
+        // Nonaktifkan semua input secara default
         deviceSelect.disabled = true;
         startDateInput.disabled = true;
         endDateInput.disabled = true;
 
+        // Tambahkan event listener untuk pemilihan mode
         modeSelect.addEventListener('change', function(event) {
             const mode = event.target.value;
 
             if (mode === 'live' || mode === 'database') {
                 deviceSelect.disabled = false;
-                startDateInput.disabled = false;
-                endDateInput.disabled = false;
             } else {
                 deviceSelect.disabled = true;
                 startDateInput.disabled = true;
                 endDateInput.disabled = true;
             }
+        });
+
+        // Tambahkan event listener untuk pemilihan perangkat
+        deviceSelect.addEventListener('change', function(event) {
+            const deviceSelected = event.target.value;
+
+            if (deviceSelected) {
+                startDateInput.disabled = false;
+                endDateInput.disabled = false;
+            } else {
+                startDateInput.disabled = true;
+                endDateInput.disabled = true;
+            }
+        });
+
+        // Tambahkan event listener untuk tombol reset
+        resetButton.addEventListener('click', function() {
+            // Reset nilai input tanggal ke default atau kosong
+            startDateInput.value = '';
+            endDateInput.value = '';
+            // Nonaktifkan input tanggal kembali
+            startDateInput.disabled = true;
+            endDateInput.disabled = true;
         });
     });
 
@@ -210,6 +235,15 @@
         if (startDate && endDate) {
             renderChartWithDataFromDatabase();
         }
+    });
+
+    document.getElementById('resetButton').addEventListener('click', function(event) {
+        // Reset datetime
+        document.getElementById('startDate').value = '';
+        document.getElementById('endDate').value = '';
+
+        // Memanggil kembali fungsi untuk merender chart dengan data dari database
+        renderChartWithDataFromDatabase();
     });
 
     document.addEventListener("DOMContentLoaded", function(event) {

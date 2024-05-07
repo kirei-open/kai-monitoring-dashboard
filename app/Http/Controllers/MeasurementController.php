@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Device;
 use App\Models\Measurement;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\Events\DeviceMeasurementBroadcast;
 
 class MeasurementController extends Controller
