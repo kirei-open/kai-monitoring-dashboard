@@ -2,21 +2,24 @@
   <h1 class="text-[#a4a2b4] lg:mt-[120px] lg:ml-[60px] lg:text-[20px]">GRAPHIC MONITORING</h1>
   <form wire:submit.prevent="save" class="max-w-sm mx-auto lg:ml-[60px]">
     <label for="select devices" class="block mt-4 text-sm font-medium text-gray-900 dark:text-white">Select Device</label>
-    <select name="device_id" id="device_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-4">
-      <option value="" selected disabled>Select Device</option>
-      @foreach ($device_id as $id)
+    <select name="device_id" id="device_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-4" disabled>
+        <option value="" selected disabled>Select Device</option>
+        @foreach ($device_id as $id)
         <option value="{{ $id }}">{{ $id }}</option>
-      @endforeach
+        @endforeach
     </select>
   </form>
   <form wire:submit.prevent="save" class="max-w-sm mx-auto lg:ml-[1450px] lg:mt-[-95px]">
-    <label for="countries" class="block mt-4 text-sm font-medium text-gray-900 dark:text-white">Select Mode</label>
+    <label for="device id" class="block mt-4 text-sm font-medium text-gray-900 dark:text-white">Select Mode</label>
     <select name="" id="dataMode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-4">
-      <option value="" selected disabled>Select Mode</option>
-      <option value="live">Live</option>
-      <option value="database">Database</option>
+        <option value="" selected disabled>Select Mode</option>
+        <option value="live">Live</option>
+        <option value="database">Database</option>
     </select>
   </form>
+  
+  {{-- <input type="datetime-local" name="" id=""> --}}
+
   <div class="grid grid-cols-2 gap-1 mb-7">
     <div class="bg-white rounded-lg shadow dark:bg-gray-800 lg:ml-[60px] lg:w-[870px] lg:mt-7" style="position: relative;">
       <div class="flex justify-between p-4 md:p-6 pb-0 md:pb-0">
@@ -52,7 +55,12 @@
   </div>
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script>
-    const measurements = @json($measurement);
+    const modeSelect = document.getElementById('dataMode');
+    const deviceSelect = document.getElementById('device_id');
+    modeSelect.addEventListener('change', function() {
+        deviceSelect.disabled = false;
+    });
+
     let chartData = {};
     let selectedDevice = '';
 
@@ -122,7 +130,6 @@
             },
             yaxis: {
                 show: true,
-                type: 'value',
                 labels: {
                     show: true,
                     style: {
@@ -166,12 +173,6 @@
     });
 
     document.addEventListener("DOMContentLoaded", function(event) {
-        // Memuat data awal berdasarkan mode yang dipilih
-        if (document.getElementById('dataMode').value === 'database') {
-            renderChartWithDataFromDatabase();
-        } else {
-            enableLiveMode();
-        }
 
         // Mendengarkan perubahan dalam dropdown mode data
         document.getElementById('dataMode').addEventListener('change', function(event) {
@@ -190,7 +191,8 @@
                 // Mengaktifkan mode live broadcast
                 enableLiveMode();
             } else if (mode === 'database') {
-                // Mengaktifkan mode database
+                window.Echo.channel('measurement-channel')
+                    .stopListening('DeviceMeasurementBroadcast');
                 renderChartWithDataFromDatabase();
             }
         });
@@ -209,10 +211,7 @@
             .then(response => response.json())
             .then(data => {
                 const dataArray = data.data;
-                let count = 0;
                 dataArray.forEach(measurement => {
-                    console.log(count);
-                    count += 1;
                     let lineColor, markerColor;
                     const key = measurement.key;
                     const config = createChartConfig(key, lineColor, markerColor);

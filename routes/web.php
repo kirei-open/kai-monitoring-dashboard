@@ -27,12 +27,16 @@ Route::group(['middleware' => ['role:super_admin|Admin']], function () {
     Route::get('/table/detail/{id}',TableDetailComponent::class)->name('table.detail');
     Route::view('/logger','event-logger');
     Route::view('/report','report');
-    Route::view('/graphic','graphic-monitoring');
     Route::view('/audit','audit');
+    Route::view('/graphic','graphic-monitoring');
     Route::get('/get-detail-measurement/{device_id}', [MeasurementController::class, 'getDetailMeasurement']);
 });
 
-Route::view('/graphic','graphic-monitoring')->middleware('role:Teknisi|Admin|super_admin');
+Route::group(['middleware' => ['role:super_admin|Admin|Teknisi']],function(){
+    Route::view('/graphic','graphic-monitoring');
+    Route::get('/get-detail-measurement/{device_id}', [MeasurementController::class, 'getDetailMeasurement']);
+});
+
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
