@@ -18,13 +18,13 @@
     </select>
   </form>
   
-  <div class="flex items-center lg:mt-[-40px] lg:ml-[950px]">
+  <div class="flex items-center lg:mt-10 lg:ml-[60px]">
     <div class="relative">
-        <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="datetime-local" name="" id="">
+        <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 lg:w-[160px]" type="datetime-local" name="" id="startDate" disabled>
     </div>
     <span class="mx-4 text-gray-500">To</span>
     <div class="relative">
-        <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="datetime-local" name="" id="">
+        <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 lg:w-[160px]" type="datetime-local" name="" id="endDate" disabled>
     </div>
   </div>
 
@@ -63,10 +63,29 @@
   </div>
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script>
-    const modeSelect = document.getElementById('dataMode');
-    const deviceSelect = document.getElementById('device_id');
-    modeSelect.addEventListener('change', function() {
-        deviceSelect.disabled = false;
+    document.addEventListener("DOMContentLoaded", function() {
+        const modeSelect = document.getElementById('dataMode');
+        const deviceSelect = document.getElementById('device_id');
+        const startDateInput = document.getElementById('startDate');
+        const endDateInput = document.getElementById('endDate');
+
+        deviceSelect.disabled = true;
+        startDateInput.disabled = true;
+        endDateInput.disabled = true;
+
+        modeSelect.addEventListener('change', function(event) {
+            const mode = event.target.value;
+
+            if (mode === 'live' || mode === 'database') {
+                deviceSelect.disabled = false;
+                startDateInput.disabled = false;
+                endDateInput.disabled = false;
+            } else {
+                deviceSelect.disabled = true;
+                startDateInput.disabled = true;
+                endDateInput.disabled = true;
+            }
+        });
     });
 
     let chartData = {};
@@ -177,6 +196,22 @@
         }
     });
 
+    document.getElementById('startDate').addEventListener('change', function(event) {
+        const startDate = event.target.value;
+        const endDate = document.getElementById('endDate').value;
+        if (startDate && endDate) {
+            renderChartWithDataFromDatabase();
+        }
+    });
+
+    document.getElementById('endDate').addEventListener('change', function(event) {
+        const startDate = document.getElementById('startDate').value;
+        const endDate = event.target.value;
+        if (startDate && endDate) {
+            renderChartWithDataFromDatabase();
+        }
+    });
+
     document.addEventListener("DOMContentLoaded", function(event) {
 
         document.getElementById('dataMode').addEventListener('change', function(event) {
@@ -209,10 +244,29 @@
     }
 
     function renderChartWithDataFromDatabase() {
-        fetch('/get-detail-measurement/' + selectedDevice)
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+        const shouldFetchData = selectedDevice && ((startDate && endDate) || (!startDate && !endDate));
+
+        if (!shouldFetchData) {
+            return;
+        }
+
+        fetch(`/get-detail-measurement/${selectedDevice}?startDate=${startDate}&endDate=${endDate}`)
             .then(response => response.json())
             .then(data => {
                 const dataArray = data.data;
+                for (const chartContainerId in chartData) {
+                    chartData[chartContainerId] = [];
+                }
+
+                for (const chartContainerId in chartContainers) {
+                    if (chartContainers[chartContainerId]) {
+                        chartContainers[chartContainerId].destroy();
+                        delete chartContainers[chartContainerId];
+                    }
+                }
+
                 dataArray.forEach(measurement => {
                     let lineColor, markerColor;
                     const key = measurement.key;

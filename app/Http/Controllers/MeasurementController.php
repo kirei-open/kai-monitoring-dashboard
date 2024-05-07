@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Device;
 use App\Models\Measurement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Events\DeviceMeasurementBroadcast;
 
 class MeasurementController extends Controller
@@ -51,8 +52,15 @@ class MeasurementController extends Controller
         return response()->json(['message' => 'measurement data', 'data' => $data]);
     }
 
-    public function getDetailMeasurement($device_id){
-        $data = Measurement::where('device_id', $device_id)->get();
+    public function getDetailMeasurement($device_id, Request $request){
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
+        $data = Measurement::query();
+        $data->where('device_id', $device_id);
+        if($startDate && $endDate){
+            $data->where('datetime', '>=', $startDate)->where('datetime', '<=', $endDate);
+        }
+        $data = $data->get();
         if(!$data) return response()->json(['message' => 'measurement detail data', 'device_id' => $device_id]);
         return response()->json(['message' => 'measurement detail data', 'data' => $data]);
     }
