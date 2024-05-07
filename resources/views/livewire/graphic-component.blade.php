@@ -153,12 +153,10 @@
     document.getElementById('device_id').addEventListener('change', function(event) {
         selectedDevice = event.target.value;
 
-        // Membersihkan data chart untuk semua kontainer chart
         for (const chartContainerId in chartData) {
             chartData[chartContainerId] = [];
         }
 
-        // Membersihkan chart yang sudah ada
         for (const chartContainerId in chartContainers) {
             if (chartContainers[chartContainerId]) {
                 chartContainers[chartContainerId].destroy();
@@ -166,7 +164,6 @@
             }
         }
 
-        // Jika mode database dipilih, render chart dengan data dari database
         if (document.getElementById('dataMode').value === 'database') {
             renderChartWithDataFromDatabase();
         }
@@ -174,21 +171,18 @@
 
     document.addEventListener("DOMContentLoaded", function(event) {
 
-        // Mendengarkan perubahan dalam dropdown mode data
         document.getElementById('dataMode').addEventListener('change', function(event) {
             const mode = event.target.value;
 
-            // Membersihkan chart yang sudah ada dan data chart
             for (const chartContainerId in chartContainers) {
                 if (chartContainers[chartContainerId]) {
                     chartContainers[chartContainerId].destroy();
                     delete chartContainers[chartContainerId];
                 }
             }
-            chartData = {}; // Membersihkan data chart
+            chartData = {};
 
             if (mode === 'live') {
-                // Mengaktifkan mode live broadcast
                 enableLiveMode();
             } else if (mode === 'database') {
                 window.Echo.channel('measurement-channel')
@@ -220,7 +214,6 @@
                     const datetime = new Date(measurement.datetime).getTime();
                     const value = parseFloat(measurement.value);
 
-                    // Menambahkan data ke objek chartData
                     if (!chartData[chartContainerId]) {
                         chartData[chartContainerId] = [];
                     }
@@ -245,14 +238,14 @@
     }
 
     function updateChart(data) {
-        // Memeriksa apakah sebuah perangkat telah dipilih
+
         if (!selectedDevice) return;
 
         if (data.device_id !== selectedDevice) return;
 
         const key = data.key;
         const config = createChartConfig(key);
-        if (!config) return; // Keluar dari fungsi jika kunci tidak dikenali
+        if (!config) return;
         const { chartContainerId, lineColor, markerColor } = config;
 
         const chartContainer = document.getElementById(chartContainerId);
@@ -267,7 +260,7 @@
 
         chartData[chartContainerId].push({ x: datetime, y: value });
 
-        const maxDataPoints = 10; // Jumlah maksimum titik data
+        const maxDataPoints = 10;
 
         if (chartData[chartContainerId].length > maxDataPoints) {
             chartData[chartContainerId].shift();
