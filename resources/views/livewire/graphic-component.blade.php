@@ -1,7 +1,7 @@
 <div>
     <h1 class="text-[#a4a2b4] lg:mt-[120px] lg:ml-[60px] lg:text-[20px]">GRAPHIC MONITORING</h1>
     <form wire:submit.prevent="save" class="max-w-sm mx-auto lg:ml-[60px]">
-    <label for="select devices" class="block mt-4 text-sm font-medium text-gray-900 dark:text-white">Select Device</label>
+        <label for="select devices" class="block mt-4 text-sm font-medium text-gray-900 dark:text-white">Select Device</label>
         <select name="device_id" id="device_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-4" disabled>
             <option value="" selected disabled>Select Device</option>
             @foreach ($device_id as $id)
@@ -10,7 +10,7 @@
         </select>
     </form>
     <form wire:submit.prevent="save" class="max-w-sm mx-auto lg:ml-[1450px] lg:mt-[-95px]">
-    <label for="device id" class="block mt-4 text-sm font-medium text-gray-900 dark:text-white">Select Mode</label>
+        <label for="device id" class="block mt-4 text-sm font-medium text-gray-900 dark:text-white">Select Mode</label>
         <select name="" id="dataMode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-4">
             <option value="" selected disabled>Select Mode</option>
             <option value="live">Live</option>
@@ -18,7 +18,7 @@
         </select>
     </form>
     <label for="select devices" class="block mt-6 lg:ml-16 text-sm font-medium text-gray-900 dark:text-white">Filter</label>
-    <div class="flex items-center lg:mt-4 lg:ml-[60px]">
+    <div class="flex items-center lg:mt-4 lg:ml-[60px]" id="datetimeFields" style="display: none;">
         <div class="relative">
             <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 lg:w-[160px]" type="datetime-local" name="" id="startDate" disabled>
         </div>
@@ -26,7 +26,7 @@
         <div class="relative">
             <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 lg:w-[160px]" type="datetime-local" name="" id="endDate" disabled>
         </div>
-        <button type="reset" id="resetButton" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 lg:ml-6 lg:mt-2">Reset</button>
+        <button type="reset" id="resetButton" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 lg:ml-6 lg:mt-2" disabled>Reset</button>
     </div>
 
     <div class="grid grid-cols-2 gap-1 mb-7">
@@ -70,14 +70,24 @@
             const startDateInput = document.getElementById('startDate');
             const endDateInput = document.getElementById('endDate');
             const resetButton = document.getElementById('resetButton');
+            const datetimeFields = document.getElementById('datetimeFields');
 
-            // Nonaktifkan semua input secara default
-            deviceSelect.disabled = true;
+            function toggleDatetimeFields(show) {
+                if (show) {
+                    datetimeFields.style.display = 'flex';
+                } else {
+                    datetimeFields.style.display = 'none';
+                }
+            }
+
+            function toggleResetButton(enable) {
+                resetButton.disabled = !enable;
+            }
+
             startDateInput.disabled = true;
             endDateInput.disabled = true;
-            resetButton.disabled = true; // Menonaktifkan tombol reset secara default
+            toggleDatetimeFields(false);
 
-            // Tambahkan event listener untuk pemilihan mode
             modeSelect.addEventListener('change', function(event) {
                 const mode = event.target.value;
 
@@ -87,40 +97,40 @@
                     deviceSelect.disabled = true;
                     startDateInput.disabled = true;
                     endDateInput.disabled = true;
-                    resetButton.disabled = true; // Menonaktifkan tombol reset jika mode tidak valid
+                    toggleDatetimeFields(false);
+                    toggleResetButton(false);
                 }
             });
 
-            // Tambahkan event listener untuk pemilihan perangkat
             deviceSelect.addEventListener('change', function(event) {
                 const deviceSelected = event.target.value;
 
                 if (deviceSelected) {
                     startDateInput.disabled = false;
                     endDateInput.disabled = false;
-                    resetButton.disabled = true; // Menonaktifkan tombol reset sampai tanggal diisi
+                    toggleDatetimeFields(true);
                 } else {
                     startDateInput.disabled = true;
                     endDateInput.disabled = true;
-                    resetButton.disabled = true; // Menonaktifkan tombol reset jika perangkat tidak valid
+                    toggleDatetimeFields(false);
+                    toggleResetButton(false);
                 }
             });
 
-            // Tambahkan event listener untuk input tanggal pertama
             startDateInput.addEventListener('change', function() {
-                resetButton.disabled = false; // Mengaktifkan tombol reset ketika tanggal pertama diisi
+                if (startDateInput.value) {
+                    toggleResetButton(true);
+                } else {
+                    toggleResetButton(false);
+                }
             });
 
-            // Tambahkan event listener untuk tombol reset
             resetButton.addEventListener('click', function() {
-                // Reset nilai input tanggal ke default atau kosong
                 startDateInput.value = '';
                 endDateInput.value = '';
-                // Nonaktifkan input tanggal kembali
                 startDateInput.disabled = true;
                 endDateInput.disabled = true;
-                // Menonaktifkan tombol reset kembali
-                resetButton.disabled = true;
+                toggleResetButton(false);
             });
         });
 
