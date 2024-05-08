@@ -2,26 +2,34 @@
 
 namespace App\Livewire;
 
-use App\Models\Device;
 use Livewire\Component;
 use App\Models\Location;
-use App\Models\Measurement;
 use Livewire\WithPagination;
 
 class TableComponent extends Component
 {
     use WithPagination;
-    
-    public $locations;
 
-    public function mount()
+    public $search = '';
+    public $sortBy = 'oldest';
+
+    public function applyFilter($sortBy)
     {
-        $this->locations = Location::selectRaw('*, ST_X(point::geometry) AS longitude, ST_Y(point::geometry) AS latitude')->get();
+        $this->sortBy = $sortBy;
     }
 
     public function render()
     {
-        $locations = Location::selectRaw('*, ST_X(point::geometry) AS longitude, ST_Y(point::geometry) AS latitude')->get();
-        return view('livewire.table-component', ['locations' => $locations]);
+        $locations = Location::selectRaw('*, ST_X(point::geometry) AS longitude, ST_Y(point::geometry) AS latitude');
+
+        $locations->where('device_id', 'ILIKE', '%' . $this->search . '%');
+
+        if ($this->sortBy === 'latest') {
+            $locations->latest();
+        } else {
+            $locations->oldest();
+        }
+
+        return view('livewire.table-component', ['locations' => $locations->paginate(10)]);
     }
 }

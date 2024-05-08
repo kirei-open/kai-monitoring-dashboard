@@ -7,18 +7,17 @@
                     <span class="absolute my-2 mx-2 text-[#878686]">
                         <x-icon name="magnifying-glass" />
                     </span>
-                    <input style="font-family: 'Poppins', sans-serif;" type="text" class="bg-white border border-gray-300 pl-10 rounded-xl bg-[#f2f2f8] placeholder:text-[#878686] focus:ring-[#4CA751] focus:border-[#4CA751] w-40 lg:w-72 text-[12px] lg:text-[14px] dark:bg-gray-900" placeholder="Search" />
+                    <input wire:model.live="search" style="font-family: 'Poppins', sans-serif;" type="text" class="bg-white border border-gray-300 pl-10 rounded-xl bg-[#f2f2f8] placeholder:text-[#878686] focus:ring-[#4CA751] focus:border-[#4CA751] w-40 lg:w-72 text-[12px] lg:text-[14px] dark:bg-gray-900" placeholder="Search" />
                 </div>
                 <div class="lg:mt-7">
                     <form wire:submit.prevent="save">
-                        <select wire:model="sortBy" wire:change="applyFilter" id="sort" name="sort" style="font-family: 'Poppins', sans-serif;" type="text" class="bg-white border border-gray-300 pr-10 text-[#878686] rounded-xl bg-[#f2f2f8] focus:ring-[#4CA751] focus:border-[#4CA751] text-[12px] lg:text-[14px] lg:mr-[30px] lg:w-72 dark:bg-gray-900">
+                        <select wire:model="sortBy" wire:change="applyFilter($event.target.value)" id="sort" name="sort" style="font-family: 'Poppins', sans-serif;" type="text" class="bg-white border border-gray-300 pr-10 text-[#878686] rounded-xl bg-[#f2f2f8] focus:ring-[#4CA751] focus:border-[#4CA751] text-[12px] lg:text-[14px] lg:mr-[30px] lg:w-72 dark:bg-gray-900">
                             <option value="#" selected disabled>Filter</option>
                             <option value="latest">Terbaru</option>
                             <option value="oldest" selected>Terlama</option>
                         </select>            
                     </form>
                 </div>
-                
             </div>
         </div>
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 lg:mt-0 mt-4">
@@ -71,6 +70,7 @@
                 @endforeach
             </tbody>
         </table>
+        {{ $locations->links() }}
         {{-- {{ $monitoring->links() }} --}}
     </div>
 </div>
