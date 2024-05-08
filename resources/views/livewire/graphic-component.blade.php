@@ -17,16 +17,16 @@
             <option value="database">Database</option>
         </select>
     </form>
-    <label for="select devices" class="block mt-6 lg:ml-16 text-sm font-medium text-gray-900 dark:text-white">Filter</label>
-    <div class="flex items-center lg:mt-4 lg:ml-[60px]" id="datetimeFields" style="display: none;">
-        <div class="relative">
+    <div class="flex items-center lg:ml-[60px]" id="datetimeFields" style="display: none;">
+        <label for="select devices" class="block lg:mt-[-20px] lg:ml-2 text-sm font-medium text-gray-900 dark:text-white">Filter</label>
+        <div class="relative lg:mt-[60px] lg:ml-[-35px]">
             <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 lg:w-[160px]" type="datetime-local" name="" id="startDate" disabled>
         </div>
-        <span class="mx-4 text-gray-500">To</span>
-        <div class="relative">
+        <span class="mx-4 text-gray-500 lg:mt-[60px]">To</span>
+        <div class="relative lg:mt-[60px]">
             <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 lg:w-[160px]" type="datetime-local" name="" id="endDate" disabled>
         </div>
-        <button type="reset" id="resetButton" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 lg:ml-6 lg:mt-2" disabled>Reset</button>
+        <button type="reset" id="resetButton" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 lg:ml-6 lg:mt-[70px]" disabled>Reset</button>
     </div>
 
     <div class="grid grid-cols-2 gap-1 mb-7">
@@ -87,12 +87,23 @@
             startDateInput.disabled = true;
             endDateInput.disabled = true;
             toggleDatetimeFields(false);
+            toggleResetButton(false);
 
             modeSelect.addEventListener('change', function(event) {
                 const mode = event.target.value;
 
-                if (mode === 'live' || mode === 'database') {
+                if (mode === 'live') {
                     deviceSelect.disabled = false;
+                    startDateInput.disabled = true;
+                    endDateInput.disabled = true;
+                    toggleDatetimeFields(false);
+                    toggleResetButton(false);
+                } else if (mode === 'database') {
+                    deviceSelect.disabled = false;
+                    toggleDatetimeFields(false); 
+                    startDateInput.disabled = true;
+                    endDateInput.disabled = true; 
+                    toggleResetButton(false);
                 } else {
                     deviceSelect.disabled = true;
                     startDateInput.disabled = true;
@@ -105,10 +116,11 @@
             deviceSelect.addEventListener('change', function(event) {
                 const deviceSelected = event.target.value;
 
-                if (deviceSelected) {
+                if (deviceSelected && modeSelect.value === 'database') {
                     startDateInput.disabled = false;
                     endDateInput.disabled = false;
                     toggleDatetimeFields(true);
+                    toggleResetButton(startDateInput.value !== '');
                 } else {
                     startDateInput.disabled = true;
                     endDateInput.disabled = true;
