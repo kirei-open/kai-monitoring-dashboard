@@ -4,14 +4,16 @@
         <div class="bg-white lg:w-full lg:h-24 dark:bg-gray-900">
             <div class="flex justify-between">
                 <div class="lg:mt-7 lg:ml-5">
-                    <span class="absolute my-2 mx-2 text-[#878686]">
-                        <x-icon name="magnifying-glass" />
-                    </span>
-                    <input wire:model.live="search" style="font-family: 'Poppins', sans-serif;" type="text" class="bg-white border border-gray-300 pl-10 rounded-xl bg-[#f2f2f8] placeholder:text-[#878686] focus:ring-[#4CA751] focus:border-[#4CA751] w-40 lg:w-72 text-[12px] lg:text-[14px] dark:bg-gray-900" placeholder="Search" />
+                    <div class="relative w-full">
+                        <span class="absolute my-2 mx-2 text-[#878686]">
+                            <x-icon name="magnifying-glass" />
+                        </span>
+                        <input style="font-family: 'Poppins', sans-serif;" wire:model.live="search" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full lg:w-72 ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search"/>
+                    </div>
                 </div>
                 <div class="lg:mt-7">
                     <form wire:submit.prevent="save">
-                        <select wire:model="sortBy" wire:change="applyFilter($event.target.value)" id="sort" name="sort" style="font-family: 'Poppins', sans-serif;" type="text" class="bg-white border border-gray-300 pr-10 text-[#878686] rounded-xl bg-[#f2f2f8] focus:ring-[#4CA751] focus:border-[#4CA751] text-[12px] lg:text-[14px] lg:mr-[30px] lg:w-72 dark:bg-gray-900">
+                        <select wire:model="sortBy" wire:change="applyFilter($event.target.value)" id="sort" name="sort" style="font-family: 'Poppins', sans-serif;" type="text" class="bg-white border border-gray-300 pr-10 text-[#878686] rounded-xl bg-[#f2f2f8] focus:ring-blue-500 focus:border-blue-500 text-[12px] lg:text-[14px] lg:mr-[30px] lg:w-72 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="#" selected disabled>Filter</option>
                             <option value="latest">Terbaru</option>
                             <option value="oldest" selected>Terlama</option>
@@ -71,6 +73,5 @@
             </tbody>
         </table>
         {{ $locations->links() }}
-        {{-- {{ $monitoring->links() }} --}}
     </div>
 </div>
