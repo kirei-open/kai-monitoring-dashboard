@@ -21,8 +21,8 @@
             var long = station.longitude;
             
             var stationIcon = L.icon({
-                iconUrl: '{{ URL::asset('img/railway.svg') }}',
-                iconSize: [50, 95],
+                iconUrl: '{{ URL::asset('img/station.png') }}',
+                iconSize: [60, 60],
                 iconAnchor: [22, 94],
                 popupAnchor: [-3, -76]
             });
@@ -47,8 +47,8 @@
             var longitude = parseFloat(device.longitude);
     
             var deviceIcon = L.icon({
-                iconUrl: '{{ URL::asset('img/train.svg') }}',
-                iconSize: [50, 95],
+                iconUrl: '{{ URL::asset('img/train.png') }}',
+                iconSize: [60, 60],
                 iconAnchor: [22, 94],
                 popupAnchor: [-3, -76]
             });
@@ -67,7 +67,7 @@
 
         function addOrUpdateMarkerFromBroadcast(device) {
             var deviceIcon = L.icon({
-                iconUrl: '{{ URL::asset('img/train.svg') }}',
+                iconUrl: '{{ URL::asset('img/train.png') }}',
                 iconSize: [50, 95],
                 iconAnchor: [22, 94],
                 popupAnchor: [-3, -76]
