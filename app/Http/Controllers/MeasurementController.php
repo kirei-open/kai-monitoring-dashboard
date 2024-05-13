@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Device;
 use App\Models\Measurement;
 use Illuminate\Http\Request;
@@ -62,6 +63,17 @@ class MeasurementController extends Controller
         $data = $data->get();
         if(!$data) return response()->json(['message' => 'measurement detail data', 'device_id' => $device_id]);
         return response()->json(['message' => 'measurement detail data', 'data' => $data]);
+    }
+
+    public function getLastThirtyMinutesData($device_id){
+        $currentTime = Carbon::now();
+        $thirtyMinutesAgo = $currentTime->copy()->subMinutes(30);
+    
+        $data = Measurement::where('device_id', $device_id)
+                            ->whereBetween('created_at', [$thirtyMinutesAgo, $currentTime])
+                            ->get();
+
+        return response()->json(['message' => 'Last thirty minutes of measurement data', 'data' => $data]);
     }
 
     public function updateMeasurement(Request $request, $id){

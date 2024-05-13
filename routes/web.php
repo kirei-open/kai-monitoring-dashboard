@@ -30,11 +30,13 @@ Route::group(['middleware' => ['role:super_admin|Admin']], function () {
     Route::view('/audit','audit');
     Route::view('/graphic','graphic-monitoring');
     Route::get('/get-detail-measurement/{device_id}', [MeasurementController::class, 'getDetailMeasurement']);
+    Route::get('/get-last-thirty-minutes/{device_id}', [MeasurementController::class, 'getLastThirtyMinutesData']);
 });
 
 Route::group(['middleware' => ['role:super_admin|Admin|Teknisi']],function(){
     Route::view('/graphic','graphic-monitoring');
     Route::get('/get-detail-measurement/{device_id}', [MeasurementController::class, 'getDetailMeasurement']);
+    Route::get('/get-last-thirty-minutes/{device_id}', [MeasurementController::class, 'getLastThirtyMinutesData']);
 });
 
 

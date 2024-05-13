@@ -14,7 +14,7 @@
         <select name="" id="dataMode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-4">
             <option value="" selected disabled>Select Mode</option>
             <option value="live">Live</option>
-            <option value="database">Database</option>
+            <option value="database">Historical</option>
         </select>
     </form>
     <div class="flex items-center lg:ml-[60px]" id="datetimeFields" style="display: none;">
@@ -64,6 +64,11 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
+        let chartData = {};
+        let selectedDevice = '';
+        let mode = '';
+        let liveArrayData = '';
+
         document.addEventListener("DOMContentLoaded", function() {
             const modeSelect = document.getElementById('dataMode');
             const deviceSelect = document.getElementById('device_id');
@@ -90,7 +95,7 @@
             toggleResetButton(false);
 
             modeSelect.addEventListener('change', function(event) {
-                const mode = event.target.value;
+                mode = event.target.value;
 
                 if (mode === 'live') {
                     deviceSelect.disabled = false;
@@ -145,9 +150,6 @@
                 toggleResetButton(false);
             });
         });
-
-        let chartData = {};
-        let selectedDevice = '';
 
         function createChartConfig(key, lineColor, markerColor) {
             let chartContainerId;
@@ -237,6 +239,54 @@
 
         document.getElementById('device_id').addEventListener('change', function(event) {
             selectedDevice = event.target.value;
+            if (mode === 'live'){
+                fetch(`/get-last-thirty-minutes/${selectedDevice}`)
+                .then(response => response.json())
+                .then(data => {
+                    liveArrayData = data.data;
+                    for (const chartContainerId in chartData) {
+                        chartData[chartContainerId] = [];
+                    }
+
+                    for (const chartContainerId in chartContainers) {
+                        if (chartContainers[chartContainerId]) {
+                            chartContainers[chartContainerId].destroy();
+                            delete chartContainers[chartContainerId];
+                        }
+                    }
+
+                    liveArrayData.forEach(measurement => {
+                        let lineColor, markerColor;
+                        const key = measurement.key;
+                        const config = createChartConfig(key, lineColor, markerColor);
+                        if (!config) return;
+                        const { chartContainerId } = config;
+                        const datetime = new Date(measurement.datetime).getTime();
+                        const value = parseFloat(measurement.value);
+
+                        if (!chartData[chartContainerId]) {
+                            chartData[chartContainerId] = [];
+                        }
+                        chartData[chartContainerId].push({ x: datetime, y: value });
+
+                        const chartContainer = document.getElementById(chartContainerId);
+                        if (!chartContainer) return;
+
+                        let chart = chartContainers[chartContainerId];
+                        if (chart) {
+                            chart.updateSeries([{ data: chartData[chartContainerId] }]);
+                        } else {
+                            chart = new ApexCharts(chartContainer, config);
+                            chart.render();
+                            chartContainers[chartContainerId] = chart;
+                            chart.updateSeries([{ data: chartData[chartContainerId] }]);
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
 
             for (const chartContainerId in chartData) {
                 chartData[chartContainerId] = [];
@@ -271,18 +321,16 @@
         });
 
         document.getElementById('resetButton').addEventListener('click', function(event) {
-            // Reset datetime
             document.getElementById('startDate').value = '';
             document.getElementById('endDate').value = '';
 
-            // Memanggil kembali fungsi untuk merender chart dengan data dari database
             renderChartWithDataFromDatabase();
         });
 
         document.addEventListener("DOMContentLoaded", function(event) {
 
             document.getElementById('dataMode').addEventListener('change', function(event) {
-                const mode = event.target.value;
+                mode = event.target.value;
 
                 for (const chartContainerId in chartContainers) {
                     if (chartContainers[chartContainerId]) {
@@ -306,6 +354,7 @@
             window.Echo.channel('measurement-channel')
                 .listen('DeviceMeasurementBroadcast', (data) => {
                     var data = data.data;
+                    console.log(selectedDevice);
                     updateChart(data);
                 });
         }
@@ -358,6 +407,7 @@
                             chart = new ApexCharts(chartContainer, config);
                             chart.render();
                             chartContainers[chartContainerId] = chart;
+                            chart.updateSeries([{ data: chartData[chartContainerId] }]);
                         }
                     });
                 })
@@ -367,9 +417,8 @@
         }
 
         function updateChart(data) {
-
             if (!selectedDevice) return;
-
+            
             if (data.device_id !== selectedDevice) return;
 
             const key = data.key;
@@ -389,10 +438,11 @@
 
             chartData[chartContainerId].push({ x: datetime, y: value });
 
-            const maxDataPoints = 10;
+            const maxDataPoints = 15;
+            const excessDataPoints = chartData[chartContainerId].length - (maxDataPoints - 1);
 
-            if (chartData[chartContainerId].length > maxDataPoints) {
-                chartData[chartContainerId].shift();
+            if (excessDataPoints > 0) {
+                chartData[chartContainerId].splice(0, excessDataPoints);
             }
 
             let chart = chartContainers[chartContainerId];
