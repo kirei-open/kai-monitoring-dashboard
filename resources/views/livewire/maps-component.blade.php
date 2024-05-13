@@ -22,7 +22,7 @@
             
             var stationIcon = L.icon({
                 iconUrl: '{{ URL::asset('img/station.png') }}',
-                iconSize: [60, 60],
+                iconSize: [40, 40],
                 iconAnchor: [22, 94],
                 popupAnchor: [-3, -76]
             });
@@ -48,7 +48,7 @@
     
             var deviceIcon = L.icon({
                 iconUrl: '{{ URL::asset('img/train.png') }}',
-                iconSize: [60, 60],
+                iconSize: [40, 40],
                 iconAnchor: [22, 94],
                 popupAnchor: [-3, -76]
             });
@@ -68,7 +68,7 @@
         function addOrUpdateMarkerFromBroadcast(device) {
             var deviceIcon = L.icon({
                 iconUrl: '{{ URL::asset('img/train.png') }}',
-                iconSize: [50, 95],
+                iconSize: [40, 40],
                 iconAnchor: [22, 94],
                 popupAnchor: [-3, -76]
             });
