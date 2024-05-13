@@ -30,6 +30,6 @@ class TableComponent extends Component
             $locations->oldest();
         }
 
-        return view('livewire.table-component', ['locations' => $locations->paginate(10)]);
+        return view('livewire.table-component', ['locations' => $locations->paginate(7)]);
     }
 }
