@@ -1,4 +1,4 @@
-<div>
+<div class="lg:mt-[50px]">
     <h1 class="text-[#a4a2b4] lg:mt-[120px] lg:ml-[60px] lg:text-[20px]">TABEL MONITORING</h1>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg lg:mt-[20px] mt-[100px] lg:ml-[60px] lg:w-11/12">
         <div class="bg-white lg:w-full lg:h-24 dark:bg-gray-900">
@@ -22,6 +22,7 @@
                 </div>
             </div>
         </div>
+        
         @php
             $lastNumber = ($locations->currentPage() - 1) * $locations->perPage();
         @endphp
@@ -82,6 +83,5 @@
                 {{ $locations->links() }}
             </nav>
         </div>
-
     </div>
 </div>

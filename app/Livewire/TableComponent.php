@@ -4,11 +4,9 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Location;
-use Livewire\WithPagination;
 
 class TableComponent extends Component
 {
-    use WithPagination;
 
     public $search = '';
     public $sortBy = 'oldest';
