@@ -12,17 +12,17 @@
                         <p class="text-gray-500 dark:text-white mt-4 lg:text-[16px] text-left">{{ $device->serial_number }}</p>
                     </div>
                     <div class="flex flex-col">
-                        <h1 class="text-xl font-bold text-gray-700 dark:text-white text-left">Code</h1>
+                        <h1 class="text-xl font-bold text-gray-700 dark:text-white text-left lg:mt-3">Code</h1>
                         <p class="text-gray-500 dark:text-white mt-4 lg:text-[16px] text-left">{{ $device->code }}</p>
                     </div>
                     <div class="flex flex-col">
-                        <p class="text-xl font-bold text-gray-500 dark:text-white text-left lg:ml-[-155px]">Last Monitored Value</p>
+                        <p class="text-xl font-bold text-gray-500 dark:text-white text-left lg:ml-[-120px] lg:mt-3">Last Monitored Value</p>
                         @if ($device->last_monitored_value != null)
                         <ul class="text-left">
-                            <li class="text-gray-700 dark:text-white mt-4 lg:text-[16px] lg:ml-[-155px]">Datetime <span class="lg:ml-4">:</span> <span class="lg:ml-3">{{ $device->last_monitored_value['datetime'] }}</span></li>
-                            <li class="text-gray-700 dark:text-white mt-4 lg:text-[16px] lg:ml-[-155px]">Key <span class="lg:ml-14">:</span> <span class="lg:ml-3">{{ $device->last_monitored_value['key'] }}</span> </li>
-                            <li class="text-gray-700 dark:text-white mt-4 lg:text-[16px] lg:ml-[-155px]">Value <span class="lg:ml-11">:</span> <span class="lg:ml-3">{{ $device->last_monitored_value['value'] }}</span> </li>
-                            <li class="text-gray-700 dark:text-white mt-4 lg:text-[16px] lg:ml-[-155px]">Unit <span class="lg:ml-[54px]">:</span> <span class="lg:ml-3">{{ $device->last_monitored_value['unit'] }}</span> </li>
+                            <li class="text-gray-700 dark:text-white mt-4 lg:text-[16px] lg:ml-[-120px]">Datetime <span class="lg:ml-4">:</span> <span class="lg:ml-3">{{ $device->last_monitored_value['datetime'] }}</span></li>
+                            <li class="text-gray-700 dark:text-white mt-4 lg:text-[16px] lg:ml-[-120px]">Key <span class="lg:ml-14">:</span> <span class="lg:ml-3">{{ $device->last_monitored_value['key'] }}</span> </li>
+                            <li class="text-gray-700 dark:text-white mt-4 lg:text-[16px] lg:ml-[-120px]">Value <span class="lg:ml-11">:</span> <span class="lg:ml-3">{{ $device->last_monitored_value['value'] }}</span> </li>
+                            <li class="text-gray-700 dark:text-white mt-4 lg:text-[16px] lg:ml-[-120px]">Unit <span class="lg:ml-[54px]">:</span> <span class="lg:ml-3">{{ $device->last_monitored_value['unit'] }}</span> </li>
                         </ul>
                         @else
                         <span class="text-gray-700 dark:text-white mt-4 lg:text-[16px]"></span>
