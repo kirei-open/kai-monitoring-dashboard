@@ -1,112 +1,87 @@
-<div>
+<div class="lg:mt-[50px]">
     <h1 class="text-[#a4a2b4] lg:mt-[120px] lg:ml-[60px] lg:text-[20px]">TABEL MONITORING</h1>
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg lg:mt-[20px] lg:ml-[60px] lg:w-11/12">
-        <div class="bg-white lg:w-full lg:h-24">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg lg:mt-[20px] mt-[100px] lg:ml-[60px] lg:w-11/12">
+        <div class="bg-white lg:w-full lg:h-24 dark:bg-gray-900">
             <div class="flex justify-between">
                 <div class="lg:mt-7 lg:ml-5">
-                    <span class="absolute my-2 mx-2 text-[#878686]">
-                        <x-icon name="magnifying-glass" />
-                    </span>
-                    <input style="font-family: 'Poppins', sans-serif;" type="text" class="border border-gray-300 pl-10 rounded-xl bg-[#f2f2f8] placeholder:text-[#878686] focus:ring-[#4CA751] focus:border-[#4CA751] w-40 lg:w-72 text-[12px] lg:text-[14px]" placeholder="Search" />
+                    <div class="relative w-full">
+                        <span class="absolute my-2 mx-2 text-[#878686]">
+                            <x-icon name="magnifying-glass" />
+                        </span>
+                        <input style="font-family: 'Poppins', sans-serif;" wire:model.live="search" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full lg:w-72 ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search"/>
+                    </div>
                 </div>
                 <div class="lg:mt-7">
                     <form wire:submit.prevent="save">
-                        <select wire:model="sortBy" wire:change="applyFilter" id="sort" name="sort" style="font-family: 'Poppins', sans-serif;" type="text" class="border border-gray-300 pr-10 text-[#878686] rounded-xl bg-[#f2f2f8] focus:ring-[#4CA751] focus:border-[#4CA751] text-[12px] lg:text-[14px] lg:mr-[30px] lg:w-72">
+                        <select wire:model="sortBy" wire:change="applyFilter($event.target.value)" id="sort" name="sort" style="font-family: 'Poppins', sans-serif;" type="text" class="bg-white border border-gray-300 pr-10 text-[#878686] rounded-xl bg-[#f2f2f8] focus:ring-blue-500 focus:border-blue-500 text-[12px] lg:text-[14px] lg:mr-[30px] lg:w-72 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="#" selected disabled>Filter</option>
                             <option value="latest">Terbaru</option>
                             <option value="oldest" selected>Terlama</option>
                         </select>            
                     </form>
                 </div>
-                
             </div>
         </div>
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-neutral-100 uppercase bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    <th scope="col" class="p-4">
-                        NO
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        TIME STAMP
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        ID RALOK
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        LATITUDE
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        LONGITUDE
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        SECTION
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        TEGANGAN INPUT
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        TEGANGAN OUTPUT
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        ARUS
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        KLASIFIKASI
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        POWER TRANSMITE
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        SWR
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($monitoring as $monitor )
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
+        
+        @php
+            $lastNumber = ($locations->currentPage() - 1) * $locations->perPage();
+        @endphp
+    
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="p-4">
+                            NO
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            TIMESTAMP
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            SERIAL NUMBER
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            LATITUDE
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            LONGITUDE
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            ACTION
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($locations as $location )
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td class="w-4 p-4">
-                            <div class="flex items-center">
-                                {{$loop->iteration}}
-                            </div>
+                            {{ ++$lastNumber }}
                         </td>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{$monitor->created_at}}
+                            {{ $location->created_at }}
                         </th>
                         <td class="px-6 py-4">
-                            {{$monitor->id_ralok}}
+                            {{ $location->device_id }}
                         </td>
                         <td class="px-6 py-4">
-                            {{$monitor->latitude}}
+                            {{ $location->latitude }}
                         </td>
                         <td class="px-6 py-4">
-                            {{$monitor->longitude}}
+                            {{ $location->longitude }}
                         </td>
                         <td class="px-6 py-4">
-                            {{$monitor->section}}
+                            <a href="/table/detail/{{ $location->device_id }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Detail</a>
                         </td>
-                        <td class="px-6 py-4">
-                            {{$monitor->input_voltage}}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{$monitor->output_voltage}}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{$monitor->voltage}}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{$monitor->clasification}}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{$monitor->power_transmite}}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{$monitor->SWR}}
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-        {{-- {{ $monitoring->links() }} --}}
+                    </tr>    
+                    @endforeach
+                </tbody>
+            </table>
+            <nav class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4" aria-label="Table navigation">
+                <span class="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">
+                    Showing <span class="font-semibold text-gray-900 dark:text-white">{{ $locations->firstItem() }}</span> - <span class="font-semibold text-gray-900 dark:text-white">{{ $locations->lastItem() }}</span> of <span class="font-semibold text-gray-900 dark:text-white">{{ $locations->total() }}</span>
+                </span>
+                {{ $locations->links() }}
+            </nav>
+        </div>
     </div>
 </div>

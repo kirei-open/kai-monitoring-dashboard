@@ -1,7 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+use Illuminate\Support\Facades\Route;
+use App\Livewire\TableDetailComponent;
+use App\Http\Controllers\MeasurementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,19 +16,29 @@ use Livewire\Volt\Volt;
 |
 */
 
-Volt::route('/','pages.auth.login')->name('login');
+Route::group(['middleware' => ['guest']],function(){
+    Volt::route('/','pages.auth.login')->name('login');
+});
+
 
 Route::group(['middleware' => ['role:super_admin|Admin']], function () {
     Route::view('/landing', 'landing'); 
     Route::view('/table','table');
+    Route::get('/table/detail/{id}',TableDetailComponent::class)->name('table.detail');
     Route::view('/logger','event-logger');
-    Route::view('/voice','voice-logger');
     Route::view('/report','report');
-    Route::view('/graphic','graphic-monitoring');
     Route::view('/audit','audit');
+    Route::view('/graphic','graphic-monitoring');
+    Route::get('/get-detail-measurement/{device_id}', [MeasurementController::class, 'getDetailMeasurement']);
+    Route::get('/get-last-thirty-minutes/{device_id}', [MeasurementController::class, 'getLastThirtyMinutesData']);
 });
 
-Route::view('/graphic','graphic-monitoring')->middleware('role:Teknisi|Admin|super_admin');
+Route::group(['middleware' => ['role:super_admin|Admin|Teknisi']],function(){
+    Route::view('/graphic','graphic-monitoring');
+    Route::get('/get-detail-measurement/{device_id}', [MeasurementController::class, 'getDetailMeasurement']);
+    Route::get('/get-last-thirty-minutes/{device_id}', [MeasurementController::class, 'getLastThirtyMinutesData']);
+});
+
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
