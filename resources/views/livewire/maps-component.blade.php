@@ -12,90 +12,86 @@
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
-    
+
         var mapLayerGroup = L.layerGroup().addTo(map);
         var markerLayerGroup = L.layerGroup().addTo(map);
-    
+
         stations.forEach(station => {
             var lat = station.latitude;
             var long = station.longitude;
-            
+
             var stationIcon = L.icon({
                 iconUrl: '{{ URL::asset('img/station.png') }}',
                 iconSize: [40, 40],
-                iconAnchor: [22, 94],
+                iconAnchor: [20, 40],
                 popupAnchor: [-3, -76]
             });
-    
+
             var marker = L.marker([lat, long], {icon: stationIcon}).addTo(mapLayerGroup);
             var popupContent = `
-                <b>Name:</b> ${station.name}<br>
-                <b>Code:</b> ${station.code}<br>
-                <b>Altitude:</b> ${station.altitude}<br>
-                <b>Point:</b> ${station.latitude},${station.longitude}<br>
+            <b>Name:</b> ${station.name}<br>
+            <b>Code:</b> ${station.code}<br>
+            <b>Altitude:</b> ${station.altitude}<br>
+            <b>Point:</b> ${station.latitude},${station.longitude}<br>
             `;
-            marker.on('mouseover', function(e) {
-                this.bindPopup(popupContent).openPopup();
-            });
-            marker.on('mouseout', function(e) {
-                this.closePopup();
-            });
+            marker.bindPopup(popupContent);
         });
-    
+
         devices.forEach(device => {
             var latitude = parseFloat(device.latitude);
             var longitude = parseFloat(device.longitude);
-    
+
             var deviceIcon = L.icon({
                 iconUrl: '{{ URL::asset('img/train.png') }}',
                 iconSize: [40, 40],
-                iconAnchor: [22, 94],
+                iconAnchor: [20, 40],
                 popupAnchor: [-3, -76]
             });
-            
+
             var popupContent = `
-                <b>Serial Number:</b> ${device.serial_number}<br>
-                <b>Name:</b> ${device.name}<br>
-                <b>Code:</b> ${device.code}<br>
-                <b>Last Location:</b> ${latitude},${longitude}<br>
-                <a href="/table/detail/${device.serial_number}">Detail</a>
+            <b>Serial Number:</b> ${device.serial_number}<br>
+            <b>Name:</b> ${device.name}<br>
+            <b>Code:</b> ${device.code}<br>
+            <b>Last Location:</b> ${latitude},${longitude}<br>
+            <a href="/table/detail/${device.serial_number}">Detail</a>
             `;
-    
+
             var marker = L.marker([latitude, longitude], { icon: deviceIcon, device_id: device.serial_number }).bindPopup(popupContent);
             marker.addTo(markerLayerGroup);
         });
 
         function addOrUpdateMarkerFromBroadcast(device) {
-            var deviceIcon = L.icon({
-                iconUrl: '{{ URL::asset('img/train.png') }}',
-                iconSize: [40, 40],
-                iconAnchor: [22, 94],
-                popupAnchor: [-3, -76]
-            });
-    
-            var popupContent = `
+                console.log(device);   
+                var deviceIcon = L.icon({
+                    iconUrl: '{{ URL::asset('img/train.png') }}',
+                    iconSize: [40, 40],
+                    iconAnchor: [22, 94],
+                    popupAnchor: [-3, -76]
+                });
+                
+                var popupContent = `
                 <b>Serial Number:</b> ${device.device_id}<br>
                 <b>Last Location:</b> ${device.latitude},${device.longitude}<br>
                 <a href="/table/detail/${device.device_id}">Detail</a>
-            `;
-            
-            var existingMarker = markerLayerGroup.getLayers().find(marker => marker.options.device_id === device.device_id);
-    
-            if (existingMarker) {
-                existingMarker.setLatLng([device.longitude, device.latitude]);
-                existingMarker.getPopup().setContent(popupContent);
-            } else {
-                var newMarker = L.marker([device.longitude, device.latitude], { icon: deviceIcon, device_id: device.device_id }).bindPopup(popupContent);
-                newMarker.addTo(markerLayerGroup);
+                `;
+                
+                var existingMarker = markerLayerGroup.getLayers().find(marker => marker.options.device_id === device.device_id);
+                
+                if (existingMarker) {
+                    existingMarker.setLatLng([device.longitude, device.latitude]);
+                    existingMarker.getPopup().setContent(popupContent);
+                } else {
+                    var newMarker = L.marker([device.longitude, device.latitude], { icon: deviceIcon, device_id: device.device_id }).bindPopup(popupContent);
+                    newMarker.addTo(markerLayerGroup);
+                }
             }
-        }
-    
+
         window.onload = function() {
             window.Echo.channel('location-channel')
             .listen('DeviceLocationBroadcast', (data) => {
-                    var device = data.data;
-                    addOrUpdateMarkerFromBroadcast(device);
-                });
+                var device = data.data;
+                addOrUpdateMarkerFromBroadcast(device);
+            });
         };
     </script>
 </div>
