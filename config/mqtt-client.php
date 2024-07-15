@@ -35,8 +35,8 @@ return [
         'default' => [
 
             // The host and port to which the client shall connect.
-            'host' => 'localhost',
-            'port' => 1883,
+            'host' => env('MQTT_HOST', 'localhost'),
+            'port' => env('MQTT_PORT', 1883),
 
             // The MQTT protocol version used for the connection.
             'protocol' => MqttClient::MQTT_3_1,

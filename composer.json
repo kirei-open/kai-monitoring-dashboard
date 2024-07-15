@@ -19,6 +19,7 @@
         "livewire/livewire": "^3.4",
         "livewire/volt": "^1.0",
         "php-mqtt/client": "^2.1",
+        "php-mqtt/laravel-client": "^1.5",
         "wireui/heroicons": "^2.4"
     },
     "require-dev": {
