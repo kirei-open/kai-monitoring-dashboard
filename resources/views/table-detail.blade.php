@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>@yield('title')</title>
+        <title>Tabel Monitoring</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -27,7 +27,7 @@
     </head>
     <body class="bg:white antialiased dark:bg-gray-900" id="main">
         <livewire:navbar-component />  
-        {{ $slot }}
+        <livewire:table-detail-component/>
         <livewire:footer-component/>
     </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>

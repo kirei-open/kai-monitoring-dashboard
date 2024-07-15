@@ -30,4 +30,6 @@ class TableComponent extends Component
 
         return view('livewire.table-component', ['locations' => $locations->paginate(7)]);
     }
+
+    
 }

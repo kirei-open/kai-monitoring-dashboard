@@ -42,7 +42,7 @@
         x-on:toggle-section.window="if ($event.detail.id == $el.id) isCollapsed = ! isCollapsed"
         x-bind:class="isCollapsed && 'fi-collapsed'"
     @endif
-    {{
+    {{-- {{
         $attributes->class([
             'fi-section',
             match ($aside) {
@@ -50,7 +50,7 @@
                 false => 'rounded-xl bg-white shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10',
             },
         ])
-    }}
+    }} --}}
 >
     @if ($hasHeader)
         <header

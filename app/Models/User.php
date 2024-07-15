@@ -2,19 +2,17 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
-use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
-use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
+use Spatie\Permission\Traits\HasRoles; // Tambahkan trait ini
 
 class User extends Authenticatable implements FilamentUser
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasPanelShield;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -47,8 +45,23 @@ class User extends Authenticatable implements FilamentUser
         'password' => 'hashed',
     ];
 
+    /**
+     * Determine if the user can access the Filament panel.
+     *
+     * @return bool
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return true; // Atur logika sesuai kebutuhan Anda
+    }
+
+    /**
+     * Get the names of the roles as a comma-separated string.
+     *
+     * @return string
+     */
     public function getRoleNamesAttribute(): string
     {
-        return $this->roles->pluck('name')->join(',');
+        return $this->roles->pluck('name')->join(','); // Gunakan metode `roles` dari HasRoles
     }
 }
