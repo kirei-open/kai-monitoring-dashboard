@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
 use Filament\Tables;
 use App\Models\Station;
 use Filament\Forms\Form;
@@ -11,11 +10,7 @@ use Filament\Resources\Resource;
 use Filament\Forms\Components\Hidden;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
-use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\StationResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\StationResource\RelationManagers;
-use Filament\Actions\DeleteAction;
 
 class StationResource extends Resource
 {
@@ -79,5 +74,10 @@ class StationResource extends Resource
             'create' => Pages\CreateStation::route('/create'),
             'edit' => Pages\EditStation::route('/{record}/edit'),
         ];
+    }
+
+    public static function canViewAny(): bool
+    {
+        return auth()->user()->hasRole(['super_admin', 'Admin']);
     }
 }

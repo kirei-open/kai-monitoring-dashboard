@@ -1,4 +1,5 @@
-{{-- <div>
+<div>
+    @section('title','Graphic')
     <h1 class="text-[#a4a2b4] lg:mt-[120px] lg:ml-[60px] lg:text-[20px]">GRAPHIC MONITORING</h1>
     <form wire:submit.prevent="save" class="max-w-sm mx-auto lg:ml-[60px]">
         <label for="select devices" class="block mt-4 text-sm font-medium text-gray-900 dark:text-white">Select Device</label>
@@ -62,6 +63,9 @@
             <div id="chart4" class="px-2.5 lg:mt-[20px]"></div>
         </div>
     </div>
+</div>
+
+@push('script')
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
         let chartData = {};
@@ -464,4 +468,4 @@
 
         const chartContainers = {};
     </script>
-</div> --}}
+@endpush
