@@ -25,4 +25,9 @@ class Location extends Model
     {
         return $this->belongsTo(Device::class);
     }
+
+    public function scopeSearch($query, $value){
+        return $query->where('device_id', 'like', "%{$value}%")
+                     ->selectRaw('*, ST_X(point::geometry) AS longitude, ST_Y(point::geometry) AS latitude');
+    }
 }

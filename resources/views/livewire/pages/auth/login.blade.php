@@ -1,12 +1,10 @@
 <?php
 
-use Livewire\Volt\Component;
-use Livewire\Attributes\Layout;
 use App\Livewire\Forms\LoginForm;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Session;
+use Livewire\Attributes\Layout;
+use Livewire\Volt\Component;
 
 new #[Layout('layouts.guest')] class extends Component
 {
@@ -28,11 +26,13 @@ new #[Layout('layouts.guest')] class extends Component
         $token = $user->createToken('API Token')->plainTextToken;
     
         session(['api_token' => $token]);
+        
+        Log::info(session()->all());
     
         $redirectTo = RouteServiceProvider::HOME;
     
         if ($user->hasRole('Teknisi')) {
-            $redirectTo = '/graphic';
+            return redirect()->route('graphic');
         }
     
         return redirect()->intended($redirectTo);
@@ -40,7 +40,6 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    @section('title','Login Monitoring Dashboard')
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
