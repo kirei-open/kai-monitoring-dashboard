@@ -52,29 +52,29 @@ class MeasurementController extends Controller
     //     return response()->json(['message' => 'measurement data', 'data' => $data]);
     // }
 
-    // public function getDetailMeasurement($device_id, Request $request){
-    //     $startDate = $request->input('startDate');
-    //     $endDate = $request->input('endDate');
-    //     $data = Measurement::query();
-    //     $data->where('device_id', $device_id);
-    //     if($startDate && $endDate){
-    //         $data->where('datetime', '>=', $startDate)->where('datetime', '<=', $endDate);
-    //     }
-    //     $data = $data->get();
-    //     if(!$data) return response()->json(['message' => 'measurement detail data', 'device_id' => $device_id]);
-    //     return response()->json(['message' => 'measurement detail data', 'data' => $data]);
-    // }
+    public function getDetailMeasurement($device_id, Request $request){
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
+        $data = Measurement::query();
+        $data->where('device_id', $device_id);
+        if($startDate && $endDate){
+            $data->where('datetime', '>=', $startDate)->where('datetime', '<=', $endDate);
+        }
+        $data = $data->get();
+        if(!$data) return response()->json(['message' => 'measurement detail data', 'device_id' => $device_id]);
+        return response()->json(['message' => 'measurement detail data', 'data' => $data]);
+    }
 
-    // public function getLastThirtyMinutesData($device_id){
-    //     $currentTime = Carbon::now();
-    //     $thirtyMinutesAgo = $currentTime->copy()->subMinutes(30);
+    public function getLastThirtyMinutesData($device_id){
+        $currentTime = Carbon::now();
+        $thirtyMinutesAgo = $currentTime->copy()->subMinutes(30);
     
-    //     $data = Measurement::where('device_id', $device_id)
-    //                         ->whereBetween('created_at', [$thirtyMinutesAgo, $currentTime])
-    //                         ->get();
+        $data = Measurement::where('device_id', $device_id)
+                            ->whereBetween('created_at', [$thirtyMinutesAgo, $currentTime])
+                            ->get();
 
-    //     return response()->json(['message' => 'Last thirty minutes of measurement data', 'data' => $data]);
-    // }
+        return response()->json(['message' => 'Last thirty minutes of measurement data', 'data' => $data]);
+    }
 
     // public function updateMeasurement(Request $request, $id){
     //     $request->validate([
