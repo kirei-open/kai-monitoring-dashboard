@@ -72,7 +72,7 @@ new class extends Component
                             </x-slot>
         
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('filament.admin.auth.login')" wire:navigate>
+                                <x-dropdown-link :href="route('filament.admin.auth.login')" target="_blank">
                                     Admin Panel
                                 </x-dropdown-link>
         
@@ -176,7 +176,7 @@ new class extends Component
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('filament.admin.auth.login')" wire:navigate>
+                                <x-dropdown-link :href="route('filament.admin.auth.login')" target="_blank">
                                     Admin Panel
                                 </x-dropdown-link>
 
