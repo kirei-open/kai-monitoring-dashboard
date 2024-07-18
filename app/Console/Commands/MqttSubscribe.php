@@ -68,7 +68,7 @@ class MqttSubscribe extends Command
             if (isset($data['serial_number'], $data['datetime'], $data['longitude'], $data['latitude'])) {
 
                 $longitude = floatval($data['longitude']);
-                $latitude = floatval($data['longitude']);
+                $latitude = floatval($data['latitude']);
 
                 $location = DB::raw("ST_GeomFromText('POINT({$latitude} {$longitude})')");
 
@@ -92,8 +92,6 @@ class MqttSubscribe extends Command
                 ]);
 
                 event(new DeviceLocationBroadcast($dataLocationBroadcast));
-
-                $this->info("Saved another measurement data for ID: {$data['id']}");
             } else {
                 $this->error("Invalid message format: {$message}");
             }
