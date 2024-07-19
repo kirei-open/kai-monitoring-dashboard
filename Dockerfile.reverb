@@ -1,0 +1,22 @@
+FROM serversideup/php:8.3-fpm-nginx
+
+USER root
+
+# Install necessary PHP extensions
+RUN install-php-extensions intl pcntl
+
+# Copy application code and startup script
+COPY . /var/www/html
+COPY startup.sh /usr/local/bin/startup.sh
+
+# Make startup script executable
+RUN chmod +x /usr/local/bin/startup.sh
+
+USER www-data
+
+WORKDIR /var/www/html
+
+# Set the entrypoint to the startup script
+ENTRYPOINT ["/usr/local/bin/startup.sh"]
+
+EXPOSE 8080
