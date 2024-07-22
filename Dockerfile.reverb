@@ -12,11 +12,11 @@ COPY startup.sh /usr/local/bin/startup.sh
 # Make startup script executable
 RUN chmod +x /usr/local/bin/startup.sh
 
-USER www-data
-
 WORKDIR /var/www/html
 
 # Set the entrypoint to the startup script
 ENTRYPOINT ["/usr/local/bin/startup.sh"]
 
 EXPOSE 8080
+
+USER www-data
