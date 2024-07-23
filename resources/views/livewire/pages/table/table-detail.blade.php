@@ -25,19 +25,25 @@
                             <li class="text-gray-700 dark:text-white mt-4 lg:text-[16px] lg:ml-[-120px]">Unit <span class="lg:ml-[54px]">:</span> <span class="lg:ml-3">{{ $device->last_monitored_value['unit'] }}</span> </li>
                         </ul>
                         @else
-                        <span class="text-gray-700 dark:text-white mt-4 lg:text-[16px]"></span>
+                        <ul class="text-left">
+                            <li class="text-gray-700 dark:text-white mt-4 lg:text-[16px] lg:ml-[-120px]">Datetime <span class="lg:ml-4">:</span> <span class="lg:ml-3">Belum Ada Data</span></li>
+                            <li class="text-gray-700 dark:text-white mt-4 lg:text-[16px] lg:ml-[-120px]">Key <span class="lg:ml-14">:</span> <span class="lg:ml-3">Belum Ada Data</span> </li>
+                            <li class="text-gray-700 dark:text-white mt-4 lg:text-[16px] lg:ml-[-120px]">Value <span class="lg:ml-11">:</span> <span class="lg:ml-3">Belum Ada Data</span> </li>
+                            <li class="text-gray-700 dark:text-white mt-4 lg:text-[16px] lg:ml-[-120px]">Unit <span class="lg:ml-[54px]">:</span> <span class="lg:ml-3">Belum Ada Data</span> </li>
+                        </ul>
                         @endif
                     </div>
-                    <div class="flex flex-col mt-[-120px]">
-                        <p class="text-xl font-bold text-gray-500 dark:text-white text-left lg:mt-8">Last Location</p>
-                        <span class="text-gray-700 dark:text-white mt-4 lg:text-[16px] text-left">Latitude &nbsp;&nbsp;&nbsp; : &nbsp;{{ $device->latitude }} </span>
-                        <span class="text-gray-700 dark:text-white mt-4 lg:text-[16px] text-left">Longitude : &nbsp;{{ $device->longitude }} </span>
+                    <div class="flex flex-col mt-[-125px]">
+                        <p class="text-xl font-bold text-gray-500 dark:text-white text-left lg:mt-[50px]">Last Location</p>
+                        <span class="text-gray-700 dark:text-white mt-4 lg:text-[16px] text-left lg:mt-[20px]">Latitude &nbsp;&nbsp;&nbsp; : &nbsp;{{ $device->latitude ?? 'Belum Ada Data' }} </span>
+                        <span class="text-gray-700 dark:text-white mt-4 lg:text-[16px] text-left">Longitude : &nbsp;{{ $device->longitude ?? 'Belum Ada Data' }} </span>
                     </div>
-                    <div class="flex flex-col mt-[-120px]">
+                    <div class="flex flex-col mt-[-115px]">
                         <h1 class="text-xl font-bold text-gray-700 dark:text-white text-left lg:mt-8">Name</h1>
                         <p class="text-gray-500 dark:text-white mt-4 lg:text-[16px] text-left">{{ $device->name }}</p>
                     </div>
                 </div>
+                
             </div>
         </div>
     </section>
