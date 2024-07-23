@@ -18,7 +18,7 @@ new class extends Component
 
 <nav id="nav" class="bg-white z-10 fixed top-0 flex-no-wrap w-full py-2 dark:bg-gray-900">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-30 lg:mx-[12.5rem] lg:mt-[-20px] p-4">
-        <a href="/landing" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <a href="{{ route('dashboard') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img src="{{ URL::asset('img/logokai_main.png') }}" class="lg:ml-[-80px] lg:w-[320px]" alt="" />
         </a>
         <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
