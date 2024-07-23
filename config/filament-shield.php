@@ -66,7 +66,12 @@ return [
             'AccountWidget', 'FilamentInfoWidget',
         ],
 
-        'resources' => [],
+        'resources' => [
+            'role' => [
+                'visibility' => 'super_admin',
+                'can_view' => true, // pastikan role super_admin dapat melihat menu ini
+            ]
+        ],
     ],
 
     'discovery' => [

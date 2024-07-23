@@ -75,9 +75,4 @@ class StationResource extends Resource
             'edit' => Pages\EditStation::route('/{record}/edit'),
         ];
     }
-
-    public static function canViewAny(): bool
-    {
-        return auth()->user()->hasRole(['super_admin', 'Admin']);
-    }
 }
