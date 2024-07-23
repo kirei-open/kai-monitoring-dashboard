@@ -123,9 +123,10 @@ new class extends Component
                                     Admin Panel
                                 </x-dropdown-link>
 
-                                <x-dropdown-link href="health" target="_blank">
+                                <x-dropdown-link :href="'/health?fresh'" target="_blank">
                                     Health Check
                                 </x-dropdown-link>
+                                
 
                                 <!-- Authentication -->
                                 <button wire:click="logout" class="w-full text-start">
