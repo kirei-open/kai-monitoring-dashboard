@@ -21,6 +21,7 @@
         "livewire/volt": "^1.0",
         "php-mqtt/client": "^2.1",
         "php-mqtt/laravel-client": "^1.5",
+        "spatie/cpu-load-health-check": "^1.0",
         "spatie/laravel-health": "^1.29",
         "wireui/heroicons": "^2.4"
     },

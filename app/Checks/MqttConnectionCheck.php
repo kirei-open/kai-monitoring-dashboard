@@ -7,7 +7,7 @@ use Spatie\Health\Checks\Check;
 use PhpMqtt\Client\Facades\MQTT;
 use Spatie\Health\Checks\Result;
 
-class CheckMqtt extends Check
+class MqttConnectionCheck extends Check
 {
     public function run(): Result
     {
