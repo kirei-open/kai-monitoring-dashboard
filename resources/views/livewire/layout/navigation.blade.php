@@ -34,7 +34,7 @@ new class extends Component {
     <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
       @if (auth()->user()->hasRole(['Teknisi']))
         <ul
-          class="flex flex-col p-4 md:p-0 mt-2 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-[4.5rem] rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 whitespace-nowrap lg:ml-[500px] md:mt-[-60px]">
+          class="flex flex-col p-4 md:p-0 mt-2 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-[4.5rem] rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 whitespace-nowrap lg:ml-[500px] lg:mt-[-60px]">
           <li
             class="{{ Request::is('graphic') ? 'bg-blue-100 text-blue-800 font-medium dark:bg-blue-900 dark:text-blue-300' : 'dark:text-white' }} text-[16px] px-4 py-3 rounded-full hover:bg-blue-100 hover:text-blue-800 hover:dark:bg-blue-900 hover:dark:text-blue-300">
             <a href="{{ route('graphic') }}" wire:navigate>Graphic</a>
@@ -100,7 +100,7 @@ new class extends Component {
       @endif
       @if (auth()->user()->hasRole(['super_admin']))
         <ul
-          class="flex flex-col p-4 md:p-0 mt-2 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-[4.5rem] rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 whitespace-nowrap lg:ml-[350px] md:mt-[-60px]">
+          class="flex flex-col p-4 md:p-0 mt-2 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-[4.5rem] rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 whitespace-nowrap lg:ml-[350px] lg:mt-[-60px]">
           <li
             class="{{ Request::is('dashboard') ? 'bg-blue-100 text-blue-800 font-medium dark:bg-blue-900 dark:text-blue-300' : 'dark:text-white' }} text-[16px] px-4 py-3 rounded-full hover:bg-blue-100 hover:text-blue-800 hover:dark:bg-blue-900 hover:dark:text-blue-300">
             <a href="{{ route('dashboard') }}">Home</a>
