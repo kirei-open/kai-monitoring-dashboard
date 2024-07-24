@@ -7,7 +7,7 @@
                     Device
                 </span>
                 <div class="relative overflow-x-auto lg:mt-4">
-                    <table class="w-[100%] text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <table class="lg:w-[1150px] text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-neutral-100 uppercase bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
