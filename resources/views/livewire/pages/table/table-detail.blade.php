@@ -1,6 +1,6 @@
 <div>
     @section('title',$device->serial_number)
-    <section class="bg-white dark:bg-gray-900">
+    <section class="bg-white dark:bg-gray-900 lg:mt-16">
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16">
             <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12 mb-8">
                 <span class="bg-blue-100 text-blue-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-blue-400 mb-2">
@@ -29,7 +29,7 @@
                         </thead>
                         <tbody>
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                     {{ $device->serial_number }}
                                 </th>
                                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -45,31 +45,31 @@
                                     @if ($device->last_monitored_value != null)
                                         <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
                                             <li class="font-medium text-gray-900 dark:text-white">
-                                                Datetime : {{ $device->last_monitored_value['datetime'] }}
+                                                Datetime <span class="lg:ml-5">:</span> &nbsp; {{ $device->last_monitored_value['datetime'] }}
                                             </li>
                                             <li class="font-medium text-gray-900 dark:text-white">
-                                                Key : {{ $device->last_monitored_value['key'] }}
+                                                Key <span class="lg:ml-14">:</span> &nbsp; {{ $device->last_monitored_value['key'] }}
                                             </li>
                                             <li class="font-medium text-gray-900 dark:text-white">
-                                                Value : {{ $device->last_monitored_value['value'] }}
+                                                Value <span class="lg:ml-11">:</span> &nbsp; {{ $device->last_monitored_value['value'] }}
                                             </li>
                                             <li class="font-medium text-gray-900 dark:text-white">
-                                                Unit : {{ $device->last_monitored_value['unit'] }}
+                                                Unit <span class="lg:ml-[53px]">:</span> &nbsp; {{ $device->last_monitored_value['unit'] }}
                                             </li>
                                         </ul>
                                     @else
                                         <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
                                             <li class="font-medium text-gray-900 dark:text-white">
-                                                Datetime : Belum Ada Data
+                                                Datetime <span class="lg:ml-2">:</span> &nbsp; Belum Ada Data
                                             </li>
                                             <li class="font-medium text-gray-900 dark:text-white">
-                                                Key : Belum Ada Data
+                                                Key <span class="lg:ml-11">:</span> &nbsp; Belum Ada Data
                                             </li>
                                             <li class="font-medium text-gray-900 dark:text-white">
-                                                Value : Belum Ada Data
+                                                Value <span class="lg:ml-8">:</span> &nbsp; Belum Ada Data
                                             </li>
                                             <li class="font-medium text-gray-900 dark:text-white">
-                                                Unit : Belum Ada Data
+                                                Unit <span class="lg:ml-10">:</span> &nbsp; Belum Ada Data
                                             </li>
                                         </ul>
                                     @endif
