@@ -53,7 +53,7 @@ new class extends Component
                     <li class="lg:mt-[-9px] lg:ml-[80px] ml-2">
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
-                                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400  hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150 ml-[-10px]">
+                                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400  hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150 ml-[-45px]">
                                     <img class="w-8 h-8 rounded-full mr-3" src="{{ asset('img/avatar-5.png') }}" alt="user photo">
                                     <div style="font-family: 'DM Sans', sans-serif;" class="lg:text-[16px] text-[13px] hover:text-[#193766] hover:font-bold" x-data="{ name: '{{ ucfirst(auth()->user()->name) }}' }" x-text="name" x-on:profile-updated.window="name = $event.detail.name"></div>
 
@@ -106,7 +106,7 @@ new class extends Component
                     <li class="lg:mt-[-9px] lg:ml-[50px] ml-2">
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
-                                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400  hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150 ml-[-10px]">
+                                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400  hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150 ml-[-45px]">
                                     <img class="w-8 h-8 rounded-full mr-3" src="{{ asset('img/avatar-1.png') }}" alt="user photo">
                                     <div style="font-family: 'DM Sans', sans-serif;" class="lg:text-[16px] text-[13px] hover:text-[#193766] hover:font-bold" x-data="{ name: '{{ ucfirst(auth()->user()->name) }}' }" x-text="name" x-on:profile-updated.window="name = $event.detail.name"></div>
 
@@ -127,7 +127,6 @@ new class extends Component
                                     Health Check
                                 </x-dropdown-link>
                                 
-
                                 <!-- Authentication -->
                                 <button wire:click="logout" class="w-full text-start">
                                     <x-dropdown-link>
