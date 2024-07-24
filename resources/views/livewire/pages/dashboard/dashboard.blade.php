@@ -106,11 +106,11 @@
             var existingMarker = markerLayerGroup.getLayers().find(marker => marker.options.device_id === device.device_id);
 
             if (existingMarker) {
-                existingMarker.setLatLng([device.longitude, device.latitude]);
+                existingMarker.setLatLng([device.latitude, device.longitude]);
                 existingMarker.getPopup().setContent(popupContent);
                 existingMarker.setIcon(deviceIcon); // update icon size
             } else {
-                var newMarker = L.marker([device.longitude, device.latitude], { icon: deviceIcon, device_id: device.device_id }).bindPopup(popupContent);
+                var newMarker = L.marker([device.latitude, device.longitude], { icon: deviceIcon, device_id: device.device_id }).bindPopup(popupContent);
                 newMarker.addTo(markerLayerGroup);
             }
         }

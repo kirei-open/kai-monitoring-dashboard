@@ -68,8 +68,6 @@ class MqttSubscribe extends Command
                 $longitude = floatval($data['longitude']);
                 $latitude = floatval($data['latitude']);
 
-                $this->info("This is the long {$longitude}, this is the lat {$latitude}");
-
                 $location = DB::raw("ST_GeomFromText('POINT({$longitude} {$latitude})')");
 
                 $dataLocationBroadcast = (object)[
