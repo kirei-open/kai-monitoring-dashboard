@@ -16,8 +16,8 @@
                     <form wire:submit.prevent="save">
                         <select wire:model.live="sortBy" wire:change="applyFilter($event.target.value)" id="sort" name="sort" style="font-family: 'Poppins', sans-serif;" type="text" class="bg-white border border-gray-300 pr-10 text-[#878686] rounded-xl bg-[#f2f2f8] focus:ring-blue-500 focus:border-blue-500 text-[12px] lg:text-[14px] lg:mr-[30px] lg:w-72 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="#" selected disabled>Filter</option>
-                            <option value="latest">Terbaru</option>
-                            <option value="oldest" selected>Terlama</option>
+                            <option value="latest" selected>Terbaru</option>
+                            <option value="oldest">Terlama</option>
                         </select>            
                     </form>
                 </div>

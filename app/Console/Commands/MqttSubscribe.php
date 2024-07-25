@@ -8,7 +8,6 @@ use App\Models\Measurement;
 use Illuminate\Console\Command;
 use PhpMqtt\Client\Facades\MQTT;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use App\Events\DeviceLocationBroadcast;
 use App\Events\DeviceMeasurementBroadcast;
 
@@ -20,7 +19,6 @@ class MqttSubscribe extends Command
     public function handle()
     {
         $client = MQTT::connection();
-
         $client->connect();
 
         // Subscribe to the first topic
@@ -70,7 +68,7 @@ class MqttSubscribe extends Command
                 $longitude = floatval($data['longitude']);
                 $latitude = floatval($data['latitude']);
 
-                $location = DB::raw("ST_GeomFromText('POINT({$latitude} {$longitude})')");
+                $location = DB::raw("ST_GeomFromText('POINT({$longitude} {$latitude})')");
 
                 $dataLocationBroadcast = (object)[
                     'device_id' => $data['serial_number'],

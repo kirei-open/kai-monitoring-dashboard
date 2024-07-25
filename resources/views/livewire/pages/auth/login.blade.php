@@ -40,6 +40,7 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
+    @section('title','Login Monitoring Dashboard')
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
