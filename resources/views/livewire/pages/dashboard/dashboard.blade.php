@@ -11,7 +11,7 @@
         const stations = @json($stations);
         const devices = @json($devices);
 
-        var map = L.map('map').setView([-7.000576569450258, 107.17740302365186], 9);
+        var map = L.map('map').setView([-7.000576569450260, 106.17740302365186], 9);
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -106,11 +106,11 @@
             var existingMarker = markerLayerGroup.getLayers().find(marker => marker.options.device_id === device.device_id);
 
             if (existingMarker) {
-                existingMarker.setLatLng([device.longitude, device.latitude]);
+                existingMarker.setLatLng([device.latitude, device.longitude]);
                 existingMarker.getPopup().setContent(popupContent);
                 existingMarker.setIcon(deviceIcon); // update icon size
             } else {
-                var newMarker = L.marker([device.longitude, device.latitude], { icon: deviceIcon, device_id: device.device_id }).bindPopup(popupContent);
+                var newMarker = L.marker([device.latitude, device.longitude], { icon: deviceIcon, device_id: device.device_id }).bindPopup(popupContent);
                 newMarker.addTo(markerLayerGroup);
             }
         }

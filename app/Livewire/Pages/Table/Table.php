@@ -8,7 +8,7 @@ use Livewire\Component;
 class Table extends Component
 {
     public $search = '';
-    public $sortBy = 'oldest';
+    public $sortBy = 'latest';
     public $selectedOption = '';
     public function applyFilter($sortBy)
     {
@@ -28,10 +28,5 @@ class Table extends Component
         $locations = $query->paginate(7);
 
         return view('livewire.pages.table.table', ['locations' => $locations]);
-    }
-
-    public function Test()
-    {
-        return dd('Test');
     }
 }
