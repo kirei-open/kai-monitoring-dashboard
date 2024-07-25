@@ -95,7 +95,7 @@
     let mode = '';
     let liveArrayData = '';
 
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener('livewire:navigated', function() {
       const modeSelect = document.getElementById('dataMode');
       const deviceSelect = document.getElementById('device_id');
       const startDateInput = document.getElementById('startDate');
@@ -362,7 +362,7 @@
       renderChartWithDataFromDatabase();
     });
 
-    document.addEventListener("DOMContentLoaded", function(event) {
+    document.addEventListener('livewire:navigated', function(event) {
 
       document.getElementById('dataMode').addEventListener('change', function(event) {
         mode = event.target.value;
