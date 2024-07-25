@@ -54,7 +54,7 @@ class UserSeeder extends Seeder
         $superAdminRole->givePermissionTo(Permission::all());
 
         // Assign specific permissions to teknisi
-        $teknisiRole->givePermissionTo(['view_device', 'view_measurement']);
+        $teknisiRole->givePermissionTo(['view_device', 'view_measurement', 'view_any_device', 'view_any_measurement']);
 
         // Create users and assign roles
         if (!User::where('email', 'superadmin@mail.com')->exists()) {
