@@ -18,28 +18,43 @@ class UserSeeder extends Seeder
         // Create roles
         $superAdminRole = Role::firstOrCreate(['name' => 'super_admin']);
         $teknisiRole = Role::firstOrCreate(['name' => 'Teknisi']);
-        
+
         // Create permissions for all resources
         $permissions = [
-            'Device',
-            'Location',
-            'Measurement',
-            'Station',
-            'User'
+            'device',
+            'location',
+            'measurement',
+            'station',
+            'user'
         ];
 
         foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['name' => "view $permission"]);
-            Permission::firstOrCreate(['name' => "create $permission"]);
-            Permission::firstOrCreate(['name' => "update $permission"]);
-            Permission::firstOrCreate(['name' => "delete $permission"]);
+            Permission::firstOrCreate(['name' => "view_$permission"]);
+            Permission::firstOrCreate(['name' => "view_any_$permission"]);
+            Permission::firstOrCreate(['name' => "create_$permission"]);
+            Permission::firstOrCreate(['name' => "update_$permission"]);
+            Permission::firstOrCreate(['name' => "restore_$permission"]);
+            Permission::firstOrCreate(['name' => "restore_any_$permission"]);
+            Permission::firstOrCreate(['name' => "replicate_$permission"]);
+            Permission::firstOrCreate(['name' => "reorder_$permission"]);
+            Permission::firstOrCreate(['name' => "delete_$permission"]);
+            Permission::firstOrCreate(['name' => "delete_any_$permission"]);
+            Permission::firstOrCreate(['name' => "force_delete_$permission"]);
+            Permission::firstOrCreate(['name' => "force_delete_any_$permission"]);
         }
+
+        Permission::firstOrCreate(['name' => "view_role"]);
+        Permission::firstOrCreate(['name' => "view_any_role"]);
+        Permission::firstOrCreate(['name' => "create_role"]);
+        Permission::firstOrCreate(['name' => "update_role"]);
+        Permission::firstOrCreate(['name' => "delete_role"]);
+        Permission::firstOrCreate(['name' => "delete_any_role"]);
 
         // Assign all permissions to super_admin
         $superAdminRole->givePermissionTo(Permission::all());
 
         // Assign specific permissions to teknisi
-        $teknisiRole->givePermissionTo(['view Device', 'view Measurement']);
+        $teknisiRole->givePermissionTo(['view_device', 'view_measurement']);
 
         // Create users and assign roles
         if (!User::where('email', 'superadmin@mail.com')->exists()) {
