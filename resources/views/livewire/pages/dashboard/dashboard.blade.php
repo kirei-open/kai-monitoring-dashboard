@@ -11,7 +11,7 @@
         const stations = @json($stations);
         const devices = @json($devices);
 
-        var map = L.map('map').setView([-7.000576569450260, 106.17740302365186], 9);
+        var map = L.map('map').setView([-7.000576569450258, 107.17740302365186], 9);
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'

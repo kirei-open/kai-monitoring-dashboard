@@ -11,7 +11,6 @@
         <link rel="stylesheet" href="{{ URL::asset('css/leaflet.css') }}"/>
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
         <link rel="shortcut icon" href="{{ URL::asset('img/kai-ico.ico') }}" type="image/x-icon">
-        <link href="https://fonts.googleapis.com/css2?family=Cabin&family=DM+Sans:opsz@9..40&family=Poppins&display=swap" rel="stylesheet" />
         <style>
             #map {
                 position: fixed;
