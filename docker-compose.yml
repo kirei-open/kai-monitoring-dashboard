@@ -19,6 +19,8 @@ services:
             DB_PASSWORD: alakadarna
             MQTT_HOST: mqtt
             MQTT_PORT: 1883
+            MQTT_AUTH_USERNAME: "kaimqtt"
+            MQTT_AUTH_PASSWORD: "kaimqtt"
             REVERB_HOST: reverb
             REVERB_PORT: 8080
         networks:
@@ -93,6 +95,7 @@ services:
             - mosquitto_data:/mosquitto/data
             - mosquitto_log:/mosquitto/log
             - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+            - C:\\Program Files\\mosquitto\\passwd_file:/mosquitto/config/passwd_file
 
 networks:
     kai:
