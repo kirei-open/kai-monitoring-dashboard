@@ -9,12 +9,21 @@
                         <span class="absolute my-2 mx-2 text-[#878686]">
                             <x-icon name="magnifying-glass" />
                         </span>
-                        <input style="font-family: 'Poppins', sans-serif;" wire:model.live.debounce.300ms="search" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full lg:w-72 ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search"/>
+                        <input style="font-family: 'Poppins', sans-serif;" wire:model.live.debounce.300ms="search" 
+                        type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
+                        focus:ring-blue-500 focus:border-blue-500 block w-full lg:w-72 ps-10 p-2.5 
+                        dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
+                        dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search"/>
                     </div>
                 </div>
                 <div class="lg:mt-7">
                     <form wire:submit.prevent="save">
-                        <select wire:model.live="sortBy" wire:change="applyFilter($event.target.value)" id="sort" name="sort" style="font-family: 'Poppins', sans-serif;" type="text" class="bg-white border border-gray-300 pr-10 text-[#878686] rounded-xl bg-[#f2f2f8] focus:ring-blue-500 focus:border-blue-500 text-[12px] lg:text-[14px] lg:mr-[30px] lg:w-72 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <select wire:model.live="sortBy" wire:change="applyFilter($event.target.value)" 
+                        id="sort" name="sort" style="font-family: 'Poppins', sans-serif;" 
+                        type="text" class="bg-white border border-gray-300 pr-10 text-[#878686] rounded-xl bg-[#f2f2f8] 
+                        focus:ring-blue-500 focus:border-blue-500 text-[12px] lg:text-[14px] lg:mr-[30px] 
+                        lg:w-72 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
+                        dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="#" selected disabled>Filter</option>
                             <option value="latest" selected>Terbaru</option>
                             <option value="oldest">Terlama</option>
@@ -23,11 +32,9 @@
                 </div>
             </div>
         </div>
-        
         @php
             $lastNumber = ($locations->currentPage() - 1) * $locations->perPage();
         @endphp
-    
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -54,7 +61,8 @@
                 </thead>
                 <tbody>
                     @foreach ($locations as $location )
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 
+                    dark:hover:bg-gray-600">
                         <td class="w-4 p-4">
                             {{ ++$lastNumber }}
                         </td>
@@ -71,7 +79,10 @@
                             {{ $location->longitude }}
                         </td>
                         <td class="px-6 py-4">
-                            <a href="/table/detail/{{ $location->device_id }}" wire:navigate class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Detail</a>
+                            <a href="/table/detail/{{ $location->device_id }}" wire:navigate class="font-medium 
+                                text-blue-600 dark:text-blue-500 hover:underline">
+                                Detail
+                            </a>
                         </td>
                     </tr>    
                     @endforeach
@@ -79,7 +90,10 @@
             </table>
             <nav class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4" aria-label="Table navigation">
                 <span class="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">
-                    Showing <span class="font-semibold text-gray-900 dark:text-white">{{ $locations->firstItem() }}</span> - <span class="font-semibold text-gray-900 dark:text-white">{{ $locations->lastItem() }}</span> of <span class="font-semibold text-gray-900 dark:text-white">{{ $locations->total() }}</span>
+                    Showing <span class="font-semibold text-gray-900 dark:text-white">{{ $locations->firstItem() }}</span> - 
+                    <span class="font-semibold text-gray-900 dark:text-white">{{ $locations->lastItem() }}</span> 
+                    of
+                    <span class="font-semibold text-gray-900 dark:text-white">{{ $locations->total() }}</span>
                 </span>
                 {{ $locations->links() }}
             </nav>
