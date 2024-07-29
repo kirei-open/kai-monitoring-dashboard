@@ -52,7 +52,7 @@ class User extends Authenticatable implements FilamentUser
      */
     public function canAccessPanel(Panel $panel): bool
     {
-        return true; // Atur logika sesuai kebutuhan Anda
+        return true;
     }
 
     /**
@@ -62,6 +62,6 @@ class User extends Authenticatable implements FilamentUser
      */
     public function getRoleNamesAttribute(): string
     {
-        return $this->roles->pluck('name')->join(','); // Gunakan metode `roles` dari HasRoles
+        return $this->roles->pluck('name')->join(',');
     }
 }
