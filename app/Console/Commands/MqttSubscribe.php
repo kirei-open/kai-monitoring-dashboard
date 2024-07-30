@@ -7,7 +7,6 @@ use App\Models\Location;
 use App\Models\Measurement;
 use PhpMqtt\Client\MqttClient;
 use Illuminate\Console\Command;
-use PhpMqtt\Client\Facades\MQTT;
 use Illuminate\Support\Facades\DB;
 use PhpMqtt\Client\ConnectionSettings;
 use App\Events\DeviceLocationBroadcast;
@@ -76,6 +75,13 @@ class MqttSubscribe extends Command
 
                     $location = DB::raw("ST_GeomFromText('POINT({$longitude} {$latitude})')");
 
+                    $dataLocationBroadcast = (object)[
+                        'device_id' => $data['serial_number'],
+                        'datetime' => $data['datetime'],
+                        'longitude' => $data['longitude'],
+                        'latitude' => $data['latitude']
+                    ];
+
                     $locationData = [
                         'device_id' => $data['serial_number'],
                         'datetime' => $data['datetime'],
@@ -87,7 +93,7 @@ class MqttSubscribe extends Command
                         'last_location' => $location,
                     ]);
 
-                    event(new DeviceLocationBroadcast((object) $locationData));
+                    event(new DeviceLocationBroadcast($dataLocationBroadcast));
                 } else {
                     $this->error("Invalid message format: {$message}");
                 }
