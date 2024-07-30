@@ -198,26 +198,31 @@
     });
     function createChartConfig(key, lineColor, markerColor) {
       let chartContainerId;
+      let unit;
       switch (key) {
         case 'Tegangan':
           chartContainerId = 'chart';
           lineColor = '#5546ff';
           markerColor = '#5546ff';
+          unit = 'V';
           break;
         case 'Arus':
           chartContainerId = 'chart2';
           lineColor = '#ef732f';
           markerColor = '#ef732f';
+          unit = 'A';
           break;
         case 'Daya Pancar':
           chartContainerId = 'chart3';
           lineColor = '#2f2b70';
           markerColor = '#2f2b70';
+          unit = 'W';
           break;
         case 'SWR':
           chartContainerId = 'chart4';
           lineColor = '#eecd23';
           markerColor = '#eecd23';
+          unit = '';
           break;
         default:
           return null;
@@ -276,6 +281,13 @@
         },
         toolbar: {
           show: false,
+        },
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return val + " " + unit;
+            }
+          }
         },
         chartContainerId: chartContainerId
       };
