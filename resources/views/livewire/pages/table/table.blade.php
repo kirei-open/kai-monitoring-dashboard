@@ -43,9 +43,6 @@
                             NO
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            TIMESTAMP
-                        </th>
-                        <th scope="col" class="px-6 py-3">
                             SERIAL NUMBER
                         </th>
                         <th scope="col" class="px-6 py-3">
@@ -53,6 +50,9 @@
                         </th>
                         <th scope="col" class="px-6 py-3">
                             LONGITUDE
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            TIMESTAMP
                         </th>
                         <th scope="col" class="px-6 py-3">
                             ACTION
@@ -67,16 +67,16 @@
                             {{ ++$lastNumber }}
                         </td>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $location->created_at }}
-                        </th>
-                        <td class="px-6 py-4">
                             {{ $location->device_id }}
-                        </td>
+                        </th>
                         <td class="px-6 py-4">
                             {{ $location->latitude }}
                         </td>
                         <td class="px-6 py-4">
                             {{ $location->longitude }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $location->datetime }}
                         </td>
                         <td class="px-6 py-4">
                             <a href="/table/detail/{{ $location->device_id }}" wire:navigate class="font-medium 

@@ -94,9 +94,6 @@
           <thead class="text-xs text-neutral-100 uppercase bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" class="px-6 py-3">
-                DATE TIME
-              </th>
-              <th scope="col" class="px-6 py-3">
                 SERIAL NUMBER
               </th>
               <th scope="col" class="px-6 py-3">
@@ -105,6 +102,9 @@
               <th scope="col" class="px-6 py-3">
                 LONGITUDE
               </th>
+              <th scope="col" class="px-6 py-3">
+                DATETIME
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -112,16 +112,16 @@
               <tr
                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {{ $location->created_at }}
-                </th>
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {{ $location->device_id }}
                 </th>
-                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {{ $location->latitude }}
-                </td>
+                </th>
                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {{ $location->longitude }}
+                </td>
+                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  {{ $location->datetime }}
                 </td>
               </tr>
             @endforeach
@@ -152,10 +152,7 @@
           <thead class="text-xs text-neutral-100 uppercase bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" class="px-6 py-3">
-                DEVICE ID
-              </th>
-              <th scope="col" class="px-6 py-3">
-                DATETIME
+                SERIAL NUMBER
               </th>
               <th scope="col" class="px-6 py-3">
                 KEY
@@ -165,6 +162,9 @@
               </th>
               <th scope="col" class="px-6 py-3">
                 UNIT
+              </th>
+              <th scope="col" class="px-6 py-3">
+                DATETIME
               </th>
             </tr>
           </thead>
@@ -176,16 +176,16 @@
                   {{ $measurement->device_id }}
                 </th>
                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {{ $measurement->datetime }}
-                </td>
-                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {{ $measurement->key }}
                 </td>
-                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"">
+                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {{ $measurement->value }}
                 </td>
-                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"">
                   {{ $measurement->unit }}
+                </td>
+                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  {{ $measurement->datetime }}
                 </td>
               </tr>
             @endforeach

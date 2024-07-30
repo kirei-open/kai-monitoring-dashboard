@@ -7,7 +7,7 @@
             hover:cursor-pointer focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 
             dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
             dark:focus:border-blue-500 mt-4"
-      disabled>
+            disabled>
             <option value="" selected disabled>Select Device</option>
               @foreach ($device_id as $id)
                 <option value="{{ $id }}">{{ $id }}</option>
@@ -123,6 +123,7 @@
       const endDateInput = document.getElementById('endDate');
       const resetButton = document.getElementById('resetButton');
       const datetimeFields = document.getElementById('datetimeFields');
+  
       function toggleDatetimeFields(show) {
         if (show) {
           datetimeFields.style.display = 'flex';
@@ -130,13 +131,16 @@
           datetimeFields.style.display = 'none';
         }
       }
+
       function toggleResetButton(enable) {
         resetButton.disabled = !enable;
       }
+
       startDateInput.disabled = true;
       endDateInput.disabled = true;
       toggleDatetimeFields(false);
       toggleResetButton(false);
+
       modeSelect.addEventListener('change', function(event) {
         mode = event.target.value;
         if (mode === 'live') {
@@ -147,10 +151,10 @@
           toggleResetButton(false);
         } else if (mode === 'database') {
           deviceSelect.disabled = false;
-          toggleDatetimeFields(false);
-          startDateInput.disabled = true;
-          endDateInput.disabled = true;
-          toggleResetButton(false);
+          toggleDatetimeFields(true); // Menampilkan fields datetime
+          startDateInput.disabled = false; // Mengaktifkan input start date
+          endDateInput.disabled = false; // Mengaktifkan input end date
+          toggleResetButton(true); // Mengaktifkan tombol reset
         } else {
           deviceSelect.disabled = true;
           startDateInput.disabled = true;
@@ -159,6 +163,7 @@
           toggleResetButton(false);
         }
       });
+
       deviceSelect.addEventListener('change', function(event) {
         const deviceSelected = event.target.value;
 
@@ -174,6 +179,7 @@
           toggleResetButton(false);
         }
       });
+
       startDateInput.addEventListener('change', function() {
         if (startDateInput.value) {
           toggleResetButton(true);
@@ -181,6 +187,7 @@
           toggleResetButton(false);
         }
       });
+
       resetButton.addEventListener('click', function() {
         startDateInput.value = '';
         endDateInput.value = '';
