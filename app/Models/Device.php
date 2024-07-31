@@ -17,11 +17,9 @@ class Device extends Model
 
     protected $fillable = [
         'serial_number',
-        'name',
         'code',
         'last_location',
         'last_monitored_value',
         'api_key'
     ];
-
 }
