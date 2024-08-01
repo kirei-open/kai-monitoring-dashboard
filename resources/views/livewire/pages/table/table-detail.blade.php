@@ -1,11 +1,61 @@
 <div>
   @section('title', $device->serial_number)
   <section class="bg-white dark:bg-gray-900 lg:mt-16">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16">
+    <div class="pt-8 px-4 mx-auto max-w-screen-xl lg:pt-16">
       <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12 mb-8">
-        <span class="bg-blue-100 text-blue-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
+        <span
+          class="bg-blue-100 text-purple-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
+              rounded-md dark:bg-gray-700 dark:text-purple-400 mb-2">
+          Train
+        </span>
+        <div class="relative overflow-x-auto lg:mt-4">
+          <table class="lg:w-[1150px] text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-neutral-100 uppercase bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" class="px-6 py-3">
+                  Serial Number
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Train Name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Train Image
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Train Stations
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                  {{ $train->device_id }}
+                </th>
+                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  {{ $train->name }}
+                </td>
+                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  <img src="{{ asset('storage/' . $train->image) }}" alt="{{ $train->name }}"
+                    class="h-16 w-16 object-cover">
+                </td>
+                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  {{ $train->stations->pluck('name')->join(', ') }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white dark:bg-gray-900">
+    <div class="pb-8 px-4 mx-auto max-w-screen-xl lg:pt-4 lg:pb-16">
+      <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12 mb-8">
+        <span
+          class="bg-blue-100 text-blue-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
               rounded-md dark:bg-gray-700 dark:text-blue-400 mb-2">
-              Device
+          Device
         </span>
         <div class="relative overflow-x-auto lg:mt-4">
           <table class="lg:w-[1150px] text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -16,9 +66,6 @@
                 </th>
                 <th scope="col" class="px-6 py-3">
                   Code
-                </th>
-                <th scope="col" class="px-6 py-3">
-                  Name
                 </th>
                 <th scope="col" class="px-6 py-3">
                   Last Location
@@ -35,9 +82,6 @@
                 </th>
                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {{ $device->code }}
-                </td>
-                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {{ $device->name }}
                 </td>
                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {{ $device->latitude ?? 'Belum Ada Data' }} , {{ $device->longitude ?? 'Belum Ada Data' }}
@@ -86,9 +130,10 @@
   <section class="bg-white dark:bg-gray-900">
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:mt-[-80px]">
       <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12 mb-8">
-        <span class="bg-green-100 text-green-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
+        <span
+          class="bg-green-100 text-green-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
               rounded-md dark:bg-gray-700 dark:text-green-400 mb-2">
-              Location
+          Location
         </span>
         <table class="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 lg:w-[1150px] lg:mt-4">
           <thead class="text-xs text-neutral-100 uppercase bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
@@ -144,9 +189,10 @@
   <section class="bg-white dark:bg-gray-900">
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:mt-[-50px]">
       <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12 mb-8">
-        <span class="bg-red-100 text-red-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
+        <span
+          class="bg-red-100 text-red-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
               rounded-md dark:bg-gray-700 dark:text-red-400 mb-2">
-              Measurement
+          Measurement
         </span>
         <table class="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 lg:w-[1150px] lg:mt-4">
           <thead class="text-xs text-neutral-100 uppercase bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
@@ -195,7 +241,8 @@
           aria-label="Table navigation">
           <span
             class="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">
-            Showing <span class="font-semibold text-gray-900 dark:text-white">{{ $measurements->firstItem() }}</span> -
+            Showing <span class="font-semibold text-gray-900 dark:text-white">{{ $measurements->firstItem() }}</span>
+            -
             <span class="font-semibold text-gray-900 dark:text-white">{{ $measurements->lastItem() }}</span> of <span
               class="font-semibold text-gray-900 dark:text-white">{{ $measurements->total() }}</span>
           </span>
