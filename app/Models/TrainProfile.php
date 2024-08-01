@@ -12,15 +12,16 @@ class TrainProfile extends Model
     protected $fillable = [
         'name',
         'image',
+        'device_id',
     ];
 
     public function device()
     {
-        return $this->belongsTo(Device::class);
+        return $this->belongsTo(Device::class); // Ensure this is correct
     }
 
     public function stations()
     {
-        return $this->belongsTo(station::class);
+        return $this->belongsToMany(Station::class, 'station_train_profile');
     }
 }

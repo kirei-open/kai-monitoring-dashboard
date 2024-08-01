@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('device_id');
             $table->foreign('device_id')->references('serial_number')->on('devices');
-            $table->unsignedBigInteger('station_id');
-            $table->foreign('station_id')->references('id')->on('stations');
             $table->string('name');
             $table->string('image');
             $table->timestamps();
