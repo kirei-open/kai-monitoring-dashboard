@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
 use Filament\Tables;
 use App\Models\Location;
 use Filament\Forms\Form;
@@ -12,8 +11,6 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\LocationResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\LocationResource\RelationManagers;
 
 class LocationResource extends Resource
 {
@@ -32,9 +29,9 @@ class LocationResource extends Resource
     public static function table(Table $table): Table
     {
         $deviceIds = Location::query()
-        ->groupBy('device_id')
-        ->pluck('device_id', 'device_id')
-        ->toArray();
+            ->groupBy('device_id')
+            ->pluck('device_id', 'device_id')
+            ->toArray();
 
         return $table
             ->columns([

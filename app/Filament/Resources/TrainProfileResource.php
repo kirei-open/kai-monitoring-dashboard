@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
 use Filament\Tables;
 use App\Models\Device;
 use App\Models\Station;
@@ -15,10 +14,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\FileUpload;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\TrainProfileResource\Pages;
-use App\Filament\Resources\TrainProfileResource\RelationManagers;
 
 class TrainProfileResource extends Resource
 {
@@ -33,7 +29,6 @@ class TrainProfileResource extends Resource
                 Select::make('device_id')
                     ->label('Device')
                     ->options(function ($get, $record) {
-                        // Fetch all devices and exclude those that are already associated with a TrainProfile
                         $associatedDeviceSerialNumbers = TrainProfile::pluck('device_id');
 
                         return Device::whereNotIn('serial_number', $associatedDeviceSerialNumbers)
@@ -47,11 +42,11 @@ class TrainProfileResource extends Resource
                     ->required()
                     ->label('Train Profile Name'),
 
-                Select::make('stations') // Use Select with multiple()
+                Select::make('stations')
                     ->label('Stations')
-                    ->multiple() // Enable multiple selection
-                    ->relationship('stations', 'name') // The relationship method on TrainProfile model and the attribute to display
-                    ->options(Station::all()->pluck('name', 'id')) // Fetch all stations
+                    ->multiple()
+                    ->relationship('stations', 'name')
+                    ->options(Station::all()->pluck('name', 'id'))
                     ->required(),
 
                 FileUpload::make('image')
