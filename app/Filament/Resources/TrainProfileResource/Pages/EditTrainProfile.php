@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources\TrainProfileResource\Pages;
 
-use App\Filament\Resources\TrainProfileResource;
 use Filament\Actions;
+use App\Models\ActivityLog;
 use Filament\Resources\Pages\EditRecord;
+use App\Filament\Resources\TrainProfileResource;
 
 class EditTrainProfile extends EditRecord
 {
@@ -15,5 +16,12 @@ class EditTrainProfile extends EditRecord
         return [
             Actions\DeleteAction::make(),
         ];
+    }
+
+    protected function afterUpdate()
+    {
+        ActivityLog::create([
+            'description' => 'Updated a train profile data'
+        ]);
     }
 }

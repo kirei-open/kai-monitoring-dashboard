@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources\DeviceResource\Pages;
 
-use App\Filament\Resources\DeviceResource;
 use Filament\Actions;
+use App\Models\ActivityLog;
 use Filament\Resources\Pages\EditRecord;
+use App\Filament\Resources\DeviceResource;
 
 class EditDevice extends EditRecord
 {
@@ -15,5 +16,12 @@ class EditDevice extends EditRecord
         return [
             Actions\DeleteAction::make(),
         ];
+    }
+
+    protected function afterSave()
+    {
+        ActivityLog::create([
+            'description' => 'Updated a device data'
+        ]);
     }
 }

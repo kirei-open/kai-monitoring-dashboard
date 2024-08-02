@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\StationResource\Pages;
 
 use Filament\Actions;
+use App\Models\ActivityLog;
 use Illuminate\Support\Facades\DB;
 use Filament\Resources\Pages\EditRecord;
 use App\Filament\Resources\StationResource;
@@ -23,5 +24,12 @@ class EditStation extends EditRecord
         return [
             Actions\DeleteAction::make(),
         ];
+    }
+
+    protected function afterSave()
+    {
+        ActivityLog::create([
+            'description' => 'Updated a station data'
+        ]);
     }
 }
