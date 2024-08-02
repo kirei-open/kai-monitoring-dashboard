@@ -30,24 +30,22 @@ class TrainProfileResource extends Resource
     {
         return $form
             ->schema([
+                Select::make('device_id')
+                    ->label('Device')
+                    ->options(function ($get, $record) {
+                        // Fetch all devices and exclude those that are already associated with a TrainProfile
+                        $associatedDeviceSerialNumbers = TrainProfile::pluck('device_id');
+
+                        return Device::whereNotIn('serial_number', $associatedDeviceSerialNumbers)
+                            ->orWhere('serial_number', $record->device_id ?? '')
+                            ->pluck('serial_number', 'serial_number');
+                    })
+                    ->required()
+                    ->default(fn (?TrainProfile $record) => $record ? $record->device_id : null),
+
                 TextInput::make('name')
                     ->required()
                     ->label('Train Profile Name'),
-
-                FileUpload::make('image')
-                    ->label('Image')
-                    ->image()
-                    ->directory('train_profiles/images'),
-
-                Select::make('device_id')
-                    ->label('Device')
-                    ->options(function () {
-                        // Fetch all devices and exclude those that are already associated with a TrainProfile
-                        $associatedDeviceSerialNumbers = TrainProfile::pluck('device_id');
-                        return Device::whereNotIn('serial_number', $associatedDeviceSerialNumbers)
-                            ->pluck('serial_number', 'serial_number'); // Use serial_number as both key and value
-                    })
-                    ->required(),
 
                 Select::make('stations') // Use Select with multiple()
                     ->label('Stations')
@@ -55,6 +53,11 @@ class TrainProfileResource extends Resource
                     ->relationship('stations', 'name') // The relationship method on TrainProfile model and the attribute to display
                     ->options(Station::all()->pluck('name', 'id')) // Fetch all stations
                     ->required(),
+
+                FileUpload::make('image')
+                    ->label('Image')
+                    ->image()
+                    ->directory('train_profiles/images'),
             ]);
     }
 
