@@ -54,10 +54,16 @@ class GenerateDetailReport implements ShouldQueue
         $train = TrainProfile::with('stations')->where('device_id', $this->id)->first();
         $device = Device::selectRaw('*, ST_X(last_location::geometry) AS longitude, ST_Y(last_location::geometry) AS latitude')->where('serial_number', $this->id)->first();
         $device->last_monitored_value = json_decode($device->last_monitored_value, true);
-        $locations = Location::selectRaw('*, ST_X(point::geometry) AS longitude, ST_Y(point::geometry) AS latitude')->where('device_id', $this->id)->orderBy('created_at', 'desc')->paginate(5, pageName: 'locationsPage');
-        $measurements = Measurement::where('device_id', $this->id)->orderBy('created_at', 'desc')->paginate(5, pageName: 'measurementsPage');
+        $locations = Location::selectRaw('*, ST_X(point::geometry) AS longitude, ST_Y(point::geometry) AS latitude')
+            ->where('device_id', $this->id)->orderBy('created_at', 'desc')
+            ->where('datetime', '>=', $this->startDate)->where('datetime', '<=', $this->endDate)
+            ->get();
+        $measurements = Measurement::where('device_id', $this->id)->orderBy('created_at', 'desc')
+            ->where('datetime', '>=', $this->startDate)->where('datetime', '<=', $this->endDate)
+            ->get();
         $calculatedMeasurements = Measurement::selectRaw("key, MIN(value) as minimum, MAX(value) as maximum, AVG(value) as average, unit")
             ->where('device_id', $this->id)
+            ->where('datetime', '>=', $this->startDate)->where('datetime', '<=', $this->endDate)
             ->groupByRaw('key, unit')
             ->get();
         Pdf::view('report', [
@@ -67,7 +73,7 @@ class GenerateDetailReport implements ShouldQueue
             "measurements" => $measurements,
             "calculatedMeasurements" => $calculatedMeasurements,
             "startDate" => Carbon::create($this->startDate)->format("d F Y"),
-            "endDate" => Carbon::create($this->endDate)->format("d F Y") 
+            "endDate" => Carbon::create($this->endDate)->format("d F Y")
         ])
             ->footerView('pdf.layout.footer')
             ->withBrowsershot(function (Browsershot $browsershot) {
