@@ -72,8 +72,8 @@ class GenerateDetailReport implements ShouldQueue
             "locations" => $locations,
             "measurements" => $measurements,
             "calculatedMeasurements" => $calculatedMeasurements,
-            "startDate" => Carbon::create($this->startDate)->format("d F Y"),
-            "endDate" => Carbon::create($this->endDate)->format("d F Y")
+            "startDate" => Carbon::create($this->startDate)->format("d F Y g:i A"),
+            "endDate" => Carbon::create($this->endDate)->format("d F Y g:i A")
         ])
             ->footerView('pdf.layout.footer')
             ->withBrowsershot(function (Browsershot $browsershot) {
