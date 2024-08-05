@@ -1,7 +1,8 @@
 <div>
   @section('title', $device->serial_number)
   <section class="lg:mt-[7rem] lg:ml-[325px]">
-    <button wire:click="generatePdf" type="button" class="text-white bg-blue-700 
+    <button wire:click="createReport" type="button"
+      class="text-white bg-blue-700 
       hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 
       font-medium rounded-lg text-sm px-5 py-2.5 
       me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 
@@ -98,8 +99,9 @@
                   {{ $train->name }}
                 </td>
                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path("storage/$train->image"))) }}"
-                      width="100" />
+                  <img
+                    src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path("storage/$train->image"))) }}"
+                    width="100" />
                 </td>
                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {{ $train->stations->pluck('name')->join(', ') }}
