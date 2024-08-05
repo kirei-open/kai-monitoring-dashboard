@@ -3,14 +3,14 @@
     <title>Report {{ $devices->serial_number }}</title>
 @endpush
 @section('main')
-  <table class="w-full">
+  <table class="w-full border-b border-black">
         <tr>
             <td>
                 <img src="https://www.kai.id/static/konten/logokai_main.png" alt="">
             </td>
             <td>
                 <span class="text-[18px] font-bold font-serif">
-                    Report Performance {{ $devices->serial_number }}
+                    Device {{ $devices->serial_number }} Report {{ $startDate . ' - ' . $endDate }}
                 </span>
             </td>
         </tr>
@@ -44,61 +44,14 @@
         <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
           {{ $train->name }}
         </td>
-        <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white justify-self-center">
-          <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path("storage/$train->image"))) }}"
+        <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-whit">
+          <img class="ml-[130px]" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path("storage/$train->image"))) }}"
           width="100" />
         </td>
         <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             {{ $train->stations->pluck('name')->join(', ') }}
         </td>
       </tr>
-    </tbody>
-  </table>
-  <span class="bg-yellow-100 text-yellow-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
-              rounded-md dark:bg-indigo-900 dark:text-indigo-400 mb-4 mt-4">
-              Calculated Performance
-  </span>
-  <table class="lg:w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-    <thead class="text-xs text-center text-neutral-100 uppercase bg-[#2d2a6f] border-b border-gray-300 dark:bg-gray-700 dark:text-gray-400">
-      <tr>
-        <th scope="col" class="border border-gray-300 px-6 py-3">
-          Key
-        </th>
-        <th scope="col" class="border border-gray-300 px-6 py-3">
-          Minimum
-        </th>
-        <th scope="col" class="border border-gray-300 px-6 py-3">
-          Maximum
-        </th>
-        <th scope="col" class="border border-gray-300 px-6 py-3">
-          Average
-        </th>
-        <th scope="col" class="border border-gray-300 px-6 py-3">
-          Unit
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach ($calculatedMeasurements as $cm)
-        <tr
-          class="text-center bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
-          <th scope="row" class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-            {{ $cm->key }}
-          </th>
-          <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-            {{ $cm->minimum }}
-          </td>
-          <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-            {{ $cm->maximum }}
-          </td>
-          <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"">
-            {{ $cm->average }}
-          </td>
-          <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-            {{ $cm->unit }}
-          </td>
-        </tr>
-      @endforeach
     </tbody>
   </table>
   <span class="bg-blue-100 text-blue-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
@@ -123,34 +76,34 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="text-center bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700">
-        <th scope="row" class="border border-gray-300 px-6 py-4 font-medium text-gray-900 dark:text-white">
+      <tr class="bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700">
+        <th scope="row" class=" text-center border border-gray-300 px-6 py-4 font-medium text-gray-900 dark:text-white">
           {{ $devices->serial_number }}
         </th>
-        <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        <td class="text-center border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
           {{ $devices->code }}
         </td>
-        <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        <td class="text-center border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
           {{ $devices->latitude ?? 'Belum Ada Data' }} , {{ $devices->longitude ?? 'Belum Ada Data' }}
         </td>
         <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
           @if ($devices->last_monitored_value != null)
-            <ul class="text-center max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
-              <li class="font-medium text-gray-900 dark:text-white">
+            <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
+              <li class="text-center font-medium text-gray-900 dark:text-white">
                 Datetime <span class="">:</span> &nbsp; {{ $devices->last_monitored_value['datetime'] }}
               </li>
-              <li class="font-medium text-gray-900 dark:text-white">
+              <li class="font-medium text-gray-900 dark:text-white ml-[80px]">
                 Key <span class="">:</span> &nbsp; {{ $devices->last_monitored_value['key'] }}
               </li>
-              <li class="font-medium text-gray-900 dark:text-white">
+              <li class="font-medium text-gray-900 dark:text-white ml-[80px]">
                 Value <span class="">:</span> &nbsp; {{ $devices->last_monitored_value['value'] }}
               </li>
-              <li class="font-medium text-gray-900 dark:text-white">
+              <li class="font-medium text-gray-900 dark:text-white ml-[80px]">
                 Unit <span class="">:</span> &nbsp; {{ $devices->last_monitored_value['unit'] }}
               </li>
             </ul>
           @else
-            <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
+            <ul class="text-center max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
               <li class="font-medium text-gray-900 dark:text-white">
                 Datetime <span class="">:</span> &nbsp; Belum Ada Data
               </li>
@@ -167,6 +120,52 @@
           @endif
         </td>
       </tr>
+    </tbody>
+  </table>
+  <span class="bg-yellow-100 text-yellow-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
+      rounded-md dark:bg-indigo-900 dark:text-indigo-400 mb-4 mt-4">
+      Calculated Measurements
+  </span>
+  <table class="lg:w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-center text-neutral-100 uppercase bg-[#2d2a6f] border-b border-gray-300 dark:bg-gray-700 dark:text-gray-400">
+      <tr>
+        <th scope="col" class="border border-gray-300 px-6 py-3">
+        Key
+        </th>
+        <th scope="col" class="border border-gray-300 px-6 py-3">
+        Minimum
+        </th>
+        <th scope="col" class="border border-gray-300 px-6 py-3">
+        Maximum
+        </th>
+        <th scope="col" class="border border-gray-300 px-6 py-3">
+        Average
+        </th>
+        <th scope="col" class="border border-gray-300 px-6 py-3">
+        Unit
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach ($calculatedMeasurements as $cm)
+        <tr class="text-center bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
+          <th scope="row" class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+          {{ $cm->key }}
+          </th>
+          <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+          {{ $cm->minimum }}
+          </td>
+          <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+          {{ $cm->maximum }}
+          </td>
+          <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"">
+          {{ $cm->average }}
+          </td>
+          <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+          {{ $cm->unit }}
+          </td>
+        </tr>
+      @endforeach
     </tbody>
   </table>
   <span class="bg-green-100 text-green-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
