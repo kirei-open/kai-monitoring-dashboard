@@ -57,7 +57,6 @@ class TableDetail extends Component
             "measurements" => $measurements,
             "calculatedMeasurements" => $calculatedMeasurements
         ])
-        ->headerView('pdf.layout.header')
         ->footerView('pdf.layout.footer')
         ->withBrowsershot(function (Browsershot $browsershot) {
             $browsershot                    
