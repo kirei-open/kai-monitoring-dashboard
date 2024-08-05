@@ -35,8 +35,7 @@ class TableDetail extends Component
     public function createReport()
     {
         $reportId = $this->saveReport();
-        GenerateDetailReport::dispatch($this->id, $reportId);
-        dd($this->startDate, $this->endDate);
+        GenerateDetailReport::dispatch($this->id, $reportId, $this->startDate, $this->endDate);
     }
 
     public function saveReport()
