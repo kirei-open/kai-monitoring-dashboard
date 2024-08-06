@@ -9,9 +9,11 @@ use App\Models\Location;
 use App\Models\Measurement;
 use App\Models\TrainProfile;
 use App\Jobs\GenerateDetailReport;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class TableDetail extends Component
 {
+    use LivewireAlert;
 
     public $id;
     public $startDate;
