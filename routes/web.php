@@ -3,7 +3,7 @@
 use App\Http\Controllers\MeasurementController;
 use App\Livewire\Pages\Dashboard\Dashboard;
 use App\Livewire\Pages\Graphic\Graphic;
-use App\Livewire\Pages\Report\Report;
+use App\Livewire\Pages\Report\ReportPage;
 use App\Livewire\Pages\Table\Table;
 use Spatie\Health\Http\Controllers\HealthCheckResultsController;
 use App\Livewire\Pages\Table\TableDetail;
@@ -29,7 +29,7 @@ Route::group(['middleware' => ['role:super_admin|Admin']], function () {
     Route::get('/table', Table::class)->name('table');
     Route::get('/table/detail/{id}', TableDetail::class)->name('table.detail');
     Route::get('health', HealthCheckResultsController::class);
-    Route::get('/report',Report::class)->name('report');
+    Route::get('/report',ReportPage::class)->name('report');
 });
 
 Route::group(['middleware' => ['role:super_admin|Admin|Teknisi']], function () {
