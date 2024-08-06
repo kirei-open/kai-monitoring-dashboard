@@ -12,13 +12,13 @@
       height: 100%; 
       overflow: auto;
       background-color: rgb(0,0,0);
-      background-color: rgba(0,0,0,0.4);
+      background-color: rgba(0,0,0,0.8);
     }
     
     .modal-content {
       margin: auto;
       padding: 10px;
-      margin-top: 50px;
+      margin-top: 250px;
       border: 1px solid #888;
       width: 30%;
     }
@@ -38,7 +38,7 @@
       cursor: pointer;
     }
     </style>
-  <section class="lg:mt-[7rem] lg:ml-[325px]">
+  <section class="lg:mt-[7rem] lg:ml-[390px]">
     <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium 
             rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none 
             dark:focus:ring-blue-800" id="myBtn">
@@ -332,20 +332,20 @@
 </div>
 @livewireScripts
 @push('script')
-<script>
-  var modal = document.getElementById("myModal");
-  var btn = document.getElementById("myBtn");
-  var span = document.getElementsByClassName("close")[0];
-  btn.onclick = function() {
-    modal.style.display = "block";
-  }
-  span.onclick = function() {
-    modal.style.display = "none";
-  }
-  window.onclick = function(event) {
-    if (event.target == modal) {
+  <script>
+    var modal = document.getElementById("myModal");
+    var btn = document.getElementById("myBtn");
+    var span = document.getElementsByClassName("close")[0];
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+    span.onclick = function() {
       modal.style.display = "none";
     }
-  }
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
   </script>
 @endpush

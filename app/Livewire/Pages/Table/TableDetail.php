@@ -11,6 +11,7 @@ use App\Models\TrainProfile;
 use App\Jobs\GenerateDetailReport;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
+
 class TableDetail extends Component
 {
     use LivewireAlert;
@@ -43,6 +44,7 @@ class TableDetail extends Component
             'timer' => 3000,
             'toast' => true,
         ]);
+        $this->reset(['startDate', 'endDate']);
     }
 
     public function saveReport()
