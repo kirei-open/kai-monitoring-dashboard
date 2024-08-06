@@ -28,6 +28,7 @@
       float: right;
       font-size: 28px;
       font-weight: bold;
+      margin-top: -15px;
     }
     
     .close:hover,
@@ -48,7 +49,7 @@
         <!-- Modal content -->
         <div class="bg-white dark:bg-gray-800 modal-content">
           <span class="close">&times;</span>
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-white ml-2">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white ml-2 mt-4">
             Generate Report By Date
           </h3>
           <div class="flex items-center ml-2">
@@ -78,6 +79,7 @@
         </div>
       </div>
   </section>
+
   <section class="bg-white dark:bg-gray-900 lg:mt-[-50px]">
     <div class="pt-8 px-4 mx-auto max-w-screen-xl lg:pt-16">
       <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12 mb-8">
