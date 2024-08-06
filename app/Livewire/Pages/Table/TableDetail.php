@@ -36,6 +36,11 @@ class TableDetail extends Component
     {
         $reportId = $this->saveReport();
         GenerateDetailReport::dispatch($this->id, $reportId, $this->startDate, $this->endDate);
+        $this->alert('info', 'Generating report', [
+            'position' => 'top-end',
+            'timer' => 3000,
+            'toast' => true,
+        ]);
     }
 
     public function saveReport()

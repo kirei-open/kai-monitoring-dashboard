@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Events\GeneratedReportEvent;
 use Carbon\Carbon;
 use App\Models\Device;
 use App\Models\Report;
@@ -92,7 +93,7 @@ class GenerateDetailReport implements ShouldQueue
             $report->file = "reports/Device_" . $this->id . "_" . $now . ".pdf";
             $report->name = "Device_" . $this->id . "_" . $now . ".pdf";
             $report->save();
-            // ReportingChannel::dispatch($this->authId, 'generating report finished', false);
+            event(new GeneratedReportEvent("success", "Report generated"));
         } else {
             throw new \Exception("Report with ID {$this->reportId} not found");
         }
