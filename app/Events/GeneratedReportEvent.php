@@ -17,7 +17,7 @@ class GeneratedReportEvent implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct(protected $type, protected $description)
+    public function __construct(public $type, public $description)
     {
         //
     }
