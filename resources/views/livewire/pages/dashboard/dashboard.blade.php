@@ -68,6 +68,7 @@
         var popupContent = `
                     <b>Serial Number:</b> ${device.serial_number}<br>
                     <b>Code:</b> ${device.code}<br>
+                    <b>Name:</b> ${device.train_profile.name}<br>
                     <b>Last Location:</b> ${latitude},${longitude}<br>
                     <a href="/table/detail/${device.serial_number}">Detail</a>
                 `;
@@ -98,14 +99,30 @@
     addStationMarkers();
     addDeviceMarkers();
 
-    function addOrUpdateMarkerFromBroadcast(device) {
+    async function fetchDeviceDetails(deviceId) {
+      const response = await fetch(`/get-detail-device/${deviceId}`);
+      const data = await response.json();
+
+      if (data.error) {
+        console.error('Error fetching device details:', data.error);
+        return null;
+      }
+
+      return data.data;
+    }
+
+    async function addOrUpdateMarkerFromBroadcast(device) {
       var deviceIcon = getIcon('{{ URL::asset('img/train.png') }}', map.getZoom());
 
+      var detail = await fetchDeviceDetails(device.device_id);
+
       var popupContent = `
-                <b>Serial Number:</b> ${device.device_id}<br>
-                <b>Last Location:</b> ${device.latitude},${device.longitude}<br>
-                <a href="/table/detail/${device.device_id}">Detail</a>
-            `;
+        <b>Serial Number:</b> ${device.device_id}<br>
+        <b>Code:</b> ${detail ? detail.code : 'N/A'}<br>
+        <b>Name:</b> ${detail ? detail.train_profile.name : 'N/A'}<br>
+        <b>Last Location:</b> ${device.latitude},${device.longitude}<br>
+        <a href="/table/detail/${device.device_id}">Detail</a>
+    `;
 
       var existingMarker = markerLayerGroup.getLayers().find(marker => marker.options.device_id === device.device_id);
 
