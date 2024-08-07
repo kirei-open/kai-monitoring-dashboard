@@ -59,27 +59,32 @@
     }
 
     function addDeviceMarkers() {
-      devices.forEach(device => {
-        var latitude = parseFloat(device.latitude);
-        var longitude = parseFloat(device.longitude);
+  devices.forEach(device => {
+    var latitude = parseFloat(device.latitude);
+    var longitude = parseFloat(device.longitude);
 
-        var deviceIcon = getIcon('{{ URL::asset('img/train.png') }}', map.getZoom());
+    var deviceIcon = getIcon('{{ URL::asset('img/train.png') }}', map.getZoom());
 
-        var popupContent = `
-                    <b>Serial Number:</b> ${device.serial_number}<br>
-                    <b>Code:</b> ${device.code}<br>
-                    <b>Name:</b> ${device.train_profile.name}<br>
-                    <b>Last Location:</b> ${latitude},${longitude}<br>
-                    <a href="/table/detail/${device.serial_number}">Detail</a>
-                `;
+    // Ganti URL gambar dengan URL publik yang dapat diakses
+    var imageUrl = `/storage/${device.train_profile.image}`;
+    
+    var popupContent = `
+      <b>Serial Number:</b> ${device.serial_number}<br>
+      <b>Code:</b> ${device.code}<br>
+      <b>Name:</b> ${device.train_profile.name}<br>
+      <b>Last Location:</b> ${latitude},${longitude}<br>
+      <img src="${imageUrl}" width="100" /><br>
+      <a href="/table/detail/${device.serial_number}">Detail</a>
+    `;
 
-        var marker = L.marker([latitude, longitude], {
-          icon: deviceIcon,
-          device_id: device.serial_number
-        }).bindPopup(popupContent);
-        marker.addTo(markerLayerGroup);
-      });
-    }
+    var marker = L.marker([latitude, longitude], {
+      icon: deviceIcon,
+      device_id: device.serial_number
+    }).bindPopup(popupContent);
+    marker.addTo(markerLayerGroup);
+  });
+}
+
 
     function updateMarkerIcons() {
       mapLayerGroup.eachLayer(function(layer) {
