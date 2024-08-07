@@ -9,7 +9,7 @@ class EventLogger extends Component
 {
     public function render()
     {
-        $activityLogs = ActivityLog::paginate(7);
+        $activityLogs = ActivityLog::paginate(10);
         return view('livewire.pages.logger.event-logger',['activity_logs'=>$activityLogs]);
     }
 }
