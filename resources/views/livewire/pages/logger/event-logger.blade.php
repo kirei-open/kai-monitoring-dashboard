@@ -15,6 +15,9 @@
                         <th scope="col" class="text-center px-6 py-3">
                             DESCRIPTION
                         </th>
+                        <th scope="col" class="text-center px-6 py-3">
+                            CREATED AT
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,6 +25,7 @@
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td class="w-4 p-4 text-center">{{ ++$lastNumber }}</td>
                         <td class="w-4 p-4 text-center">{{ $activity->description }}</td>
+                        <td class="w-4 p-4 text-center">{{ $activity->created_at }}</td>
                     </tr>
                     @endforeach
                 </tbody>
