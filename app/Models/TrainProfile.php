@@ -15,6 +15,10 @@ class TrainProfile extends Model
         'device_id',
     ];
 
+    protected $casts = [
+        'device_id' => 'string',
+    ];
+
     public function device()
     {
         return $this->belongsTo(Device::class); // Ensure this is correct
