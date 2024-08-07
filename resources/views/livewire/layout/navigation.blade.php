@@ -143,11 +143,11 @@ new class extends Component {
               hover:dark:text-blue-300">
               <a href="{{ route('graphic') }}" wire:navigate>Graphic</a>
           </li>
-          <li class="{{ Request::is('#') ? 'bg-blue-100 text-blue-800 font-medium dark:bg-blue-900 
-              dark:text-blue-300' : 'dark:text-white' }} text-[16px] px-4 py-3 rounded-full 
-              hover:bg-blue-100 hover:text-blue-800 hover:dark:bg-blue-900 
+          <li class="{{ Request::is('event-logger') ? 'bg-blue-100 text-blue-800 font-medium dark:bg-blue-900 
+              dark:text-blue-300' : 'dark:text-white' }} text-[16px] px-4 py-3 rounded-full hover:bg-blue-100 
+              hover:text-blue-800 hover:dark:bg-blue-900 
               hover:dark:text-blue-300">
-              <a href="#" wire:navigate>Event Logger</a>
+              <a href="{{ route('event-logger') }}" wire:navigate>Event Logger</a>
           </li>
           <li class="{{ Request::is('report') ? 'bg-blue-100 text-blue-800 font-medium dark:bg-blue-900 
               dark:text-blue-300' : 'dark:text-white' }} text-[16px] px-4 py-3 rounded-full 
