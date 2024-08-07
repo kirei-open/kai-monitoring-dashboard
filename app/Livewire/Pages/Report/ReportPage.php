@@ -10,7 +10,8 @@ class ReportPage extends Component
 {
     public function render()
     {
-        return view('livewire.pages.report.report-page');
+        $reports = Report::paginate(10);
+        return view('livewire.pages.report.report-page',['reports'=> $reports]);
     }
 
     public function createReport()
