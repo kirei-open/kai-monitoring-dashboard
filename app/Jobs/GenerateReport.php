@@ -62,7 +62,7 @@ class GenerateReport implements ShouldQueue
         //     ->where('datetime', '>=', $this->startDate)->where('datetime', '<=', $this->endDate)
         //     ->groupByRaw('key, unit')
         //     ->get();
-        Pdf::view('report', [
+        Pdf::view('report-all', [
             "trains" => $trains,
             "devices" => $devices,
             "locations" => $locations,

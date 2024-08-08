@@ -5,9 +5,15 @@ namespace App\Livewire\Pages\Report;
 use App\Models\Report;
 use Livewire\Component;
 use App\Jobs\GenerateReport;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class ReportPage extends Component
 {
+    use LivewireAlert;
+    
+    public $startDate;
+    public $endDate;
+
     public function render()
     {
         $reports = Report::paginate(10);
