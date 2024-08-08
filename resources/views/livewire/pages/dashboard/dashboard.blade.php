@@ -117,32 +117,37 @@
     }
 
     async function addOrUpdateMarkerFromBroadcast(device) {
-      var deviceIcon = getIcon('{{ URL::asset('img/train.png') }}', map.getZoom());
+  var deviceIcon = getIcon('{{ URL::asset('img/train.png') }}', map.getZoom());
 
-      var detail = await fetchDeviceDetails(device.device_id);
+  var detail = await fetchDeviceDetails(device.device_id);
 
-      var popupContent = `
-        <b>Serial Number:</b> ${device.device_id}<br>
-        <b>Code:</b> ${detail ? detail.code : 'N/A'}<br>
-        <b>Name:</b> ${detail ? detail.train_profile.name : 'N/A'}<br>
-        <b>Last Location:</b> ${device.latitude},${device.longitude}<br>
-        <a href="/table/detail/${device.device_id}">Detail</a>
-    `;
+  // Pastikan URL gambar valid
+  var imageUrl = detail ? `/storage/${detail.train_profile.image}` : '';
 
-      var existingMarker = markerLayerGroup.getLayers().find(marker => marker.options.device_id === device.device_id);
+  var popupContent = `
+    <b>Serial Number:</b> ${device.device_id}<br>
+    <b>Code:</b> ${detail ? detail.code : 'N/A'}<br>
+    <b>Name:</b> ${detail ? detail.train_profile.name : 'N/A'}<br>
+    <b>Last Location:</b> ${device.latitude},${device.longitude}<br>
+    ${imageUrl ? `<img src="${imageUrl}" width="100" /><br>` : ''} <!-- Tampilkan gambar jika URL valid -->
+    <a href="/table/detail/${device.device_id}">Detail</a>
+  `;
 
-      if (existingMarker) {
-        existingMarker.setLatLng([device.latitude, device.longitude]);
-        existingMarker.getPopup().setContent(popupContent);
-        existingMarker.setIcon(deviceIcon); // update icon size
-      } else {
-        var newMarker = L.marker([device.latitude, device.longitude], {
-          icon: deviceIcon,
-          device_id: device.device_id
-        }).bindPopup(popupContent);
-        newMarker.addTo(markerLayerGroup);
-      }
-    }
+  var existingMarker = markerLayerGroup.getLayers().find(marker => marker.options.device_id === device.device_id);
+
+  if (existingMarker) {
+    existingMarker.setLatLng([device.latitude, device.longitude]);
+    existingMarker.getPopup().setContent(popupContent);
+    existingMarker.setIcon(deviceIcon); // update icon size
+  } else {
+    var newMarker = L.marker([device.latitude, device.longitude], {
+      icon: deviceIcon,
+      device_id: device.device_id
+    }).bindPopup(popupContent);
+    newMarker.addTo(markerLayerGroup);
+  }
+}
+
 
     window.onload = function() {
       window.Echo.channel('location-channel')
