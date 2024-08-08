@@ -64,16 +64,19 @@ class GenerateReport implements ShouldQueue
         $measurements = Measurement::orderBy('created_at', 'desc')
             ->where('datetime', '>=', $this->startDate)->where('datetime', '<=', $this->endDate)
             ->get();
-        // $calculatedMeasurements = Measurement::selectRaw("key, MIN(value) as minimum, MAX(value) as maximum, AVG(value) as average, unit")
-        //     ->where('datetime', '>=', $this->startDate)->where('datetime', '<=', $this->endDate)
-        //     ->groupByRaw('key, unit')
-        //     ->get();
+            $calculatedMeasurements = Measurement::selectRaw("device_id, key, MIN(value) as minimum, MAX(value) as maximum, AVG(value) as average, unit")
+    ->where('datetime', '>=', $this->startDate)
+    ->where('datetime', '<=', $this->endDate)
+    ->groupByRaw('device_id, key, unit')
+    ->orderBy('device_id')
+    ->get();
+
         Pdf::view('report-all', [
             "trains" => $trains,
             "devices" => $devices,
             "locations" => $locations,
             "measurements" => $measurements,
-            // "calculatedMeasurements" => $calculatedMeasurements,
+            "calculatedMeasurements" => $calculatedMeasurements,
             "startDate" => Carbon::create($this->startDate)->format("d F Y g:i A"),
             "endDate" => Carbon::create($this->endDate)->format("d F Y g:i A")
         ])

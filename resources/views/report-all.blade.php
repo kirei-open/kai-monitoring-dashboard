@@ -56,6 +56,60 @@
             @endforeach
         </tbody>
     </table>
+    <span class="bg-yellow-100 text-yellow-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
+        rounded-md dark:bg-indigo-900 dark:text-indigo-400 mb-4 mt-4">
+        Calculated Measurements
+    </span>
+    @php
+        $groupedMeasurements = $calculatedMeasurements->groupBy('device_id');
+    @endphp
+
+    @foreach ($groupedMeasurements as $deviceId => $calculatedMeasurements)
+        <h3 class="text-black font-bold text-[14px] mb-2 mt-2">Device ID: {{ $deviceId }}</h3>
+        <table class="lg:w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-center text-neutral-100 uppercase bg-[#2d2a6f] border-b border-gray-300 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="border border-gray-300 px-6 py-3">
+                    Key
+                    </th>
+                    <th scope="col" class="border border-gray-300 px-6 py-3">
+                    Minimum
+                    </th>
+                    <th scope="col" class="border border-gray-300 px-6 py-3">
+                    Maximum
+                    </th>
+                    <th scope="col" class="border border-gray-300 px-6 py-3">
+                    Average
+                    </th>
+                    <th scope="col" class="border border-gray-300 px-6 py-3">
+                    Unit
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($calculatedMeasurements as $cm)
+                <tr class="text-center bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
+                    <th scope="row" class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{ $cm->key }}
+                    </th>
+                    <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{ $cm->minimum }}
+                    </td>
+                    <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{ $cm->maximum }}
+                    </td>
+                    <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{ $cm->average }}
+                    </td>
+                    <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{ $cm->unit }}
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endforeach
+
     <span class="bg-blue-100 text-blue-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
             rounded-md dark:bg-gray-700 dark:text-blue-400 mb-4 mt-4">
             Device
@@ -173,44 +227,45 @@
     </span>
     <table class="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 lg:w-full">
         <thead class="text-center text-xs text-neutral-100 uppercase border-b border-gray-300 bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" class="border border-gray-300 px-6 py-3">
-                SERIAL NUMBER
-                </th>
-                <th scope="col" class="border border-gray-300 px-6 py-3">
-                KEY
-                </th>
-                <th scope="col" class="border border-gray-300 px-6 py-3">
-                VALUE
-                </th>
-                <th scope="col" class="border border-gray-300 px-6 py-3">
-                UNIT
-                </th>
-                <th scope="col" class="border border-gray-300 px-6 py-3">
-                DATETIME
-                </th>
-            </tr>
+          <tr>
+            <th scope="col" class="border border-gray-300 px-6 py-3">
+              SERIAL NUMBER
+            </th>
+            <th scope="col" class="border border-gray-300 px-6 py-3">
+              KEY
+            </th>
+            <th scope="col" class="border border-gray-300 px-6 py-3">
+              VALUE
+            </th>
+            <th scope="col" class="border border-gray-300 px-6 py-3">
+              UNIT
+            </th>
+            <th scope="col" class="border border-gray-300 px-6 py-3">
+              DATETIME
+            </th>
+          </tr>
         </thead>
         <tbody>
-            @foreach ($measurements as $measurement)
-                <tr class="text-center bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
-                    <th scope="row" class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ $measurement->device_id }}
-                    </th>
-                    <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ $measurement->key }}
-                    </td>
-                    <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ $measurement->value }}
-                    </td>
-                    <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"">
-                    {{ $measurement->unit }}
-                    </td>
-                    <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ $measurement->datetime }}
-                    </td>
-                </tr>
-            @endforeach
+          @foreach ($measurements as $measurement)
+            <tr
+              class="text-center bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
+              <th scope="row" class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {{ $measurement->device_id }}
+              </th>
+              <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {{ $measurement->key }}
+              </td>
+              <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {{ $measurement->value }}
+              </td>
+              <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"">
+                {{ $measurement->unit }}
+              </td>
+              <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {{ $measurement->datetime }}
+              </td>
+            </tr>
+          @endforeach
         </tbody>
     </table>
 @endsection
