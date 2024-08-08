@@ -51,7 +51,11 @@ class GenerateReport implements ShouldQueue
 
         $trains = TrainProfile::with('stations')->get();
         $devices = Device::selectRaw('*, ST_X(last_location::geometry) AS longitude, ST_Y(last_location::geometry) AS latitude')->get();
-        $devices->last_monitored_value = json_decode($devices->last_monitored_value, true);
+        foreach ($devices as $device) {
+            if ($device->last_monitored_value != null) {
+                $device->last_monitored_value = json_decode($device->last_monitored_value, true);
+            }
+        }
         $locations = Location::selectRaw('*, ST_X(point::geometry) AS longitude, ST_Y(point::geometry) AS latitude')
             ->where('datetime', '>=', $this->startDate)->where('datetime', '<=', $this->endDate)
             ->get();
