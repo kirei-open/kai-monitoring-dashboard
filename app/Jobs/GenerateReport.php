@@ -43,11 +43,13 @@ class GenerateReport implements ShouldQueue
     public function handle(): void
     {
         $reportsDirectory = base_path('public/reports');
+        $start = Carbon::create($this->startDate)->format("Y_m_d_H_i");
+        $end = Carbon::create($this->endDate)->format("Y_m_d_H_i");
 
         if (!File::exists($reportsDirectory)) {
             File::makeDirectory($reportsDirectory, 0755, true);
         }
-        $pdfFilePath = $reportsDirectory . "/" . "Report_" . $this->startDate . "_" . $this->endDate . ".pdf";
+        $pdfFilePath = $reportsDirectory . "/" . "Report_" . $start . "_" . $end . ".pdf";
 
         $trains = TrainProfile::with('stations')->get();
         $devices = Device::selectRaw('*, ST_X(last_location::geometry) AS longitude, ST_Y(last_location::geometry) AS latitude')->get();
@@ -89,8 +91,8 @@ class GenerateReport implements ShouldQueue
 
         $report = Report::find($this->reportId);
         if ($report) {
-            $report->file = "reports/Report_" . $this->startDate . "_" . $this->endDate . ".pdf";
-            $report->name = "Report_" . $this->startDate . "_" . $this->endDate . ".pdf";
+            $report->file = "reports/Report_" . $start . "_" . $end . ".pdf";
+            $report->name = "Report_" . $start . "_" . $end . ".pdf";
             $report->save();
             event(new GeneratedReportEvent("success", "Report generated"));
         } else {

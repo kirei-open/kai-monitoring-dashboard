@@ -16,7 +16,7 @@ class ReportPage extends Component
 
     public function render()
     {
-        $reports = Report::paginate(10);
+        $reports = Report::orderBy('created_at', 'DESC')->paginate(10);
         return view('livewire.pages.report.report-page',['reports'=> $reports]);
     }
 
