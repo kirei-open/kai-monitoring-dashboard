@@ -9,8 +9,8 @@
       <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-white uppercase bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            <th scope="col" class="text-center p-4">
-              ID
+            <th scope="col" class="text-center p-4" style="width: 10%">
+              NO
             </th>
             <th scope="col" class="text-center px-6 py-3">
               DESCRIPTION
