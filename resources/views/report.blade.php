@@ -176,9 +176,6 @@
     <thead class="text-center text-xs text-neutral-100 uppercase border-b border-gray-300 bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
       <tr>
         <th scope="col" class="border border-gray-300 px-6 py-3">
-          SERIAL NUMBER
-        </th>
-        <th scope="col" class="border border-gray-300 px-6 py-3">
           LATITUDE
         </th>
         <th scope="col" class="border border-gray-300 px-6 py-3">
@@ -193,9 +190,6 @@
       @foreach ($locations as $location)
         <tr
           class="text-center bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
-          <th scope="row" class=" border border-gray-300px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-            {{ $location->device_id }}
-          </th>
           <th scope="row" class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             {{ $location->latitude }}
           </th>
@@ -217,9 +211,6 @@
     <thead class="text-center text-xs text-neutral-100 uppercase border-b border-gray-300 bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
       <tr>
         <th scope="col" class="border border-gray-300 px-6 py-3">
-          SERIAL NUMBER
-        </th>
-        <th scope="col" class="border border-gray-300 px-6 py-3">
           KEY
         </th>
         <th scope="col" class="border border-gray-300 px-6 py-3">
@@ -237,9 +228,6 @@
       @foreach ($measurements as $measurement)
         <tr
           class="text-center bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
-          <th scope="row" class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-            {{ $measurement->device_id }}
-          </th>
           <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             {{ $measurement->key }}
           </td>
