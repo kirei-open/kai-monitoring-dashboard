@@ -151,10 +151,10 @@
           toggleResetButton(false);
         } else if (mode === 'database') {
           deviceSelect.disabled = false;
-          toggleDatetimeFields(true); // Menampilkan fields datetime
-          startDateInput.disabled = false; // Mengaktifkan input start date
-          endDateInput.disabled = false; // Mengaktifkan input end date
-          toggleResetButton(true); // Mengaktifkan tombol reset
+          toggleDatetimeFields(true);
+          startDateInput.disabled = false;
+          endDateInput.disabled = false;
+          toggleResetButton(true);
         } else {
           deviceSelect.disabled = true;
           startDateInput.disabled = true;
@@ -199,36 +199,44 @@
     function createChartConfig(key, lineColor, markerColor) {
       let chartContainerId;
       let unit;
+      let seriesName;
       switch (key) {
         case 'Tegangan':
           chartContainerId = 'chart';
           lineColor = '#5546ff';
           markerColor = '#5546ff';
           unit = 'V';
+          seriesName = 'Tegangan';
           break;
         case 'Arus':
           chartContainerId = 'chart2';
           lineColor = '#ef732f';
           markerColor = '#ef732f';
           unit = 'A';
+          seriesName = 'Arus';
           break;
         case 'Daya Pancar':
           chartContainerId = 'chart3';
           lineColor = '#2f2b70';
           markerColor = '#2f2b70';
           unit = 'W';
+          seriesName = 'Daya Pancar';
           break;
         case 'SWR':
           chartContainerId = 'chart4';
           lineColor = '#eecd23';
           markerColor = '#eecd23';
           unit = '';
+          seriesName = 'SWR';
           break;
         default:
           return null;
       }
       return {
-        series: [],
+        series: [{
+          name: seriesName,
+          data: []
+        }],
         chart: {
           height: 350,
           type: 'area',
@@ -279,19 +287,25 @@
           colors: ['#fff'],
           strokeColors: [markerColor],
         },
-        toolbar: {
-          show: false,
-        },
         tooltip: {
           y: {
             formatter: function (val) {
               return val + " " + unit;
             }
+          },
+          x: {
+            formatter: function (val) {
+              return new Date(val).toLocaleString();
+            }
+          },
+          marker: {
+            show: true
           }
         },
         chartContainerId: chartContainerId
       };
     }
+
     document.getElementById('device_id').addEventListener('change', function(event) {
       selectedDevice = event.target.value;
       if (mode === 'live') {
@@ -496,15 +510,15 @@
       let chart = chartContainers[chartContainerId];
       if (chart) {
         chart.updateSeries([{
-          name: data.key,
+          name: config.series[0].name, // Nama yang diinginkan
           data: chartData[chartContainerId]
         }]);
       } else {
-        chart = new ApexCharts(chartContainer, config);
-        chart.render();
-        chartContainers[chartContainerId] = chart;
+      chart = new ApexCharts(chartContainer, config);
+      chart.render();
+      chartContainers[chartContainerId] = chart;
         chart.updateSeries([{
-          name: data.key,
+          name: config.series[0].name, // Nama yang diinginkan
           data: chartData[chartContainerId]
         }]);
       }
