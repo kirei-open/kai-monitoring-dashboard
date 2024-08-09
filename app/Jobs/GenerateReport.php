@@ -65,11 +65,11 @@ class GenerateReport implements ShouldQueue
             ->where('datetime', '>=', $this->startDate)->where('datetime', '<=', $this->endDate)
             ->get();
             $calculatedMeasurements = Measurement::selectRaw("device_id, key, MIN(value) as minimum, MAX(value) as maximum, AVG(value) as average, unit")
-    ->where('datetime', '>=', $this->startDate)
-    ->where('datetime', '<=', $this->endDate)
-    ->groupByRaw('device_id, key, unit')
-    ->orderBy('device_id')
-    ->get();
+            ->where('datetime', '>=', $this->startDate)
+            ->where('datetime', '<=', $this->endDate)
+            ->groupByRaw('device_id, key, unit')
+            ->orderBy('device_id')
+            ->get();
 
         Pdf::view('report-all', [
             "trains" => $trains,
