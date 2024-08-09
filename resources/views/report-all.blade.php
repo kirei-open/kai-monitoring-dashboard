@@ -70,19 +70,19 @@
             <thead class="text-xs text-center text-neutral-100 uppercase bg-[#2d2a6f] border-b border-gray-300 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="border border-gray-300 px-6 py-3">
-                    Key
+                        Key
                     </th>
                     <th scope="col" class="border border-gray-300 px-6 py-3">
-                    Minimum
+                        Minimum
                     </th>
                     <th scope="col" class="border border-gray-300 px-6 py-3">
-                    Maximum
+                        Maximum
                     </th>
                     <th scope="col" class="border border-gray-300 px-6 py-3">
-                    Average
+                        Average
                     </th>
                     <th scope="col" class="border border-gray-300 px-6 py-3">
-                    Unit
+                        Unit
                     </th>
                 </tr>
             </thead>
