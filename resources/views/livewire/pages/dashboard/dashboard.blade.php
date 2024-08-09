@@ -75,23 +75,46 @@
           <b>Code:</b> ${device.code}<br>
           <b>Last Location:</b> ${latitude},${longitude}<br>
           ${imageUrl ? `<img src="${imageUrl}" width="100" /><br>` : ''}
-          <a href="/table/detail/${device.serial_number}">Detail</a>
+          <a href="/table/detail/${device.serial_number}" class="popup-link">Detail</a>
         `;
 
         var marker = L.marker([latitude, longitude], {
           icon: deviceIcon,
           device_id: device.serial_number
-        }).bindPopup(popupContent)
-          .on('mouseover', function(e) {
-            this.openPopup();
-          })
-          .on('mouseout', function(e) {
-            this.closePopup();
+        }).addTo(markerLayerGroup);
+
+        marker.bindPopup(popupContent);
+
+        // Mengatur popup agar tetap terbuka saat mouseover dan menutup saat mouseout
+        marker.on('mouseover', function() {
+          marker.openPopup();
+        });
+
+        marker.on('mouseout', function() {
+          setTimeout(() => {
+            if (!marker.getPopup()._isOpen || !document.querySelector('.leaflet-popup:hover')) {
+              marker.closePopup();
+            }
+          }, 300);
+        });
+
+        marker.on('popupopen', function() {
+          var popup = marker.getPopup();
+
+          popup.getElement().addEventListener('mouseover', function() {
+            marker.openPopup(); // Biarkan popup tetap terbuka
           });
-        marker.addTo(markerLayerGroup);
+
+          popup.getElement().addEventListener('mouseout', function() {
+            setTimeout(() => {
+              if (!document.querySelector('.leaflet-popup:hover') && !document.querySelector('.leaflet-marker-icon:hover')) {
+                marker.closePopup();
+              }
+            }, 300);
+          });
+        });
       });
     }
-
 
     function updateMarkerIcons() {
       mapLayerGroup.eachLayer(function(layer) {
@@ -118,7 +141,7 @@
       var popupContent = `
         <b>Serial Number:</b> ${device.device_id}<br>
         <b>Last Location:</b> ${device.latitude},${device.longitude}<br>
-        <a href="/table/detail/${device.device_id}">Detail</a>
+        <a href="/table/detail/${device.device_id}" class="popup-link">Detail</a>
       `;
 
       var existingMarker = markerLayerGroup.getLayers().find(marker => marker.options.device_id === device.device_id);
@@ -131,17 +154,39 @@
         var newMarker = L.marker([device.latitude, device.longitude], {
           icon: deviceIcon,
           device_id: device.device_id
-        }).bindPopup(popupContent)
-          .on('mouseover', function(e) {
-            this.openPopup();
-          })
-          .on('mouseout', function(e) {
-            this.closePopup();
+        }).addTo(markerLayerGroup);
+
+        newMarker.bindPopup(popupContent);
+
+        newMarker.on('mouseover', function() {
+          newMarker.openPopup();
+        });
+
+        newMarker.on('mouseout', function() {
+          setTimeout(() => {
+            if (!newMarker.getPopup()._isOpen || !document.querySelector('.leaflet-popup:hover')) {
+              newMarker.closePopup();
+            }
+          }, 300);
+        });
+
+        newMarker.on('popupopen', function() {
+          var popup = newMarker.getPopup();
+
+          popup.getElement().addEventListener('mouseover', function() {
+            newMarker.openPopup(); // Biarkan popup tetap terbuka
           });
-        newMarker.addTo(markerLayerGroup);
+
+          popup.getElement().addEventListener('mouseout', function() {
+            setTimeout(() => {
+              if (!document.querySelector('.leaflet-popup:hover') && !document.querySelector('.leaflet-marker-icon:hover')) {
+                newMarker.closePopup();
+              }
+            }, 300);
+          });
+        });
       }
     }
-
 
     window.onload = function() {
       window.Echo.channel('location-channel')
