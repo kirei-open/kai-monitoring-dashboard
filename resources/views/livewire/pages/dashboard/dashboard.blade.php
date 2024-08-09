@@ -75,46 +75,28 @@
           <b>Code:</b> ${device.code}<br>
           <b>Last Location:</b> ${latitude},${longitude}<br>
           ${imageUrl ? `<img src="${imageUrl}" width="100" /><br>` : ''}
-          <a href="/table/detail/${device.serial_number}" class="popup-link">Detail</a>
+          <a href="/table/detail/${device.serial_number}" target="_blank">Detail</a>
         `;
 
         var marker = L.marker([latitude, longitude], {
           icon: deviceIcon,
           device_id: device.serial_number
-        }).addTo(markerLayerGroup);
-
-        marker.bindPopup(popupContent);
-
-        // Mengatur popup agar tetap terbuka saat mouseover dan menutup saat mouseout
-        marker.on('mouseover', function() {
-          marker.openPopup();
-        });
-
-        marker.on('mouseout', function() {
-          setTimeout(() => {
-            if (!marker.getPopup()._isOpen || !document.querySelector('.leaflet-popup:hover')) {
-              marker.closePopup();
+        }).bindPopup(popupContent, { closeOnClick: false, autoClose: false })
+          .on('mouseover', function(e) {
+            this.openPopup();
+          })
+          .on('mouseout', function(e) {
+            // Check if the mouse is still over the popup
+            var popup = this.getPopup();
+            if (!popup.isOpen()) {
+              this.closePopup();
             }
-          }, 300);
-        });
-
-        marker.on('popupopen', function() {
-          var popup = marker.getPopup();
-
-          popup.getElement().addEventListener('mouseover', function() {
-            marker.openPopup(); // Biarkan popup tetap terbuka
           });
 
-          popup.getElement().addEventListener('mouseout', function() {
-            setTimeout(() => {
-              if (!document.querySelector('.leaflet-popup:hover') && !document.querySelector('.leaflet-marker-icon:hover')) {
-                marker.closePopup();
-              }
-            }, 300);
-          });
-        });
+        marker.addTo(markerLayerGroup);
       });
     }
+
 
     function updateMarkerIcons() {
       mapLayerGroup.eachLayer(function(layer) {
@@ -141,7 +123,7 @@
       var popupContent = `
         <b>Serial Number:</b> ${device.device_id}<br>
         <b>Last Location:</b> ${device.latitude},${device.longitude}<br>
-        <a href="/table/detail/${device.device_id}" class="popup-link">Detail</a>
+        <a href="/table/detail/${device.device_id}" target="_blank">Detail</a>
       `;
 
       var existingMarker = markerLayerGroup.getLayers().find(marker => marker.options.device_id === device.device_id);
@@ -154,37 +136,18 @@
         var newMarker = L.marker([device.latitude, device.longitude], {
           icon: deviceIcon,
           device_id: device.device_id
-        }).addTo(markerLayerGroup);
-
-        newMarker.bindPopup(popupContent);
-
-        newMarker.on('mouseover', function() {
-          newMarker.openPopup();
-        });
-
-        newMarker.on('mouseout', function() {
-          setTimeout(() => {
-            if (!newMarker.getPopup()._isOpen || !document.querySelector('.leaflet-popup:hover')) {
-              newMarker.closePopup();
+        }).bindPopup(popupContent, { closeOnClick: false, autoClose: false })
+          .on('mouseover', function(e) {
+            this.openPopup();
+          })
+          .on('mouseout', function(e) {
+            var popup = this.getPopup();
+            if (!popup.isOpen()) {
+              this.closePopup();
             }
-          }, 300);
-        });
-
-        newMarker.on('popupopen', function() {
-          var popup = newMarker.getPopup();
-
-          popup.getElement().addEventListener('mouseover', function() {
-            newMarker.openPopup(); // Biarkan popup tetap terbuka
           });
 
-          popup.getElement().addEventListener('mouseout', function() {
-            setTimeout(() => {
-              if (!document.querySelector('.leaflet-popup:hover') && !document.querySelector('.leaflet-marker-icon:hover')) {
-                newMarker.closePopup();
-              }
-            }, 300);
-          });
-        });
+        newMarker.addTo(markerLayerGroup);
       }
     }
 
