@@ -5,6 +5,7 @@ namespace App\Filament\Resources\DeviceResource\Pages;
 use Filament\Actions;
 use App\Models\ActivityLog;
 use App\Filament\Resources\DeviceResource;
+use App\Models\TrainProfile;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateDevice extends CreateRecord
@@ -18,10 +19,16 @@ class CreateDevice extends CreateRecord
         return $data;
     }
 
-    protected function afterCreate()
+    protected function afterCreate(): void
     {
         ActivityLog::create([
             'description' => 'Added a device data'
+        ]);
+
+        TrainProfile::create([
+            'device_id' => $this->record->serial_number,
+            'name' => '',
+            'image' => '',
         ]);
     }
 }
