@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class DeviceController extends Controller
 {
-    public function getDetailDevice($serial_number)
-    {
-        $data = Device::where('serial_number', $serial_number)->with('trainProfile')->first();
-        return response()->json(['message' => 'Device data', 'data' => $data]);
-    }
+    // public function getDetailDevice($serial_number)
+    // {
+    //     $data = Device::where('serial_number', $serial_number)->with('trainProfile')->first();
+    //     return response()->json(['message' => 'Device data', 'data' => $data]);
+    // }
 
     // public function createDevice(Request $request){
     //     $request->validate([

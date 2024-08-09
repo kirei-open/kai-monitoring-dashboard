@@ -65,15 +65,10 @@
 
         var deviceIcon = getIcon('{{ URL::asset('img/train.png') }}', map.getZoom());
 
-        // Ganti URL gambar dengan URL publik yang dapat diakses
-        var imageUrl = `/storage/${device.train_profile.image}`;
-        
         var popupContent = `
           <b>Serial Number:</b> ${device.serial_number}<br>
           <b>Code:</b> ${device.code}<br>
-          <b>Name:</b> ${device.train_profile.name}<br>
           <b>Last Location:</b> ${latitude},${longitude}<br>
-          <img src="${imageUrl}" width="100" /><br>
           <a href="/table/detail/${device.serial_number}">Detail</a>
         `;
 
@@ -104,49 +99,30 @@
     addStationMarkers();
     addDeviceMarkers();
 
-    async function fetchDeviceDetails(deviceId) {
-      const response = await fetch(`/get-detail-device/${deviceId}`);
-      const data = await response.json();
 
-      if (data.error) {
-        console.error('Error fetching device details:', data.error);
-        return null;
-      }
-
-      return data.data;
-    }
-
-    async function addOrUpdateMarkerFromBroadcast(device) {
+    function addOrUpdateMarkerFromBroadcast(device) {
       var deviceIcon = getIcon('{{ URL::asset('img/train.png') }}', map.getZoom());
 
-      var detail = await fetchDeviceDetails(device.device_id);
+      var popupContent = `
+        <b>Serial Number:</b> ${device.device_id}<br>
+        <b>Last Location:</b> ${device.latitude},${device.longitude}<br>
+        <a href="/table/detail/${device.device_id}">Detail</a>
+      `;
 
-  // Pastikan URL gambar valid
-  var imageUrl = detail ? `/storage/${detail.train_profile.image}` : '';
+      var existingMarker = markerLayerGroup.getLayers().find(marker => marker.options.device_id === device.device_id);
 
-  var popupContent = `
-    <b>Serial Number:</b> ${device.device_id}<br>
-    <b>Code:</b> ${detail ? detail.code : 'N/A'}<br>
-    <b>Name:</b> ${detail ? detail.train_profile.name : 'N/A'}<br>
-    <b>Last Location:</b> ${device.latitude},${device.longitude}<br>
-    ${imageUrl ? `<img src="${imageUrl}" width="100" /><br>` : ''} <!-- Tampilkan gambar jika URL valid -->
-    <a href="/table/detail/${device.device_id}">Detail</a>
-  `;
-
-  var existingMarker = markerLayerGroup.getLayers().find(marker => marker.options.device_id === device.device_id);
-
-  if (existingMarker) {
-    existingMarker.setLatLng([device.latitude, device.longitude]);
-    existingMarker.getPopup().setContent(popupContent);
-    existingMarker.setIcon(deviceIcon); // update icon size
-  } else {
-    var newMarker = L.marker([device.latitude, device.longitude], {
-      icon: deviceIcon,
-      device_id: device.device_id
-    }).bindPopup(popupContent);
-    newMarker.addTo(markerLayerGroup);
-  }
-}
+      if (existingMarker) {
+        existingMarker.setLatLng([device.latitude, device.longitude]);
+        existingMarker.getPopup().setContent(popupContent);
+        existingMarker.setIcon(deviceIcon); // update icon size
+      } else {
+        var newMarker = L.marker([device.latitude, device.longitude], {
+          icon: deviceIcon,
+          device_id: device.device_id
+        }).bindPopup(popupContent);
+        newMarker.addTo(markerLayerGroup);
+      }
+    }
 
 
     window.onload = function() {

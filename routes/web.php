@@ -33,7 +33,6 @@ Route::group(['middleware' => ['role:super_admin|Admin']], function () {
     Route::get('health', HealthCheckResultsController::class);
     Route::get('/report', ReportPage::class)->name('report');
     Route::get('/event-logger', EventLogger::class)->name('event-logger');
-    Route::get('/get-detail-device/{device_id}', [DeviceController::class, 'getDetailDevice']);
 });
 
 Route::group(['middleware' => ['role:super_admin|Admin|Teknisi']], function () {
