@@ -65,17 +65,29 @@
 
         var deviceIcon = getIcon('{{ URL::asset('img/train.png') }}', map.getZoom());
 
+        var imageUrl = device.train_profile && device.train_profile.image
+          ? `/storage/${device.train_profile.image}`
+          : '';
+
         var popupContent = `
+          <b>Name:</b> ${device.train_profile ? device.train_profile.name : 'N/A'}<br>
           <b>Serial Number:</b> ${device.serial_number}<br>
           <b>Code:</b> ${device.code}<br>
           <b>Last Location:</b> ${latitude},${longitude}<br>
+          ${imageUrl ? `<img src="${imageUrl}" width="100" /><br>` : ''}
           <a href="/table/detail/${device.serial_number}">Detail</a>
         `;
 
         var marker = L.marker([latitude, longitude], {
           icon: deviceIcon,
           device_id: device.serial_number
-        }).bindPopup(popupContent);
+        }).bindPopup(popupContent)
+          .on('mouseover', function(e) {
+            this.openPopup();
+          })
+          .on('mouseout', function(e) {
+            this.closePopup();
+          });
         marker.addTo(markerLayerGroup);
       });
     }
@@ -119,7 +131,13 @@
         var newMarker = L.marker([device.latitude, device.longitude], {
           icon: deviceIcon,
           device_id: device.device_id
-        }).bindPopup(popupContent);
+        }).bindPopup(popupContent)
+          .on('mouseover', function(e) {
+            this.openPopup();
+          })
+          .on('mouseout', function(e) {
+            this.closePopup();
+          });
         newMarker.addTo(markerLayerGroup);
       }
     }
