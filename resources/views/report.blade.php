@@ -70,63 +70,63 @@
       rounded-md dark:bg-gray-700 dark:text-blue-400 mb-4 mt-4">
       Device
   </span>
-  <table class="lg:w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-    <thead class="text-xs text-center text-neutral-100 uppercase border-b border-gray-300 bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
+  <table class="lg:w-[1150px] text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-neutral-100 uppercase bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
       <tr>
-        <th scope="col" class="border border-gray-300 px-6 py-3">
+        <th scope="col" class="px-6 py-3">
           Serial Number
         </th>
-        <th scope="col" class="border border-gray-300 px-6 py-3">
+        <th scope="col" class="px-6 py-3">
           Code
         </th>
-        <th scope="col" class="border border-gray-300 px-6 py-3">
+        <th scope="col" class="px-6 py-3">
           Last Location
         </th>
-        <th scope="col" class="border border-gray-300 px-6 py-3">
+        <th scope="col" class="px-6 py-3">
           Last Monitored Value
         </th>
       </tr>
     </thead>
     <tbody>
-      <tr class="bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700">
-        <th scope="row" class=" text-center border border-gray-300 px-6 py-4 font-medium text-gray-900 dark:text-white">
+      <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+        <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
           {{ $devices->serial_number }}
         </th>
-        <td class="text-center border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
           {{ $devices->code }}
         </td>
-        <td class="text-center border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
           {{ $devices->latitude ?? 'Belum Ada Data' }} , {{ $devices->longitude ?? 'Belum Ada Data' }}
         </td>
-        <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
           @if ($devices->last_monitored_value != null)
             <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
-              <li class="text-center font-medium text-gray-900 dark:text-white">
-                Datetime <span class="">:</span> &nbsp; {{ $devices->last_monitored_value['datetime'] }}
+              <li class="font-medium text-gray-900 dark:text-white">
+                Datetime <span class="lg:ml-5">:</span> &nbsp; {{ $devices->last_monitored_value['datetime'] }}
               </li>
-              <li class="font-medium text-gray-900 dark:text-white ml-[80px]">
-                Key <span class="">:</span> &nbsp; {{ $devices->last_monitored_value['key'] }}
+              <li class="font-medium text-gray-900 dark:text-white">
+                Key <span class="lg:ml-14">:</span> &nbsp; {{ $devices->last_monitored_value['key'] }}
               </li>
-              <li class="font-medium text-gray-900 dark:text-white ml-[80px]">
-                Value <span class="">:</span> &nbsp; {{ $devices->last_monitored_value['value'] }}
+              <li class="font-medium text-gray-900 dark:text-white">
+                Value <span class="lg:ml-11">:</span> &nbsp; {{ $devices->last_monitored_value['value'] }}
               </li>
-              <li class="font-medium text-gray-900 dark:text-white ml-[80px]">
-                Unit <span class="">:</span> &nbsp; {{ $devices->last_monitored_value['unit'] }}
+              <li class="font-medium text-gray-900 dark:text-white">
+                Unit <span class="lg:ml-[53px]">:</span> &nbsp; {{ $devices->last_monitored_value['unit'] }}
               </li>
             </ul>
           @else
-            <ul class="text-center max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
+            <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
               <li class="font-medium text-gray-900 dark:text-white">
-                Datetime <span class="">:</span> &nbsp; Belum Ada Data
+                Datetime <span class="lg:ml-5">:</span> &nbsp; Belum Ada Data
               </li>
               <li class="font-medium text-gray-900 dark:text-white">
-                Key <span class="">:</span> &nbsp; Belum Ada Data
+                Key <span class="lg:ml-14">:</span> &nbsp; Belum Ada Data
               </li>
               <li class="font-medium text-gray-900 dark:text-white">
-                Value <span class="">:</span> &nbsp; Belum Ada Data
+                Value <span class="lg:ml-11">:</span> &nbsp; Belum Ada Data
               </li>
               <li class="font-medium text-gray-900 dark:text-white">
-                Unit <span class="">:</span> &nbsp; Belum Ada Data
+                Unit <span class="lg:ml-[53px]">:</span> &nbsp; Belum Ada Data
               </li>
             </ul>
           @endif
