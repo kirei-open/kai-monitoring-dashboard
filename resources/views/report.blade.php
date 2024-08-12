@@ -70,7 +70,7 @@
       rounded-md dark:bg-gray-700 dark:text-blue-400 mb-4 mt-4">
       Device
   </span>
-  <table class="lg:w-[1150px] text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+  <table class="lg:w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
     <thead class="text-xs text-neutral-100 uppercase bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
       <tr>
         <th scope="col" class="px-6 py-3">
@@ -142,43 +142,47 @@
     <thead class="text-xs text-center text-neutral-100 uppercase bg-[#2d2a6f] border-b border-gray-300 dark:bg-gray-700 dark:text-gray-400">
       <tr>
         <th scope="col" class="border border-gray-300 px-6 py-3">
-        Key
+            Key
         </th>
         <th scope="col" class="border border-gray-300 px-6 py-3">
-        Minimum
+            Minimum
         </th>
         <th scope="col" class="border border-gray-300 px-6 py-3">
-        Maximum
+            Maximum
         </th>
         <th scope="col" class="border border-gray-300 px-6 py-3">
-        Average
+            Average
         </th>
         <th scope="col" class="border border-gray-300 px-6 py-3">
-        Unit
+            Unit
         </th>
       </tr>
     </thead>
     <tbody>
-      @foreach ($calculatedMeasurements as $cm)
+      @forelse ($calculatedMeasurements as $cm)
         <tr class="text-center bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
           <th scope="row" class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-          {{ $cm->key }}
+            {{ $cm->key }}
           </th>
           <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-          {{ $cm->minimum }}
+            {{ $cm->minimum }}
           </td>
           <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-          {{ $cm->maximum }}
-          </td>
-          <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"">
-          {{ $cm->average }}
+            {{ $cm->maximum }}
           </td>
           <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-          {{ $cm->unit }}
+            {{ $cm->average }}
+          </td>
+          <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            {{ $cm->unit }}
           </td>
         </tr>
-      @endforeach
-    </tbody>
+      @empty
+        <tr>
+          <td colspan="5" class="text-center py-4 text-gray-900">No Calculated Measurement Data Available</td>
+        </tr>
+      @endforelse
+    </tbody>    
   </table>
   <span class="bg-green-100 text-green-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
                   rounded-md dark:bg-gray-700 dark:text-green-400 mb-4 mt-4">
@@ -199,9 +203,8 @@
       </tr>
     </thead>
     <tbody>
-      @foreach ($locations as $location)
-        <tr
-          class="text-center bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
+      @forelse ($locations as $location)
+        <tr class="text-center bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
           <th scope="row" class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             {{ $location->latitude }}
           </th>
@@ -212,7 +215,11 @@
             {{ $location->datetime }}
           </td>
         </tr>
-      @endforeach
+      @empty
+        <tr>
+          <td colspan="3" class="text-center py-4 text-gray-900">No Location Data Available</td>
+        </tr>
+      @endforelse
     </tbody>
   </table>
   <span class="bg-red-100 text-red-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
@@ -237,24 +244,26 @@
       </tr>
     </thead>
     <tbody>
-      @foreach ($measurements as $measurement)
-        <tr
-          class="text-center bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
+      @forelse ($measurements as $measurement)
+        <tr class="text-center bg-white border-b border-gray-300 dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
           <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             {{ $measurement->key }}
           </td>
           <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             {{ $measurement->value }}
           </td>
-          <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"">
+          <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             {{ $measurement->unit }}
           </td>
           <td class="border border-gray-300 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             {{ $measurement->datetime }}
           </td>
         </tr>
-      @endforeach
-    </tbody>
+      @empty
+        <tr>
+          <td colspan="4" class="text-center py-4 text-gray-900">No Measurement Data Available</td>
+        </tr>
+      @endforelse
+    </tbody>    
   </table>
-
 @endsection
