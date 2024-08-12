@@ -25,7 +25,8 @@ class UserSeeder extends Seeder
             'location',
             'measurement',
             'station',
-            'user'
+            'user',
+            'train::profile'
         ];
 
         foreach ($permissions as $permission) {
@@ -54,7 +55,7 @@ class UserSeeder extends Seeder
         $superAdminRole->givePermissionTo(Permission::all());
 
         // Assign specific permissions to teknisi
-        $teknisiRole->givePermissionTo(['view_device', 'view_measurement', 'view_any_device', 'view_any_measurement']);
+        $teknisiRole->givePermissionTo(['view_device', 'view_measurement', 'view_any_device', 'view_any_measurement', 'view_any_train::profile']);
 
         // Create users and assign roles
         if (!User::where('email', 'superadmin@mail.com')->exists()) {
