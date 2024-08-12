@@ -115,9 +115,11 @@
                   {{ $train->name }}
                 </td>
                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  <img
-                    src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path("storage/$train->image"))) }}"
-                    width="100" />
+                  @if($train->image)
+                      <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path("storage/$train->image"))) }}" width="100" />
+                  @else
+                      <p>No image available</p>
+                  @endif
                 </td>
                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {{ $train->stations->pluck('name')->join(', ') }}
