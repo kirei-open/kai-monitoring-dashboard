@@ -1,6 +1,6 @@
 <div>
     @section('title','Tabel Monitoring')
-    <h1 class="text-[#a4a2b4] lg:mt-[120px] lg:ml-[60px] lg:text-[20px]">TABEL MONITORING</h1>
+    <h1 class="text-[#a4a2b4] lg:mt-[120px] lg:ml-[60px] lg:text-[20px]">DEVICES MONITORING</h1>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg lg:mt-[20px] mt-[100px] lg:ml-[60px] lg:w-11/12">
         <div class="bg-white lg:w-full lg:h-24 dark:bg-gray-900">
             <div class="flex justify-between">
