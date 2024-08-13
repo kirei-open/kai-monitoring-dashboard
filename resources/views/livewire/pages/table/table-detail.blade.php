@@ -82,58 +82,67 @@
 
   <section class="bg-white dark:bg-gray-900 lg:mt-[-50px]">
     <div class="pt-8 px-4 mx-auto max-w-screen-xl lg:pt-16">
-      <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12 mb-8">
-        <span
-          class="bg-indigo-100 text-indigo-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
+      <div class="bg-slate-200 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12 mb-8">
+        <span class="bg-indigo-100 text-indigo-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
               rounded-md dark:bg-indigo-900 dark:text-indigo-400 mb-2">
-          Train
+              Train
         </span>
-        <div class="relative overflow-x-auto lg:mt-4">
-          <table class="lg:w-[1150px] text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-3">
+          <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-neutral-100 uppercase bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                <th scope="col" class="px-6 py-3">
-                  Serial Number
-                </th>
-                <th scope="col" class="px-6 py-3">
-                  Train Name
-                </th>
-                <th scope="col" class="px-6 py-3">
-                  Train Image
-                </th>
-                <th scope="col" class="px-6 py-3">
-                  Train Stations
-                </th>
+                  <th scope="col" class="px-6 py-3">
+                      Image Train
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                      Information
+                  </th>
               </tr>
             </thead>
-            <tbody>
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                  {{ $train->device_id }}
-                </th>
-                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  @if(!empty($train->name))
-                    {{ $train->name }}
-                  @else
-                    No Name Data
-                  @endif
-                </td>
-                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  @if($train->image)
-                      <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path("storage/$train->image"))) }}" width="100" />
-                  @else
-                      <p>No Image Data</p>
-                  @endif
-                </td>
-                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  @if($train->stations->isNotEmpty())
-                    {{ $train->stations->pluck('name')->join(', ') }}
-                  @else
-                    No Stations Data
-                  @endif
-                </td>
-              </tr>
-            </tbody>
+              <tbody>
+                  <tr class="bg-white dark:bg-gray-800">
+                      <td class="p-6">
+                        @if($train->image)
+                          <img class="w-16 md:w-32 lg:w-[500px] lg:h-[300px]" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path("storage/$train->image"))) }}" width="100" />
+                        @else
+                            <p>No Image Data</p>
+                        @endif
+                      </td>
+                      <td class="px-6 py-4 pb-14">
+                        <span class="bg-sky-200 text-sky-500 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-sky-500 dark:text-sky-100">Device ID</span>
+                        <span class="lg:ml-12 text-gray-900 dark:text-white text-base">:</span><span class="text-gray-900 dark:text-white lg:ml-8 text-base">{{ $train->device_id }}</span>
+                        <br>
+                        <br>
+                        <br>
+                        <span class="bg-cyan-200 text-cyan-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-cyan-400 dark:text-cyan-50">Train Name</span>
+                        <span class="lg:ml-[35px] text-gray-900 dark:text-white text-base">:</span><span class="text-gray-900 dark:text-white lg:ml-7 text-base">
+                          @if(!empty($train->name))
+                            {{ $train->name }}
+                          @else
+                            No Name Data
+                          @endif
+                        </span>
+                        <br>
+                        <br>
+                        <br>
+                        <span class="mb-2 bg-teal-200 text-teal-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-teal-400 dark:text-teal-50">Route Trains</span>
+                        <span class="lg:ml-[25px] text-gray-900 dark:text-white text-base">:</span>
+                          <ol class="max-w-md space-y-1 text-gray-500 list-decimal list-inside dark:text-white lg:mt-[-20px] lg:ml-[180px]">
+                            @if($train->stations->isNotEmpty())
+                                @foreach ($train->stations as $station)
+                                    <li>
+                                        <span class="font-medium text-gray-900 dark:text-white text-base">{{ $station->name }}</span>
+                                    </li>
+                                @endforeach
+                            @else
+                                <li>
+                                    <span class="font-semibold text-gray-900 dark:text-white text-base">No Stations Data</span>
+                                </li>
+                            @endif
+                          </ol>                      
+                      </td>
+                  </tr>
+              </tbody>
           </table>
         </div>
       </div>
@@ -142,7 +151,7 @@
 
   <section class="bg-white dark:bg-gray-900">
     <div class="pb-8 px-4 mx-auto max-w-screen-xl lg:pt-4 lg:pb-16">
-      <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12 mb-8">
+      <div class="bg-slate-200 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12 mb-8">
         <span
           class="bg-blue-100 text-blue-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
               rounded-md dark:bg-gray-700 dark:text-blue-400 mb-2">
@@ -220,7 +229,7 @@
 
   <section class="bg-white dark:bg-gray-900">
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:mt-[-80px]">
-      <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12 mb-8">
+      <div class="bg-slate-200 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12 mb-8">
         <span
           class="bg-green-100 text-green-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
               rounded-md dark:bg-gray-700 dark:text-green-400 mb-2">
@@ -278,7 +287,7 @@
 
   <section class="bg-white dark:bg-gray-900">
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:mt-[-50px]">
-      <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12 mb-8">
+      <div class="bg-slate-200 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12 mb-8">
         <span
           class="bg-red-100 text-red-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
               rounded-md dark:bg-gray-700 dark:text-red-400 mb-2">
