@@ -151,7 +151,7 @@ new class extends Component {
                 : 'dark:text-white' }} text-[16px] px-4 py-3 rounded-full hover:bg-blue-100 
               hover:text-blue-800 hover:dark:bg-blue-900 
               hover:dark:text-blue-300">
-            <a href="{{ route('table') }}" wire:navigate>Table</a>
+            <a href="{{ route('table') }}" wire:navigate>Devices</a>
           </li>
           <li
             class="{{ Request::is('graphic')
@@ -160,7 +160,7 @@ new class extends Component {
                 : 'dark:text-white' }} text-[16px] px-4 py-3 rounded-full hover:bg-blue-100 
               hover:text-blue-800 hover:dark:bg-blue-900 
               hover:dark:text-blue-300">
-            <a href="{{ route('graphic') }}" wire:navigate>Graphic</a>
+            <a href="{{ route('graphic') }}" wire:navigate>Historical Data</a>
           </li>
           <li
             class="{{ Request::is('event-logger')
@@ -180,21 +180,12 @@ new class extends Component {
               hover:dark:text-blue-300">
             <a href="{{ route('report') }}" wire:navigate>Report</a>
           </li>
-          <li
-            class="{{ Request::is('#')
-                ? 'bg-blue-100 text-blue-800 font-medium dark:bg-blue-900 
-                                                              dark:text-blue-300'
-                : 'dark:text-white' }} text-[16px] px-4 py-3 rounded-full 
-              hover:bg-blue-100 hover:text-blue-800 hover:dark:bg-blue-900 
-              hover:dark:text-blue-300">
-            <a href="#" wire:navigate>Asset</a>
-          </li>
           <li class="lg:mt-[2px]">
             <button id="theme-toggle" type="button"
               class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 
                     dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 
                     dark:focus:ring-gray-700 rounded-lg 
-                    text-sm p-2.5 lg:ml-[100px] ml-[3px]">
+                    text-sm p-2.5 lg:ml-[200px] ml-[3px]">
               <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg">
                 <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
