@@ -2,19 +2,15 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\Measurement;
 use Filament\Resources\Resource;
-use Illuminate\Support\Facades\Log;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\MeasurementResource\Pages;
-use App\Filament\Resources\MeasurementResource\RelationManagers;
 
 class MeasurementResource extends Resource
 {
@@ -41,7 +37,7 @@ class MeasurementResource extends Resource
             ->groupBy('key')
             ->pluck('key', 'key')
             ->toArray();
-    
+
         return $table
             ->columns([
                 TextColumn::make('device_id')
@@ -55,24 +51,24 @@ class MeasurementResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('device_id', 'Device ID')
-                ->options(array_merge($deviceIds))
-                ->query(function (Builder $query, array $data) {
-                    $value = $data['value'] ?? null;
-                    if ($value !== null && $value !== 'All' && $value !== '') {
-                        $query->where('device_id', $value);
-                    }
-                })
-                ->default(''),
-            
-            SelectFilter::make('key', 'Key')
-                ->options(array_merge($keys))
-                ->query(function (Builder $query, array $data) {
-                    $value = $data['value'] ?? null;
-                    if ($value !== null && $value !== 'All' && $value !== '') {
-                        $query->where('key', $value);
-                    }
-                })
-                ->default('')
+                    ->options(array_merge($deviceIds))
+                    ->query(function (Builder $query, array $data) {
+                        $value = $data['value'] ?? null;
+                        if ($value !== null && $value !== 'All' && $value !== '') {
+                            $query->where('device_id', $value);
+                        }
+                    })
+                    ->default(''),
+
+                SelectFilter::make('key', 'Key')
+                    ->options(array_merge($keys))
+                    ->query(function (Builder $query, array $data) {
+                        $value = $data['value'] ?? null;
+                        if ($value !== null && $value !== 'All' && $value !== '') {
+                            $query->where('key', $value);
+                        }
+                    })
+                    ->default('')
             ])
             ->actions([
                 //

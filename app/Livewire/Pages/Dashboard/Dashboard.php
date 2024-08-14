@@ -5,10 +5,6 @@ namespace App\Livewire\Pages\Dashboard;
 use App\Models\Device;
 use App\Models\Station;
 use Livewire\Component;
-use App\Models\Location;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Events\DeviceLocationBroadcast;
 
 class Dashboard extends Component
 {
@@ -16,8 +12,7 @@ class Dashboard extends Component
     {
         $stations = Station::selectRaw('*, ST_X(point::geometry) AS longitude, ST_Y(point::geometry) AS latitude')->get();
 
-        $devices = Device::selectRaw('*, ST_X(last_location::geometry) AS longitude, ST_Y(last_location::geometry) AS latitude')->get();
-
+        $devices = Device::selectRaw('*, ST_X(last_location::geometry) AS longitude, ST_Y(last_location::geometry) AS latitude')->with('trainProfile')->get();
         return view('livewire.pages.dashboard.dashboard', [
             "stations" => $stations,
             "devices" => $devices,

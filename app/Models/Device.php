@@ -10,6 +10,8 @@ class Device extends Model
     use HasFactory;
 
     protected $primaryKey = 'serial_number';
+    protected $keyType = 'string';
+    public $incrementing = false;
 
     protected $casts = [
         'serial_number' => 'string',
@@ -17,11 +19,14 @@ class Device extends Model
 
     protected $fillable = [
         'serial_number',
-        'name',
         'code',
         'last_location',
         'last_monitored_value',
         'api_key'
     ];
 
+    public function trainProfile()
+    {
+        return $this->hasOne(TrainProfile::class, 'device_id', 'serial_number');
+    }
 }

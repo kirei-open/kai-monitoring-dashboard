@@ -13,6 +13,7 @@
         "doctrine/dbal": "^3.8",
         "filament/filament": "^3.2",
         "guzzlehttp/guzzle": "^7.2",
+        "jantinnerezo/livewire-alert": "^3.0",
         "laravel/framework": "^10.10",
         "laravel/reverb": "@beta",
         "laravel/sanctum": "^3.3",
@@ -21,8 +22,10 @@
         "livewire/volt": "^1.0",
         "php-mqtt/client": "^2.1",
         "php-mqtt/laravel-client": "^1.5",
+        "spatie/browsershot": "^4.1",
         "spatie/cpu-load-health-check": "^1.0",
         "spatie/laravel-health": "^1.29",
+        "spatie/laravel-pdf": "^1.5",
         "wireui/heroicons": "^2.4"
     },
     "require-dev": {
