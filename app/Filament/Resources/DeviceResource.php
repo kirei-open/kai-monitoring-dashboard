@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
 use Filament\Tables;
 use App\Models\Device;
 use Filament\Forms\Form;
@@ -11,11 +10,8 @@ use Filament\Resources\Resource;
 use Filament\Forms\Components\Hidden;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Contexts\Create;
-use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\DeviceResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\DeviceResource\RelationManagers;
+
 
 class DeviceResource extends Resource
 {
@@ -30,10 +26,7 @@ class DeviceResource extends Resource
                 TextInput::make('serial_number')
                     ->label('Serial Number')
                     ->required()
-                    ->unique(ignoreRecord:true),
-                TextInput::make('name')
-                    ->label('Device Name')
-                    ->required(),
+                    ->unique(ignoreRecord: true),
                 TextInput::make('code')
                     ->label('Device Code')
                     ->required(),
@@ -47,9 +40,6 @@ class DeviceResource extends Resource
             ->columns([
                 TextColumn::make('serial_number')
                     ->label('Serial Number'),
-                TextColumn::make('name')
-                    ->label('Device Name')
-                    ->searchable(),
                 TextColumn::make('code')
                     ->label('Device Code')
                     ->searchable(),

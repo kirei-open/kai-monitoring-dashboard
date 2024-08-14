@@ -18,6 +18,7 @@
     },
     "dependencies": {
         "apexcharts": "^3.49.2",
-        "flowbite": "^2.3.0"
+        "flowbite": "^2.3.0",
+        "puppeteer": "^22.14.0"
     }
 }

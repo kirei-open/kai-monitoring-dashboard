@@ -74,6 +74,23 @@
                 }
             });
         </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <x-livewire-alert::scripts />
+        <script>
+            window.onload = () => {
+              window.Echo.channel("report-channel")
+                .listen("GeneratedReportEvent", (e) => {
+                  Swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    icon: e.type,
+                    title: e.description,
+                    timer: 2000,
+                    showConfirmButton: false,
+                  });
+                });
+            }
+        </script>
         @stack('script')
     </body>
 </html>
