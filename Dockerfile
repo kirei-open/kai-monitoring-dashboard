@@ -1,4 +1,4 @@
-FROM serversideup/php:8.3-fpm-nginx
+FROM serversideup/php:8.3-fpm-nginx AS base
 
 # Switch to root so we can do root things
 USER root
