@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\MeasurementController;
 use App\Livewire\Pages\Dashboard\Dashboard;
 use App\Livewire\Pages\Graphic\Graphic;
@@ -27,6 +28,7 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => ['role:super_admin|Admin']], function () {
+    Route::get('locale/{lang}',[LocaleController::class,'setLocale']);
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/table', Table::class)->name('table');
     Route::get('/table/detail/{id}', TableDetail::class)->name('table.detail');
@@ -36,6 +38,7 @@ Route::group(['middleware' => ['role:super_admin|Admin']], function () {
 });
 
 Route::group(['middleware' => ['role:super_admin|Admin|Teknisi']], function () {
+    Route::get('locale/{lang}',[LocaleController::class,'setLocale']);
     Route::get('/graphic', Graphic::class)->name('graphic');
     Route::get('/get-detail-measurement/{device_id}', [MeasurementController::class, 'getDetailMeasurement']);
     Route::get('/get-last-thirty-minutes/{device_id}', [MeasurementController::class, 'getLastThirtyMinutesData']);
