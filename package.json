@@ -18,7 +18,9 @@
     },
     "dependencies": {
         "apexcharts": "^3.49.2",
+        "country-flag-icons": "^1.5.13",
         "flowbite": "^2.3.0",
-        "puppeteer": "^22.14.0"
+        "puppeteer": "^22.14.0",
+        "sweetalert2": "^11.12.4"
     }
 }
