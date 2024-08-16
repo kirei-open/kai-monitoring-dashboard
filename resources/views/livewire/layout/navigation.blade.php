@@ -129,6 +129,32 @@ new class extends Component {
               </svg>
             </button>
           </li>
+          <li class="lg:mt-[5px]">
+            <div class="dropdown">
+              <button class="inline-flex items-center font-medium justify-center px-4 py-2 text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white lg:ml-[-50px]">
+                @if (session('locale', 'en') == 'id')
+                  <img alt="Indonesia" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/ID.svg"/>
+                @else
+                  <img alt="United States" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg"/>
+                @endif
+                  {{ session('locale', 'en') == 'id' ? 'Bahasa' : 'English' }}
+              </button>
+              <div class="dropdown-content">
+                <a href="{{ url('locale/en') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                  <div class="inline-flex items-center">
+                      <img alt="United States" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg"/>
+                      English
+                  </div>
+                </a>
+                <a href="{{ url('locale/id') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                  <div class="inline-flex items-center">
+                      <img alt="Indonesia" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/ID.svg"/>
+                      Bahasa
+                  </div>
+                </a>
+              </div>
+            </div>
+          </li>
           <li class="lg:mt-[-2px] lg:ml-[80px] ml-2">
             <x-dropdown align="right" width="48">
               <x-slot name="trigger">
@@ -235,31 +261,30 @@ new class extends Component {
           </li>
           <li class="lg:mt-[5px]">
             <div class="dropdown">
-              <button class="inline-flex items-center font-medium justify-center px-4 py-2 text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white lg:ml-[-50px]">
-                @if (session('locale', 'en') == 'id')
-                <img alt="Indonesia" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/ID.svg"/>
-                @else
-                <img alt="United States" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg"/>
-                @endif
-                {{ session('locale', 'en') == 'id' ? 'Bahasa' : 'English' }}
-                <i class="fa fa-caret-down"></i>
-              </button>
-              <div class="dropdown-content">
-                <a href="{{ url('locale/en') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                  <div class="inline-flex items-center">
-                      <img alt="United States" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg"/>
-                      English
-                  </div>
-                </a>
-                <a href="{{ url('locale/id') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                  <div class="inline-flex items-center">
-                      <img alt="Indonesia" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/ID.svg"/>
-                      Bahasa
-                  </div>
-                </a>
-              </div>
+                <button class="inline-flex items-center font-medium justify-center px-4 py-2 text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white lg:ml-[-50px]">
+                    @if (session('locale', 'en') == 'id')
+                        <img alt="Indonesia" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/ID.svg"/>
+                    @else
+                        <img alt="United States" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg"/>
+                    @endif
+                    {{ session('locale', 'en') == 'id' ? 'Bahasa' : 'English' }}
+                </button>
+                <div class="dropdown-content">
+                    <a href="{{ url('locale/en') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                        <div class="inline-flex items-center">
+                            <img alt="United States" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg"/>
+                            English
+                        </div>
+                    </a>
+                    <a href="{{ url('locale/id') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                        <div class="inline-flex items-center">
+                            <img alt="Indonesia" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/ID.svg"/>
+                            Bahasa
+                        </div>
+                    </a>
+                </div>
             </div>
-          </li>
+        </li>
         
           <li class="lg:mt-[-2px] lg:ml-[50px] ml-2">
             <x-dropdown align="right" width="48">

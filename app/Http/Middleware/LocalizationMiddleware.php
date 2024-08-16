@@ -17,8 +17,8 @@ class LocalizationMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $locale = Session::get('locale') ?? 'en';
-        Session::put('locale',$locale);
+        // Ambil locale dari session atau fallback ke 'id'
+        $locale = Session::get('locale', 'id');
         App::setLocale($locale);
         
         return $next($request);
