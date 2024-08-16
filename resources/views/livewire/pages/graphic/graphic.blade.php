@@ -1,54 +1,58 @@
 <div>
-  @section('title', 'Graphic')
-  <h1 class="text-[#a4a2b4] lg:mt-[120px] lg:ml-[60px] lg:text-[20px]">HISTORICAL DATA MONITORING</h1>
+  @section('title')
+    @lang('messages.historical monitoring title')
+  @endsection
+  <h1 class="text-[#a4a2b4] lg:mt-[120px] lg:ml-[60px] lg:text-[20px]">@lang('messages.historical monitoring')</h1>
   <form wire:submit.prevent="save" class="max-w-sm mx-auto lg:ml-[60px]">
-    <label for="select devices" class="block mt-4 text-sm font-medium text-gray-900 dark:text-white">Select Device</label>
+    <label for="select devices" class="block mt-4 text-sm font-medium text-gray-900 dark:text-white">@lang('messages.select device')</label>
     <select name="device_id" id="device_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
             hover:cursor-pointer focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 
             dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
             dark:focus:border-blue-500 mt-4"
             disabled>
-            <option value="" selected disabled>Select Device</option>
+            <option value="" selected disabled>@lang('messages.select device')</option>
               @foreach ($device_id as $id)
                 <option value="{{ $id }}">{{ $id }}</option>
               @endforeach
     </select>
   </form>
   <form wire:submit.prevent="save" class="max-w-sm mx-auto lg:ml-[1450px] lg:mt-[-95px]">
-    <label for="device id" class="block mt-4 text-sm font-medium text-gray-900 dark:text-white">Select Mode</label>
+    <label for="device id" class="block mt-4 text-sm font-medium text-gray-900 dark:text-white">@lang('messages.select mode')</label>
     <select name="" id="dataMode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
             hover:cursor-pointer focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
             dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
             dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-4">
-          <option value="" selected disabled>Select Mode</option>
-          <option value="live">Live</option>
-          <option value="database">Historical</option>
+          <option value="" selected disabled>@lang('messages.select mode')</option>
+          <option value="live">@lang('messages.live')</option>
+          <option value="database">@lang('messages.historical')</option>
     </select>
   </form>
   <div class="flex items-center lg:ml-[60px]" id="datetimeFields" style="display: none;">
-    <label for="select devices" class="block lg:mt-[-20px] lg:ml-2 text-sm font-medium 
+    <label for="select devices" class="block lg:mt-[-20px] lg:ml-3 lg:mb-8 text-sm font-medium 
             text-gray-900 dark:text-white">
             Filter
     </label>
     <div class="relative lg:mt-[60px] lg:ml-[-35px]">
+      <span class="text-sm dark:text-white text-gray-900">@lang('messages.start date')</span>
       <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 
             focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 
             dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
-            dark:focus:border-blue-500 lg:w-[160px]"
+            dark:focus:border-blue-500 lg:w-[160px] mt-2"
             type="datetime-local" name="" id="startDate" disabled>
     </div>
-    <span class="mx-4 text-gray-500 lg:mt-[60px]">To</span>
+    <span class="mx-4 text-gray-500 dark:text-white mt-[90px]">@lang('messages.to')</span>
     <div class="relative lg:mt-[60px]">
+      <span class="text-sm dark:text-white text-gray-900">@lang('messages.end date')</span>
       <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 
               focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 
               dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
-              dark:focus:border-blue-500 lg:w-[160px]"
+              dark:focus:border-blue-500 lg:w-[160px] mt-2"
               type="datetime-local" name="" id="endDate" disabled>
     </div>
     <button type="reset" id="resetButton" class="focus:outline-none text-white bg-red-700 
             hover:bg-red-800 hover:cursor-pointer focus:ring-4 focus:ring-red-300 
             font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 
-            dark:hover:bg-red-700 dark:focus:ring-red-900 lg:ml-6 lg:mt-[70px]"
+            dark:hover:bg-red-700 dark:focus:ring-red-900 lg:ml-6 lg:mt-[95px]"
             disabled>
             Reset
     </button>
@@ -59,11 +63,11 @@
       <div class="flex justify-between p-4 md:p-6 pb-0 md:pb-0">
         <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2 
             lg:text-[16px] lg:ml-4">
-            Graphic Tegangan
+            @lang('messages.graphic voltage')
         </h5>
         <span class="flex items-center text-sm font-medium text-gray-900 dark:text-white me-3">
           <span class="flex w-2.5 h-2.5 bg-purple-500 rounded-full me-1.5 flex-shrink-0"></span>
-          Tegangan
+          @lang('messages.voltage')
         </span>
       </div>
       <div id="chart" class="px-2.5 lg:mt-[20px]"></div>
@@ -72,11 +76,11 @@
       style="position: relative;">
       <div class="flex justify-between p-4 md:p-6 pb-0 md:pb-0">
         <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2 lg:text-[16px] lg:ml-4">
-          Graphic Arus
+          @lang('messages.graphic flow')
         </h5>
         <span class="flex items-center text-sm font-medium text-gray-900 dark:text-white me-3">
           <span class="flex w-2.5 h-2.5 bg-orange-500 rounded-full me-1.5 flex-shrink-0"></span>
-          Arus
+          @lang('messages.flow')
         </span>
       </div>
       <div id="chart2" class="px-2.5 lg:mt-[20px]"></div>
@@ -85,11 +89,11 @@
           style="position: relative;">
       <div class="flex justify-between p-4 md:p-6 pb-0 md:pb-0">
         <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2 lg:text-[16px] lg:ml-4">
-          Graphic Daya Pancar
+          @lang('messages.graphic power trans')
         </h5>
         <span class="flex items-center text-sm font-medium text-gray-900 dark:text-white me-3">
           <span class="flex w-2.5 h-2.5 bg-purple-950 rounded-full me-1.5 flex-shrink-0"></span>
-          Daya pancar
+          @lang('messages.power trans')
         </span>
       </div>
       <div id="chart3" class="px-2.5 lg:mt-[20px]"></div>
@@ -98,11 +102,11 @@
           style="position: relative;">
       <div class="flex justify-between p-4 md:p-6 pb-0 md:pb-0">
         <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2 lg:text-[16px] lg:ml-4">
-          Graphic SWR
+          @lang('messages.graphic swr')
         </h5>
         <span class="flex items-center text-sm font-medium text-gray-900 dark:text-white me-3">
           <span class="flex w-2.5 h-2.5 bg-yellow-300 rounded-full me-1.5 flex-shrink-0"></span>
-          SWR
+          @lang('messages.swr')
         </span>
       </div>
       <div id="chart4" class="px-2.5 lg:mt-[20px]"></div>
@@ -206,28 +210,28 @@
           lineColor = '#5546ff';
           markerColor = '#5546ff';
           unit = 'V';
-          seriesName = 'Tegangan';
+          seriesName = '@lang('messages.voltage')';
           break;
         case 'Arus':
           chartContainerId = 'chart2';
           lineColor = '#ef732f';
           markerColor = '#ef732f';
           unit = 'A';
-          seriesName = 'Arus';
+          seriesName = '@lang('messages.flow')';
           break;
         case 'Daya Pancar':
           chartContainerId = 'chart3';
           lineColor = '#2f2b70';
           markerColor = '#2f2b70';
           unit = 'W';
-          seriesName = 'Daya Pancar';
+          seriesName = '@lang('messages.power trans')';
           break;
         case 'SWR':
           chartContainerId = 'chart4';
           lineColor = '#eecd23';
           markerColor = '#eecd23';
           unit = '';
-          seriesName = 'SWR';
+          seriesName = '@lang('messages.swr')';
           break;
         default:
           return null;
