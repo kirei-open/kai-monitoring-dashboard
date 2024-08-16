@@ -42,7 +42,7 @@
     <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium 
             rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none 
             dark:focus:ring-blue-800" id="myBtn">
-            Generate Report
+            @lang('messages.generate report')
     </button>
       <!-- The Modal -->
       <div id="myModal" class="modal">
@@ -50,22 +50,24 @@
         <div class="bg-white dark:bg-gray-800 modal-content">
           <span class="close">&times;</span>
           <h3 class="text-xl font-semibold text-gray-900 dark:text-white ml-2 mt-4">
-            Generate Report By Date
+            @lang('messages.generate report by date')
           </h3>
           <div class="flex items-center ml-2">
             <div class="relative mt-8">
+              <span class="text-sm dark:text-white text-gray-900">@lang('messages.start date')</span>
               <input wire:model="startDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 
                     focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 
                     dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
-                    dark:focus:border-blue-500 lg:w-[230px]"
+                    dark:focus:border-blue-500 lg:w-[230px] lg:mt-3"
                     type="datetime-local" name="startDate">
             </div>
-            <span class="mx-4 text-gray-500 mt-8">To</span>
+            <span class="mx-4 text-gray-500 dark:text-white mt-16">@lang('messages.to')</span>
             <div class="relative mt-8">
+              <span class="text-sm dark:text-white text-gray-900">@lang('messages.end date')</span>
               <input wire:model="endDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md 
                       focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 
                       dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
-                      dark:focus:border-blue-500 lg:w-[230px]"
+                      dark:focus:border-blue-500 lg:w-[230px] lg:mt-3"
                       type="datetime-local" name="endDate">
             </div>
           </div>
@@ -73,7 +75,7 @@
             <button wire:click="createReport" type="button" class="text-white bg-blue-700 
                     hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg 
                     text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    Generate
+                    @lang('messages.generate')
             </button>
           </div>
         </div>
@@ -85,49 +87,51 @@
       <div class="bg-slate-200 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12 mb-8">
         <span class="bg-indigo-100 text-indigo-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
               rounded-md dark:bg-indigo-900 dark:text-indigo-400 mb-2">
-              Train
+              @lang('messages.train')
         </span>
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-3">
           <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-neutral-100 uppercase bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
               <tr>
                   <th scope="col" class="px-6 py-3">
-                      Image Train
+                    @lang('messages.train image')
                   </th>
                   <th scope="col" class="px-6 py-3">
-                      Information
+                      @lang('messages.information')
                   </th>
               </tr>
             </thead>
-              <tbody>
-                  <tr class="bg-white dark:bg-gray-800">
-                      <td class="p-6">
-                        @if($train->image)
-                          <img class="w-16 md:w-32 lg:w-[500px] lg:h-[300px]" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path("storage/$train->image"))) }}" width="100" />
-                        @else
-                            <p>No Image Data</p>
-                        @endif
-                      </td>
-                      <td class="px-6 py-4 pb-14">
-                        <span class="bg-sky-200 text-sky-500 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-sky-500 dark:text-sky-100">Device ID</span>
-                        <span class="lg:ml-12 text-gray-900 dark:text-white text-base">:</span><span class="text-gray-900 dark:text-white lg:ml-8 text-base">{{ $train->device_id }}</span>
-                        <br>
-                        <br>
-                        <br>
-                        <span class="bg-cyan-200 text-cyan-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-cyan-400 dark:text-cyan-50">Train Name</span>
-                        <span class="lg:ml-[35px] text-gray-900 dark:text-white text-base">:</span><span class="text-gray-900 dark:text-white lg:ml-7 text-base">
+            <tbody>
+                <tr class="bg-white dark:bg-gray-800">
+                    <td class="p-6">
+                      @if($train->image)
+                        <img class="w-16 md:w-32 lg:w-[500px] lg:h-[300px]" src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path("storage/$train->image"))) }}" width="100" />
+                      @else
+                          <p>No Image Data</p>
+                      @endif
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex items-start mb-8">
+                        <span class="bg-sky-200 text-sky-500 text-base font-medium px-2.5 py-0.5 rounded-lg dark:bg-sky-500 dark:text-sky-100 w-40">@lang('messages.device id')</span>
+                        <span class="text-gray-900 dark:text-white text-base mx-2">:</span>
+                        <span class="text-gray-900 dark:text-white text-base">{{ $train->device_id }}</span>
+                      </div>
+                      <div class="flex items-start mb-8">
+                        <span class="bg-cyan-200 text-cyan-800 text-base font-medium px-2.5 py-0.5 rounded-lg dark:bg-cyan-400 dark:text-cyan-50 w-40">@lang('messages.train name')</span>
+                        <span class="text-gray-900 dark:text-white text-base mx-2">:</span>
+                        <span class="text-gray-900 dark:text-white text-base">
                           @if(!empty($train->name))
                             {{ $train->name }}
                           @else
                             No Name Data
                           @endif
                         </span>
-                        <br>
-                        <br>
-                        <br>
-                        <span class="mb-2 bg-teal-200 text-teal-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-teal-400 dark:text-teal-50">Route Trains</span>
-                        <span class="lg:ml-[25px] text-gray-900 dark:text-white text-base">:</span>
-                          <ol class="max-w-md space-y-1 text-gray-500 list-decimal list-inside dark:text-white lg:mt-[-20px] lg:ml-[180px]">
+                      </div>
+                      <div class="flex items-start mb-4">
+                        <span class="bg-teal-200 text-teal-800 text-base font-medium px-2.5 py-0.5 rounded-lg dark:bg-teal-400 dark:text-teal-50 w-40">@lang('messages.route trains')</span>
+                        <span class="text-gray-900 dark:text-white text-base mx-2">:</span>
+                        <div>
+                          <ol class="max-w-md space-y-1 text-gray-500 list-decimal list-inside dark:text-white">
                             @if($train->stations->isNotEmpty())
                                 @foreach ($train->stations as $station)
                                     <li>
@@ -140,38 +144,41 @@
                                 </li>
                             @endif
                           </ol>                      
-                      </td>
-                  </tr>
-              </tbody>
+                        </div>
+                      </div>
+                    </td>
+                </tr>
+            </tbody>
           </table>
         </div>
       </div>
     </div>
   </section>
-
+  
+  
   <section class="bg-white dark:bg-gray-900">
     <div class="pb-8 px-4 mx-auto max-w-screen-xl lg:pt-4 lg:pb-16">
       <div class="bg-slate-200 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12 mb-8">
         <span
           class="bg-blue-100 text-blue-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
               rounded-md dark:bg-gray-700 dark:text-blue-400 mb-2">
-          Device
+          @lang('messages.devices')
         </span>
         <div class="relative overflow-x-auto lg:mt-4">
           <table class="lg:w-[1150px] text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-neutral-100 uppercase bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" class="px-6 py-3">
-                  Serial Number
+                  @lang('messages.serial number')
                 </th>
                 <th scope="col" class="px-6 py-3">
-                  Code
+                  @lang('messages.code')
                 </th>
                 <th scope="col" class="px-6 py-3">
-                  Last Location
+                  @lang('messages.last location')
                 </th>
                 <th scope="col" class="px-6 py-3">
-                  Last Monitored Value
+                  @lang('messages.last monitored value')
                 </th>
               </tr>
             </thead>
@@ -188,37 +195,53 @@
                 </td>
                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   @if ($device->last_monitored_value != null)
-                    <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
-                      <li class="font-medium text-gray-900 dark:text-white">
-                        Datetime <span class="lg:ml-5">:</span> &nbsp; {{ $device->last_monitored_value['datetime'] }}
-                      </li>
-                      <li class="font-medium text-gray-900 dark:text-white">
-                        Key <span class="lg:ml-14">:</span> &nbsp; {{ $device->last_monitored_value['key'] }}
-                      </li>
-                      <li class="font-medium text-gray-900 dark:text-white">
-                        Value <span class="lg:ml-11">:</span> &nbsp; {{ $device->last_monitored_value['value'] }}
-                      </li>
-                      <li class="font-medium text-gray-900 dark:text-white">
-                        Unit <span class="lg:ml-[53px]">:</span> &nbsp; {{ $device->last_monitored_value['unit'] }}
-                      </li>
-                    </ul>
+                    <div class="flex flex-col space-y-2">
+                      <div class="flex items-center">
+                        <span class="font-medium text-gray-900 dark:text-white w-32">@lang('messages.datetime')</span>
+                        <span class="mx-2">:</span>
+                        <span>{{ $device->last_monitored_value['datetime'] }}</span>
+                      </div>
+                      <div class="flex items-center">
+                        <span class="font-medium text-gray-900 dark:text-white w-32">@lang('messages.key')</span>
+                        <span class="mx-2">:</span>
+                        <span>{{ $device->last_monitored_value['key'] }}</span>
+                      </div>
+                      <div class="flex items-center">
+                        <span class="font-medium text-gray-900 dark:text-white w-32">@lang('messages.value')</span>
+                        <span class="mx-2">:</span>
+                        <span>{{ $device->last_monitored_value['value'] }}</span>
+                      </div>
+                      <div class="flex items-center">
+                        <span class="font-medium text-gray-900 dark:text-white w-32">@lang('messages.unit')</span>
+                        <span class="mx-2">:</span>
+                        <span>{{ $device->last_monitored_value['unit'] }}</span>
+                      </div>
+                    </div>
                   @else
-                    <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
-                      <li class="font-medium text-gray-900 dark:text-white">
-                        Datetime <span class="lg:ml-2">:</span> &nbsp; Belum Ada Data
-                      </li>
-                      <li class="font-medium text-gray-900 dark:text-white">
-                        Key <span class="lg:ml-11">:</span> &nbsp; Belum Ada Data
-                      </li>
-                      <li class="font-medium text-gray-900 dark:text-white">
-                        Value <span class="lg:ml-8">:</span> &nbsp; Belum Ada Data
-                      </li>
-                      <li class="font-medium text-gray-900 dark:text-white">
-                        Unit <span class="lg:ml-10">:</span> &nbsp; Belum Ada Data
-                      </li>
-                    </ul>
+                    <div class="flex flex-col space-y-2">
+                      <div class="flex items-center">
+                        <span class="font-medium text-gray-900 dark:text-white w-32">@lang('messages.datetime')</span>
+                        <span class="mx-2">:</span>
+                        <span>@lang('messages.no data')</span>
+                      </div>
+                      <div class="flex items-center">
+                        <span class="font-medium text-gray-900 dark:text-white w-32">@lang('messages.key')</span>
+                        <span class="mx-2">:</span>
+                        <span>@lang('messages.no data')</span>
+                      </div>
+                      <div class="flex items-center">
+                        <span class="font-medium text-gray-900 dark:text-white w-32">@lang('messages.value')</span>
+                        <span class="mx-2">:</span>
+                        <span>@lang('messages.no data')</span>
+                      </div>
+                      <div class="flex items-center">
+                        <span class="font-medium text-gray-900 dark:text-white w-32">@lang('messages.unit')</span>
+                        <span class="mx-2">:</span>
+                        <span>@lang('messages.no data')</span>
+                      </div>
+                    </div>
                   @endif
-                </td>
+                </td>                
               </tr>
             </tbody>
           </table>
@@ -233,22 +256,22 @@
         <span
           class="bg-green-100 text-green-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
               rounded-md dark:bg-gray-700 dark:text-green-400 mb-2">
-          Location
+          @lang('messages.location')
         </span>
         <table class="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 lg:w-[1150px] lg:mt-4">
           <thead class="text-xs text-neutral-100 uppercase bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" class="px-6 py-3">
-                SERIAL NUMBER
+                @lang('messages.serial number detail')
               </th>
               <th scope="col" class="px-6 py-3">
-                LATITUDE
+                @lang('messages.latitude detail')
               </th>
               <th scope="col" class="px-6 py-3">
-                LONGITUDE
+                @lang('messages.longitude detail')
               </th>
               <th scope="col" class="px-6 py-3">
-                DATETIME
+                @lang('messages.datetime detail')
               </th>
             </tr>
           </thead>
@@ -275,8 +298,8 @@
         <nav class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4 lg:w-[1150px]" 
             aria-label="Table navigation">
           <span class="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">
-              Showing <span class="font-semibold text-gray-900 dark:text-white">{{ $locations->firstItem() }}</span> - 
-              <span class="font-semibold text-gray-900 dark:text-white">{{ $locations->lastItem() }}</span> of 
+              @lang('messages.showing') <span class="font-semibold text-gray-900 dark:text-white">{{ $locations->firstItem() }}</span> - 
+              <span class="font-semibold text-gray-900 dark:text-white">{{ $locations->lastItem() }}</span> @lang('messages.of') 
               <span class="font-semibold text-gray-900 dark:text-white">{{ $locations->total() }}</span>
           </span>
           {{ $locations->links(data: ['scrollTo' => false]) }}
@@ -291,25 +314,25 @@
         <span
           class="bg-red-100 text-red-800 text-md font-medium inline-flex items-center px-2.5 py-0.5 
               rounded-md dark:bg-gray-700 dark:text-red-400 mb-2">
-          Measurement
+          @lang('messages.measurement')
         </span>
         <table class="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 lg:w-[1150px] lg:mt-4">
           <thead class="text-xs text-neutral-100 uppercase bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" class="px-6 py-3">
-                SERIAL NUMBER
+                @lang('messages.serial number detail')
               </th>
               <th scope="col" class="px-6 py-3">
-                KEY
+                @lang('messages.key detail')
               </th>
               <th scope="col" class="px-6 py-3">
-                VALUE
+                @lang('messages.value detail')
               </th>
               <th scope="col" class="px-6 py-3">
-                UNIT
+                @lang('messages.unit detail')
               </th>
               <th scope="col" class="px-6 py-3">
-                DATETIME
+                @lang('messages.datetime detail')
               </th>
             </tr>
           </thead>
@@ -339,8 +362,8 @@
         <nav class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4 lg:w-[1150px]" 
             aria-label="Table navigation">
           <span class="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">
-              Showing <span class="font-semibold text-gray-900 dark:text-white">{{ $measurements->firstItem() }}</span> - 
-              <span class="font-semibold text-gray-900 dark:text-white">{{ $measurements->lastItem() }}</span> of 
+              @lang('messages.showing') <span class="font-semibold text-gray-900 dark:text-white">{{ $measurements->firstItem() }}</span> - 
+              <span class="font-semibold text-gray-900 dark:text-white">{{ $measurements->lastItem() }}</span> @lang('messages.of') 
               <span class="font-semibold text-gray-900 dark:text-white">{{ $measurements->total() }}</span>
           </span>
           {{ $measurements->links(data: ['scrollTo' => false]) }}
