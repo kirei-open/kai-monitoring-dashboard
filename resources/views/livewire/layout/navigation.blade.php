@@ -15,7 +15,47 @@ new class extends Component {
     }
 }; ?>
 
+
 <nav id="nav" class="bg-white z-10 fixed top-0 flex-no-wrap w-full py-2 dark:bg-gray-900">
+  <style>
+    .dropdown .dropbtn {
+      font-size: 16px;  
+      border: none;
+      outline: none;
+      color: white;
+      padding: 14px 16px;
+      background-color: inherit;
+      font-family: inherit;
+      margin: 0;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 100px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+      margin-left: -50px;
+    }
+
+    .dropdown-content a {
+      float: none;
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #ddd;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+  </style>
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-30 lg:mx-[12.5rem] lg:mt-[-20px] p-4">
     <a href="{{ route('dashboard') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
       <img src="{{ URL::asset('img/logokai_main.png') }}" class="lg:ml-[-80px] lg:w-[320px]" alt="" />
@@ -194,36 +234,32 @@ new class extends Component {
             </button>
           </li>
           <li class="lg:mt-[5px]">
-            <button type="button" data-dropdown-toggle="language-dropdown-menu" class="inline-flex items-center font-medium justify-center px-4 py-2 text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white lg:ml-[-50px]">
-              @if (session('locale', 'en') == 'id')
-              <img alt="Indonesia" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/ID.svg"/>
-              @else
-              <img alt="United States" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg"/>
-              @endif
-              {{ session('locale', 'en') == 'id' ? 'Bahasa' : 'English' }}
-            </button>
-            <!-- Dropdown -->
-            <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700" id="language-dropdown-menu">
-                <ul class="py-2 font-medium" role="none">
-                    <li>
-                        <a href="{{ url('locale/en') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                            <div class="inline-flex items-center">
-                                <img alt="United States" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg"/>
-                                English
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ url('locale/id') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                            <div class="inline-flex items-center">
-                                <img alt="Indonesia" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/ID.svg"/>
-                                Bahasa
-                            </div>
-                        </a>
-                    </li>
-                </ul>
+            <div class="dropdown">
+              <button class="inline-flex items-center font-medium justify-center px-4 py-2 text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white lg:ml-[-50px]">
+                @if (session('locale', 'en') == 'id')
+                <img alt="Indonesia" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/ID.svg"/>
+                @else
+                <img alt="United States" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg"/>
+                @endif
+                {{ session('locale', 'en') == 'id' ? 'Bahasa' : 'English' }}
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                <a href="{{ url('locale/en') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                  <div class="inline-flex items-center">
+                      <img alt="United States" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg"/>
+                      English
+                  </div>
+                </a>
+                <a href="{{ url('locale/id') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                  <div class="inline-flex items-center">
+                      <img alt="Indonesia" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/ID.svg"/>
+                      Bahasa
+                  </div>
+                </a>
+              </div>
             </div>
-        </li>
+          </li>
         
           <li class="lg:mt-[-2px] lg:ml-[50px] ml-2">
             <x-dropdown align="right" width="48">
