@@ -1,9 +1,11 @@
+version: "3.8"
+
 services:
     app:
+        image: kai_monitoring_dashboard:latest
         build:
             context: .
             dockerfile: Dockerfile
-            target: base
         container_name: kai_monitoring_dashboard
         ports:
             - "8000:8080"
@@ -14,6 +16,7 @@ services:
             - db
         command: ["php", "artisan", "mqtt:subscribe"]
         environment:
+            PHP_FPM_POOL_NAME: "my-app_php"
             DB_CONNECTION: pgsql
             DB_HOST: db
             DB_PORT: 5432
@@ -25,17 +28,32 @@ services:
             MQTT_AUTH_USERNAME: "kaimqtt"
             MQTT_AUTH_PASSWORD: "kaimqtt"
             REVERB_HOST: reverb
-            REVERB_PORT: 8080
+            REVERB_PORT: 8081
+        networks:
+            - kai
+
+    queue:
+        image: kai_monitoring_dashboard:latest
+        container_name: queue
+        volumes:
+            - queue_data:/var/www/html
+        working_dir: /var/www/html
+        restart: always
+        command: ["php", "/var/www/html/artisan", "queue:work", "--tries=3"]
+        environment:
+            PHP_FPM_POOL_NAME: "my-app_queue"
+        depends_on:
+            - app
         networks:
             - kai
 
     reverb:
-        build:
-            context: .
-            dockerfile: Dockerfile.reverb
+        image: kai_monitoring_dashboard:latest
         container_name: reverb
+        restart: always
         ports:
-            - 8080:8080
+            - 8080:8081
+        command: ["php", "artisan", "reverb:start", "--debug", "--port=8081"]
         volumes:
             - reverb_data:/var/www/html
         working_dir: /var/www/html
@@ -46,7 +64,7 @@ services:
 
     db:
         image: postgis/postgis:latest
-        container_name: kai_postgres
+        container_name: postgres
         environment:
             POSTGRES_DB: monitoring_dashboard
             POSTGRES_USER: postgres
@@ -75,7 +93,7 @@ services:
 
     mqtt:
         image: eclipse-mosquitto:latest
-        container_name: kai_mqtt
+        container_name: mqtt
         ports:
             - "1883:1883"
             - "9001:9001"
@@ -90,7 +108,7 @@ networks:
 
 volumes:
     kai_monitordata:
-    mosquitto_data:
-    mosquitto_log:
+    job_data:
+    queue_data:
     reverb_data:
     pgadmin-data:
