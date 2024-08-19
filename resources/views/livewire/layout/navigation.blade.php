@@ -15,7 +15,47 @@ new class extends Component {
     }
 }; ?>
 
+
 <nav id="nav" class="bg-white z-10 fixed top-0 flex-no-wrap w-full py-2 dark:bg-gray-900">
+  <style>
+    .dropdown .dropbtn {
+      font-size: 16px;  
+      border: none;
+      outline: none;
+      color: white;
+      padding: 14px 16px;
+      background-color: inherit;
+      font-family: inherit;
+      margin: 0;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 100px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+      margin-left: -50px;
+    }
+
+    .dropdown-content a {
+      float: none;
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #ddd;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+  </style>
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-30 lg:mx-[12.5rem] lg:mt-[-20px] p-4">
     <a href="{{ route('dashboard') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
       <img src="{{ URL::asset('img/logokai_main.png') }}" class="lg:ml-[-80px] lg:w-[320px]" alt="" />
@@ -47,7 +87,7 @@ new class extends Component {
                 : 'dark:text-white' }} text-[16px] px-4 py-3 rounded-full hover:bg-blue-100 
               hover:text-blue-800 hover:dark:bg-blue-900 
               hover:dark:text-blue-300">
-            <a href="{{ route('graphic') }}" wire:navigate>Graphic</a>
+            <a href="{{ route('graphic') }}" wire:navigate>@lang('messages.historical data')</a>
           </li>
           <li
             class="{{ Request::is('#')
@@ -56,7 +96,7 @@ new class extends Component {
                 : 'dark:text-white' }} text-[16px] px-4 py-3 rounded-full hover:bg-blue-100 
               hover:text-blue-800 hover:dark:bg-blue-900 
               hover:dark:text-blue-300">
-            <a href="#" wire:navigate>Event Logger</a>
+            <a href="#" wire:navigate>@lang('messages.event logger')</a>
           </li>
           <li
             class="{{ Request::is('#')
@@ -65,16 +105,7 @@ new class extends Component {
                 : 'dark:text-white' }} text-[16px] px-4 py-3 rounded-full hover:bg-blue-100 
               hover:text-blue-800 hover:dark:bg-blue-900 
               hover:dark:text-blue-300">
-            <a href="#" wire:navigate>Report</a>
-          </li>
-          <li
-            class="{{ Request::is('#')
-                ? 'bg-blue-100 text-blue-800 font-medium dark:bg-blue-900 
-                                                              dark:text-blue-300'
-                : 'dark:text-white' }} text-[16px] px-4 py-3 rounded-full hover:bg-blue-100 
-              hover:text-blue-800 hover:dark:bg-blue-900 
-              hover:dark:text-blue-300">
-            <a href="#" wire:navigate>Asset</a>
+            <a href="#" wire:navigate>@lang('messages.report')</a>
           </li>
           <li class="lg:mt-[2px]">
             <button id="theme-toggle" type="button"
@@ -97,6 +128,32 @@ new class extends Component {
                 </path>
               </svg>
             </button>
+          </li>
+          <li class="lg:mt-[5px]">
+            <div class="dropdown">
+              <button class="inline-flex items-center font-medium justify-center px-4 py-2 text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white lg:ml-[-50px]">
+                @if (session('locale', 'en') == 'id')
+                  <img alt="Indonesia" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/ID.svg"/>
+                @else
+                  <img alt="United States" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg"/>
+                @endif
+                  {{ session('locale', 'en') == 'id' ? 'Bahasa' : 'English' }}
+              </button>
+              <div class="dropdown-content">
+                <a href="{{ url('locale/en') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                  <div class="inline-flex items-center">
+                      <img alt="United States" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg"/>
+                      English
+                  </div>
+                </a>
+                <a href="{{ url('locale/id') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                  <div class="inline-flex items-center">
+                      <img alt="Indonesia" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/ID.svg"/>
+                      Bahasa
+                  </div>
+                </a>
+              </div>
+            </div>
           </li>
           <li class="lg:mt-[-2px] lg:ml-[80px] ml-2">
             <x-dropdown align="right" width="48">
@@ -122,7 +179,7 @@ new class extends Component {
                 <!-- Authentication -->
                 <button wire:click="logout" class="w-full text-start">
                   <x-dropdown-link>
-                    {{ __('Log Out') }}
+                    @lang('messages.logout')
                   </x-dropdown-link>
                 </button>
               </x-slot>
@@ -142,16 +199,16 @@ new class extends Component {
                                                               dark:text-blue-300'
                 : 'dark:text-white' }} text-[16px] px-4 py-3 rounded-full hover:bg-blue-100 
               hover:text-blue-800 hover:dark:bg-blue-900 hover:dark:text-blue-300">
-            <a href="{{ route('dashboard') }}">Home</a>
+            <a href="{{ route('dashboard') }}">@lang('messages.home')</a>
           </li>
           <li
             class="{{ Request::is('table')
                 ? 'bg-blue-100 text-blue-800 font-medium dark:bg-blue-900 
-                                                              dark:text-blue-300'
+                dark:text-blue-300'
                 : 'dark:text-white' }} text-[16px] px-4 py-3 rounded-full hover:bg-blue-100 
               hover:text-blue-800 hover:dark:bg-blue-900 
               hover:dark:text-blue-300">
-            <a href="{{ route('table') }}" wire:navigate>Devices</a>
+            <a href="{{ route('table') }}" wire:navigate>@lang('messages.devices')</a>
           </li>
           <li
             class="{{ Request::is('graphic')
@@ -160,7 +217,7 @@ new class extends Component {
                 : 'dark:text-white' }} text-[16px] px-4 py-3 rounded-full hover:bg-blue-100 
               hover:text-blue-800 hover:dark:bg-blue-900 
               hover:dark:text-blue-300">
-            <a href="{{ route('graphic') }}" wire:navigate>Historical Data</a>
+            <a href="{{ route('graphic') }}" wire:navigate>@lang('messages.historical data')</a>
           </li>
           <li
             class="{{ Request::is('event-logger')
@@ -169,7 +226,7 @@ new class extends Component {
                 : 'dark:text-white' }} text-[16px] px-4 py-3 rounded-full hover:bg-blue-100 
               hover:text-blue-800 hover:dark:bg-blue-900 
               hover:dark:text-blue-300">
-            <a href="{{ route('event-logger') }}" wire:navigate>Event Logger</a>
+            <a href="{{ route('event-logger') }}" wire:navigate>@lang('messages.event logger')</a>
           </li>
           <li
             class="{{ Request::is('report')
@@ -178,14 +235,14 @@ new class extends Component {
                 : 'dark:text-white' }} text-[16px] px-4 py-3 rounded-full 
               hover:bg-blue-100 hover:text-blue-800 hover:dark:bg-blue-900 
               hover:dark:text-blue-300">
-            <a href="{{ route('report') }}" wire:navigate>Report</a>
+            <a href="{{ route('report') }}" wire:navigate>@lang('messages.report')</a>
           </li>
           <li class="lg:mt-[2px]">
             <button id="theme-toggle" type="button"
               class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 
                     dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 
                     dark:focus:ring-gray-700 rounded-lg 
-                    text-sm p-2.5 lg:ml-[200px] ml-[3px]">
+                    text-sm p-2.5 lg:ml-[70px] ml-[3px]">
               <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg">
                 <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
@@ -202,6 +259,33 @@ new class extends Component {
               </svg>
             </button>
           </li>
+          <li class="lg:mt-[5px]">
+            <div class="dropdown">
+                <button class="inline-flex items-center font-medium justify-center px-4 py-2 text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white lg:ml-[-50px]">
+                    @if (session('locale', 'en') == 'id')
+                        <img alt="Indonesia" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/ID.svg"/>
+                    @else
+                        <img alt="United States" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg"/>
+                    @endif
+                    {{ session('locale', 'en') == 'id' ? 'Bahasa' : 'English' }}
+                </button>
+                <div class="dropdown-content">
+                    <a href="{{ url('locale/en') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                        <div class="inline-flex items-center">
+                            <img alt="United States" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg"/>
+                            English
+                        </div>
+                    </a>
+                    <a href="{{ url('locale/id') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                        <div class="inline-flex items-center">
+                            <img alt="Indonesia" class="h-3.5 w-3.5 rounded-full me-2" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/ID.svg"/>
+                            Bahasa
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </li>
+        
           <li class="lg:mt-[-2px] lg:ml-[50px] ml-2">
             <x-dropdown align="right" width="48">
               <x-slot name="trigger">
@@ -231,15 +315,15 @@ new class extends Component {
               </x-slot>
               <x-slot name="content">
                 <x-dropdown-link :href="route('filament.admin.auth.login')" target="_blank">
-                  Admin Panel
+                  @lang('messages.admin panel')
                 </x-dropdown-link>
                 <x-dropdown-link :href="'/health?fresh'" target="_blank">
-                  Health Check
+                  @lang('messages.health check')
                 </x-dropdown-link>
                 <!-- Authentication -->
                 <button wire:click="logout" class="w-full text-start">
                   <x-dropdown-link>
-                    {{ __('Log Out') }}
+                    @lang('messages.logout')
                   </x-dropdown-link>
                 </button>
               </x-slot>
