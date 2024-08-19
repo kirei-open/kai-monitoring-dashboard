@@ -1,5 +1,7 @@
 <div class="container">
-  @section('title', 'Dashboard')
+  @section('title')
+    @lang('messages.home')
+  @endsection
   <div id="map" class="lg:mt-[100px] mt-[50px] lg:w-[2000px] w-full"></div>
 </div>
 
@@ -44,10 +46,10 @@
           icon: stationIcon
         }).addTo(mapLayerGroup);
         var popupContent = `
-                    <b>Name:</b> ${station.name}<br>
-                    <b>Code:</b> ${station.code}<br>
-                    <b>Altitude:</b> ${station.altitude}<br>
-                    <b>Point:</b> ${station.latitude},${station.longitude}<br>
+                    <b>@lang('messages.name') :</b> ${station.name}<br>
+                    <b>@lang('messages.code') :</b> ${station.code}<br>
+                    <b>@lang('messages.altitude') :</b> ${station.altitude}<br>
+                    <b>@lang('messages.point') :</b> ${station.latitude},${station.longitude}<br>
                 `;
         marker.on('mouseover', function(e) {
           this.bindPopup(popupContent).openPopup();
@@ -70,10 +72,10 @@
           : '';
 
         var popupContent = `
-          <b>Name:</b> ${device.train_profile ? device.train_profile.name : 'N/A'}<br>
-          <b>Serial Number:</b> ${device.serial_number}<br>
-          <b>Code:</b> ${device.code}<br>
-          <b>Last Location:</b> ${latitude},${longitude}<br>
+          <b>@lang('messages.name') :</b> ${device.train_profile ? device.train_profile.name : 'N/A'}<br>
+          <b>@lang('messages.serial number') :</b> ${device.serial_number}<br>
+          <b>@lang('messages.code') :</b> ${device.code}<br>
+          <b>@lang('messages.last location') :</b> ${latitude},${longitude}<br>
           ${imageUrl ? `<img src="${imageUrl}" width="100" /><br>` : ''}
           <a href="/table/detail/${device.serial_number}" target="_blank">Detail</a>
         `;
@@ -121,8 +123,8 @@
       var deviceIcon = getIcon('{{ URL::asset('img/train.png') }}', map.getZoom());
 
       var popupContent = `
-        <b>Serial Number:</b> ${device.device_id}<br>
-        <b>Last Location:</b> ${device.latitude},${device.longitude}<br>
+        <b>@lang('messages.serial number') :</b> ${device.device_id}<br>
+        <b>@lang('messages.last location')</b> ${device.latitude},${device.longitude}<br>
         <a href="/table/detail/${device.device_id}" target="_blank">Detail</a>
       `;
 

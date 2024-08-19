@@ -1,6 +1,8 @@
 <div>
-    @section('title','Tabel Monitoring')
-    <h1 class="text-[#a4a2b4] lg:mt-[120px] lg:ml-[60px] lg:text-[20px]">DEVICES MONITORING</h1>
+    @section('title')
+        @lang('messages.devices monitoring title')
+    @endsection
+    <h1 class="text-[#a4a2b4] lg:mt-[120px] lg:ml-[60px] lg:text-[20px]">@lang('messages.devices monitoring')</h1>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg lg:mt-[20px] mt-[100px] lg:ml-[60px] lg:w-11/12">
         <div class="bg-white lg:w-full lg:h-24 dark:bg-gray-900">
             <div class="flex justify-between">
@@ -13,7 +15,7 @@
                         type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
                         focus:ring-blue-500 focus:border-blue-500 block w-full lg:w-72 ps-10 p-2.5 
                         dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
-                        dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search"/>
+                        dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="@lang('messages.search')"/>
                     </div>
                 </div>
                 <div class="lg:mt-7">
@@ -25,8 +27,8 @@
                         lg:w-72 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 
                         dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="#" selected disabled>Filter</option>
-                            <option value="latest" selected>Terbaru</option>
-                            <option value="oldest">Terlama</option>
+                            <option value="latest" selected>@lang('messages.latest')</option>
+                            <option value="oldest">@lang('messages.oldest')</option>
                         </select>            
                     </form>
                 </div>
@@ -40,22 +42,22 @@
                 <thead class="text-xs text-white uppercase bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="p-4">
-                            NO
+                            @lang('messages.no')
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            SERIAL NUMBER
+                            @lang('messages.serial number')
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            LATITUDE
+                            @lang('messages.latitude')
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            LONGITUDE
+                            @lang('messages.longitude')
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            TIMESTAMP
+                            @lang('messages.timestamp')
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            ACTION
+                            @lang('messages.action')
                         </th>
                     </tr>
                 </thead>
@@ -90,9 +92,9 @@
             </table>
             <nav class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4" aria-label="Table navigation">
                 <span class="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">
-                    Showing <span class="font-semibold text-gray-900 dark:text-white">{{ $locations->firstItem() }}</span> - 
+                    @lang('messages.showing') <span class="font-semibold text-gray-900 dark:text-white">{{ $locations->firstItem() }}</span> - 
                     <span class="font-semibold text-gray-900 dark:text-white">{{ $locations->lastItem() }}</span> 
-                    of
+                    @lang('messages.of')
                     <span class="font-semibold text-gray-900 dark:text-white">{{ $locations->total() }}</span>
                 </span>
                 {{ $locations->links() }}

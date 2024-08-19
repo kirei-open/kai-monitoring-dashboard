@@ -1,6 +1,8 @@
 <div>
-  @section('title', 'Event Logger')
-  <h1 class="text-[#a4a2b4] lg:mt-[120px] lg:ml-[60px] lg:text-[20px]">EVENT LOGGER</h1>
+  @section('title')
+    @lang('messages.event logger')
+  @endsection
+  <h1 class="text-[#a4a2b4] lg:mt-[120px] lg:ml-[60px] lg:text-[20px]">@lang('messages.event logger title')</h1>
   <div class="relative overflow-x-auto shadow-md sm:rounded-lg lg:mt-[20px] mt-[100px] lg:ml-[60px] lg:w-11/12">
     @php
       $lastNumber = ($activity_logs->currentPage() - 1) * $activity_logs->perPage();
@@ -10,13 +12,13 @@
         <thead class="text-xs text-white uppercase bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" class="text-center p-4" style="width: 10%">
-              NO
+              @lang('messages.no')
             </th>
             <th scope="col" class="text-center px-6 py-3">
-              DESCRIPTION
+              @lang('messages.description')
             </th>
             <th scope="col" class="text-center px-6 py-3">
-              CREATED AT
+              @lang('messages.created at')
             </th>
           </tr>
         </thead>
@@ -34,9 +36,9 @@
         aria-label="Table navigation">
         <span
           class="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">
-          Showing <span class="font-semibold text-gray-900 dark:text-white">{{ $activity_logs->firstItem() }}</span> -
+          @lang('messages.showing') <span class="font-semibold text-gray-900 dark:text-white">{{ $activity_logs->firstItem() }}</span> -
           <span class="font-semibold text-gray-900 dark:text-white">{{ $activity_logs->lastItem() }}</span>
-          of
+          @lang('messages.of')
           <span class="font-semibold text-gray-900 dark:text-white">{{ $activity_logs->total() }}</span>
         </span>
         {{ $activity_logs->links() }}
