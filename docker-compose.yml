@@ -38,7 +38,7 @@ services:
             - queue_data:/var/www/html
         working_dir: /var/www/html
         restart: always
-        command: ["php", "/var/www/html/artisan", "queue:work", "--tries=3"]
+        command: ["php", "artisan", "queue:work", "--tries=3"]
         environment:
             DB_CONNECTION: pgsql
             DB_HOST: db
