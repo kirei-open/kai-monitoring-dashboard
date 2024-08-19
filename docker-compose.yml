@@ -16,7 +16,6 @@ services:
             - db
         command: ["php", "artisan", "mqtt:subscribe"]
         environment:
-            PHP_FPM_POOL_NAME: "my-app_php"
             DB_CONNECTION: pgsql
             DB_HOST: db
             DB_PORT: 5432
@@ -41,7 +40,14 @@ services:
         restart: always
         command: ["php", "/var/www/html/artisan", "queue:work", "--tries=3"]
         environment:
-            PHP_FPM_POOL_NAME: "my-app_queue"
+            DB_CONNECTION: pgsql
+            DB_HOST: db
+            DB_PORT: 5432
+            DB_DATABASE: monitoring_dashboard
+            DB_USERNAME: postgres
+            DB_PASSWORD: alakadarna
+            REVERB_HOST: reverb
+            REVERB_PORT: 8081
         depends_on:
             - app
         networks:
