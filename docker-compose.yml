@@ -61,7 +61,7 @@ services:
             - 8080:8081
         command: ["php", "artisan", "reverb:start", "--debug", "--port=8081"]
         volumes:
-            - reverb_data:/var/www/html
+            - .:/var/www/html
         working_dir: /var/www/html
         networks:
             - kai
