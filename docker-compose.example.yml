@@ -1,0 +1,120 @@
+version: "3.8"
+
+services:
+  app:
+    image: kai_monitoring_dashboard:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kai_monitoring_dashboard
+    ports:
+      - "8000:8080"
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+    command: ["php", "artisan", "mqtt:subscribe"]
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: monitoring_dashboard
+      DB_USERNAME: postgres
+      DB_PASSWORD:
+      MQTT_HOST: mqtt
+      MQTT_PORT: 1883
+      MQTT_AUTH_USERNAME:
+      MQTT_AUTH_PASSWORD:
+      REVERB_HOST: reverb
+      REVERB_PORT: 8081
+    networks:
+      - kai
+
+  queue:
+    image: kai_monitoring_dashboard:latest
+    container_name: queue
+    volumes:
+      - queue_data:/var/www/html
+    working_dir: /var/www/html
+    restart: always
+    command: ["php", "artisan", "queue:work", "--tries=3"]
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: monitoring_dashboard
+      DB_USERNAME: postgres
+      DB_PASSWORD:
+      REVERB_HOST: reverb
+      REVERB_PORT: 8081
+    depends_on:
+      - app
+    networks:
+      - kai
+
+  reverb:
+    image: kai_monitoring_dashboard:latest
+    container_name: reverb
+    restart: always
+    ports:
+      - 8080:8081
+    command: ["php", "artisan", "reverb:start", "--debug", "--port=8081"]
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html
+    networks:
+      - kai
+    depends_on:
+      - app
+
+  db:
+    image: postgis/postgis:latest
+    container_name: postgres
+    environment:
+      POSTGRES_DB: monitoring_dashboard
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD:
+      MQTT_HOST: mqtt
+      MQTT_PORT: 1883
+    ports:
+      - "5432:5432"
+    volumes:
+      - kai_monitordata:/var/lib/postgresql/data
+    networks:
+      - kai
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@mail.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "8888:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - kai
+
+  mqtt:
+    image: eclipse-mosquitto:latest
+    container_name: mqtt
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    networks:
+      - kai
+    volumes:
+      - ./mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./mosquitto/config/passwd_file:/mosquitto/config/passwd_file
+
+networks:
+  kai:
+
+volumes:
+  kai_monitordata:
+  job_data:
+  queue_data:
+  reverb_data:
+  pgadmin-data:
