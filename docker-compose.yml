@@ -88,8 +88,8 @@ services:
         image: dpage/pgadmin4
         container_name: pgadmin
         environment:
-            PGADMIN_DEFAULT_EMAIL: admin@admin.com
-            PGADMIN_DEFAULT_PASSWORD: admin
+            PGADMIN_DEFAULT_EMAIL: admin@mail.com
+            PGADMIN_DEFAULT_PASSWORD: admin123
         ports:
             - "8888:80"
         volumes:
@@ -106,8 +106,8 @@ services:
         networks:
             - kai
         volumes:
-            - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
-            - C:\\Program Files\\mosquitto\\passwd_file:/mosquitto/config/passwd_file
+            - ./mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+            - ./mosquitto/config/passwd_file:/mosquitto/config/passwd_file
 
 networks:
     kai:
