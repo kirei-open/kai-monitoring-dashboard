@@ -7,7 +7,7 @@ USER root
 RUN install-php-extensions intl
 
 # Copy the application code
-COPY . /var/www/html
+COPY --chown=www-data:www-data . /var/www/html
 
 # Ensure the storage directory exists
 RUN chown -R www-data:www-data /var/www/html/storage
