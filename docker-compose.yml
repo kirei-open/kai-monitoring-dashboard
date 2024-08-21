@@ -10,6 +10,8 @@ services:
         ports:
             - "8000:8080"
         working_dir: /var/www/html
+        volumes:
+            - shared_data:/var/www/html
         depends_on:
             - db
         command: ["php", "artisan", "mqtt:subscribe"]
@@ -36,7 +38,7 @@ services:
         image: kai_monitoring_dashboard:latest
         container_name: queue
         volumes:
-            - queue_data:/var/www/html
+            - shared_data:/var/www/html
         working_dir: /var/www/html
         restart: always
         command: ["php", "artisan", "queue:work", "--tries=3"]
@@ -116,6 +118,6 @@ networks:
 volumes:
     kai_monitordata:
     job_data:
-    queue_data:
+    shared_data:
     reverb_data:
     pgadmin-data:
