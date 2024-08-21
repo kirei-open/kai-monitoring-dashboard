@@ -26,6 +26,9 @@ services:
             MQTT_AUTH_PASSWORD: "kaimqtt"
             REVERB_HOST: reverb
             REVERB_PORT: 8081
+            BROWSERSHOT_NODE_PATH: "/usr/bin/node"
+            BROWSERSHOT_NPM_PATH: "/usr/bin/npm"
+            BROWSERSHOT_CHROME_PATH: "/usr/bin/chromium-browser"
         networks:
             - kai
 

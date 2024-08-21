@@ -6,6 +6,17 @@ USER root
 # Install necessary PHP extensions
 RUN install-php-extensions intl
 
+# Install Node.js and npm
+RUN apk add --no-cache nodejs npm
+
+# Install Google Chrome
+RUN apk add --no-cache \
+    chromium \
+    nss \
+    freetype \
+    harfbuzz \
+    ttf-freefont
+
 # Copy the application code
 COPY --chown=www-data:www-data . /var/www/html
 
