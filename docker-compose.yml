@@ -11,7 +11,7 @@ services:
             - "8000:8080"
         working_dir: /var/www/html
         volumes:
-            - shared_data:/var/www/html
+            - kai_data:/var/www/html
         depends_on:
             - db
         command: ["php", "artisan", "mqtt:subscribe"]
@@ -38,7 +38,7 @@ services:
         image: kai_monitoring_dashboard:latest
         container_name: queue
         volumes:
-            - shared_data:/var/www/html
+            - kai_data:/var/www/html
         working_dir: /var/www/html
         restart: always
         command: ["php", "artisan", "queue:work", "--tries=3"]
@@ -64,7 +64,7 @@ services:
             - 8080:8081
         command: ["php", "artisan", "reverb:start", "--debug", "--port=8081"]
         volumes:
-            - .:/var/www/html
+            - kai_data:/var/www/html
         working_dir: /var/www/html
         networks:
             - kai
@@ -83,7 +83,7 @@ services:
         ports:
             - "5433:5432"
         volumes:
-            - kai_monitordata:/var/lib/postgresql/data
+            - kai_data:/var/www/html
         networks:
             - kai
 
@@ -96,7 +96,7 @@ services:
         ports:
             - "8888:80"
         volumes:
-            - pgadmin-data:/var/lib/pgadmin
+            - kai_data:/var/www/html
         networks:
             - kai
 
@@ -116,8 +116,4 @@ networks:
     kai:
 
 volumes:
-    kai_monitordata:
-    job_data:
-    shared_data:
-    reverb_data:
-    pgadmin-data:
+    kai_data:
