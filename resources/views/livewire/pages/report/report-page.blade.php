@@ -1,6 +1,6 @@
 <div>
     @section('title','Report')
-    <h1 class="text-[#a4a2b4] lg:mt-[120px] lg:ml-[60px] lg:text-[20px]">REPORT DATA</h1>
+    <h1 class="text-[#a4a2b4] lg:mt-[120px] lg:ml-[60px] lg:text-[20px]">@lang('messages.report title')</h1>
     <style>
         .modal {
           display: none;
