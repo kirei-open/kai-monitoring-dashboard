@@ -43,25 +43,27 @@
         <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium 
             rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none 
             dark:focus:ring-blue-800" id="myBtn">
-            Generate All Report
+            @lang('messages.generate all report')
         </button>
         <div id="myModal" class="modal">
             <!-- Modal content -->
             <div class="bg-white dark:bg-gray-800 modal-content">
               <span class="close">&times;</span>
               <h3 class="text-xl font-semibold text-gray-900 dark:text-white ml-2 mt-4">
-                Generate Report By Date
+                @lang('messages.generate report by date')
               </h3>
               <div class="flex items-center ml-2">
                 <div class="relative mt-8">
+                  <span class="text-sm dark:text-white text-gray-900">@lang('messages.start date')</span>
                   <input wire:model="startDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 
                         focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 
                         dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
                         dark:focus:border-blue-500 lg:w-[230px]"
                         type="datetime-local" name="startDate">
                 </div>
-                <span class="mx-4 text-gray-500 mt-8">To</span>
+                <span class="mx-4 text-gray-500 mt-8">@lang('messages.to')</span>
                 <div class="relative mt-8">
+                  <span class="text-sm dark:text-white text-gray-900">@lang('messages.end date')</span>
                   <input wire:model="endDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md 
                           focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 
                           dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
@@ -73,7 +75,7 @@
                 <button wire:click="createReport" type="button" class="text-white bg-blue-700 
                         hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg 
                         text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        Generate
+                        @lang('messages.generate')
                 </button>
               </div>
             </div>
@@ -88,13 +90,13 @@
                 <thead class="text-xs text-white uppercase bg-[#2d2a6f] dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="text-center p-4">
-                            NO
+                            @lang('messages.no')
                         </th>
                         <th scope="col" class="text-center px-6 py-3">
-                            Name
+                            @lang('messages.name')
                         </th>
                         <th scope="col" class="text-center px-6 py-3">
-                            ACTION
+                            @lang('messages.action')
                         </th>
                     </tr>
                 </thead>
@@ -107,12 +109,12 @@
                             @if ($report->file == 'Generating report')
                                 <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 
                                         dark:text-gray-300">
-                                        Generating ...
+                                        @lang('messages.generating')
                                 </span>
                             @else
                                 <a href="{{ asset($report->file) }}" target="_blank" class="bg-blue-100 text-blue-800 text-xs font-medium 
                                     me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300" disabled>
-                                    Download
+                                    @lang('messages.download')
                                 </a>
                             @endif
                         </td>
